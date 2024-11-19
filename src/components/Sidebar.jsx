@@ -2,6 +2,8 @@ import React from "react";
 import {
   BeakerIcon,
   CalendarDaysIcon,
+  ChatBubbleBottomCenterIcon,
+  ChatBubbleLeftRightIcon,
   HomeIcon,
   PencilSquareIcon,
   RectangleStackIcon,
@@ -14,7 +16,7 @@ import { User2 } from "lucide-react";
 
 const Sidebar = () => {
   return (
-    <div className="flex h-screen bg-hitam text-white">
+    <div className="flex h-auto bg-hitam text-white">
       <aside className="flex flex-col w-72 px-6 py-7">
         {/* Navigasi */}
         <nav className="flex flex-col flex-grow gap-3">
@@ -38,6 +40,11 @@ const Sidebar = () => {
             icon={<UserGroupIcon />}
             page={"/ambassadors"}
             text={"Ambassadors"}
+          />
+          <SideItems
+            icon={<ChatBubbleLeftRightIcon />}
+            page={"/requests"}
+            text={"Requests"}
           />
           <SideItems icon={<UserCircleIcon />} page={"/users"} text={"Users"} />
         </nav>

@@ -3,10 +3,11 @@ import FormDefault from "../components/forms/FormDefault";
 import { formCategories } from "../Constant";
 import Button from "../components/buttons/Button";
 import RegularButton from "../components/buttons/RegularButton";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FormLayout = ({ formData, pages }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const path = location.pathname;
   const getBasePath = () => {
@@ -31,8 +32,8 @@ const FormLayout = ({ formData, pages }) => {
       </div>
       <div className="flex flex-row pt-10 gap-4">
         <RegularButton nav={"/"} name={"Create"} />
-        <Button nav={path} name={"Create & create another"} />
-        <Button nav={getBasePath()} name={"Cancel"} />
+        <Button func={() => navigate(path)} name={"Create & create another"} />
+        <Button func={() => getBasePath} name={"Cancel"} />
       </div>
     </div>
   );

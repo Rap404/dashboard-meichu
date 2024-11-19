@@ -30,13 +30,13 @@ const SelectItem = ({
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative mt-1" ref={dropdownRef}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 
+        className={`w-full px-4 py-2.5 bg-secondary border border-zinc-700 
         rounded-lg flex items-center justify-between cursor-pointer
         hover:border-zinc-600 transition-colors duration-200
-        ${isOpen ? "border-zinc-600" : ""}`}
+        ${isOpen ? "border-oren" : ""}`}
       >
         <span
           className={`block truncate ${
@@ -56,7 +56,7 @@ const SelectItem = ({
       {/* Dropdown Options */}
       {isOpen && (
         <div
-          className="absolute z-10 w-full mt-1 bg-zinc-800 border border-zinc-700 
+          className="absolute z-10 w-full mt-1 bg-secondary border border-zinc-700 
           rounded-lg shadow-lg max-h-60 overflow-auto"
         >
           {options.map((option, index) => (

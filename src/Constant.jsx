@@ -26,7 +26,7 @@ export const formCategories = [
   {
     id: "products",
     name: "products",
-    type: "select",
+    type: "multiselect",
     placeholder: "Select the products",
     label: "Select products",
   },
@@ -41,17 +41,17 @@ export const formProduct = [
     label: "Product name",
   },
   {
-    id: "thumbnail",
-    name: "thumbnail",
-    type: "file",
-    label: "Product Thumbnail",
-  },
-  {
     id: "category",
     name: "category",
     type: "select",
     placeholder: "Select product category",
     label: "Product category",
+  },
+  {
+    id: "thumbnail",
+    name: "thumbnail",
+    type: "file",
+    label: "Product Thumbnail",
   },
   {
     id: "images",
@@ -64,7 +64,7 @@ export const formProduct = [
     name: "description",
     type: "textArea",
     placeholder: "Enter product description",
-    lable: "Product description",
+    label: "Product description",
   },
   {
     id: "price",
@@ -113,6 +113,13 @@ export const formEvent = [
     label: "Event name",
   },
   {
+    id: "link",
+    name: "link",
+    type: "text",
+    placeholder: "Enter event link",
+    label: "Event link",
+  },
+  {
     id: "image",
     name: "image",
     type: "file",
@@ -125,13 +132,6 @@ export const formEvent = [
     type: "textArea",
     placeholder: "Enter event description",
     label: "Event description",
-  },
-  {
-    id: "link",
-    name: "link",
-    type: "text",
-    placeholder: "Enter event link",
-    label: "Event link",
   },
   {
     id: "start_date",

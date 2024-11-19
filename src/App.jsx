@@ -12,6 +12,7 @@ import CreateCategory from "./pages/create pages/CreateCategory";
 import CreateAmbassador from "./pages/create pages/CreateAmbassador";
 import CreateProduct from "./pages/create pages/CreateProduct";
 import CreateEvent from "./pages/create pages/CreateEvent";
+import RequestsPage from "./pages/RequestsPage";
 
 function App() {
   return (
@@ -19,20 +20,20 @@ function App() {
       <Routes>
         <Route element={<BasicLayout />}>
           <Route path="/" element={<HomePage />} />
-
+          {/* Pages */}
           <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/create" element={<CreateCategory />} />
-
           <Route path="/ambassadors" element={<Ambassador />} />
-          <Route path="/ambassadors/create" element={<CreateAmbassador />} />
-
           <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/create" element={<CreateProduct />} />
-
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/users" element={<UsersPage />} />
+
+          {/* Create Pages */}
+          <Route path="/categories/create" element={<CreateCategory />} />
+          <Route path="/ambassadors/create" element={<CreateAmbassador />} />
+          <Route path="/products/create" element={<CreateProduct />} />
           <Route path="/events/create" element={<CreateEvent />} />
 
-          <Route path="/users" element={<UsersPage />} />
           {/* <Route path="/users/create" element={<CreateUe />} /> */}
         </Route>
         <Route path="/login" element={<LoginPage />} />
