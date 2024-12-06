@@ -13,7 +13,8 @@ export default {
         'abumuda': '#5D5D65',
         'ungu': '#8474DB',
         'kuning': '#ECB423',
-        'oren': '#F59E0B'
+        'oren': '#F59E0B',
+        'ijo': '#369763'
       },
       fontFamily: {
         sans: ['Be Vietnam Pro', 'sans-serif'], // Menjadikan Be Vietnam Pro sebagai font sans default

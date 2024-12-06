@@ -6,14 +6,23 @@ import UploadImage from "../input/UploadImage";
 import UploadImages from "../input/UploadImages";
 import MultiSelect from "../input/MultiSelect";
 import DateInput from "../input/DateInput";
+import CircularImages from "../images/CircularImages";
+import { baseUrl } from "../../Constant";
 
-const FormDefault = ({ FormData }) => {
+const FormDefault = ({
+  FormData,
+  data,
+  file,
+  changeHandler,
+  fileHandler,
+  filesHandler,
+}) => {
   // Add these helper functions to FormDefault component
   const [selectedValue, setSelectedValue] = useState([]);
   const [formData, setFormData] = useState({});
   const [images, setImages] = useState([]);
+  const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
-  const [components, setcomponents] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const transportasisOptions = [
@@ -70,15 +79,23 @@ const FormDefault = ({ FormData }) => {
       case "text":
         return (
           <>
-            <label htmlFor="" className="block text-sm font-medium text-white">
+            <label
+              htmlFor=""
+              className={`block text-sm font-medium text-white`}
+            >
               {item.label}
             </label>
             <input
               type="text"
               name={item.name}
               id={item.id}
+              disabled={item.disabled ? item.disabled : false}
+              value={data[item.name] || ""}
+              onChange={changeHandler}
               placeholder={item.placeholder}
-              className="mt-1 block w-full rounded-lg bg-secondary border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3"
+              className={`mt-1 block w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
+                item.disabled ? "bg-abumuda" : "bg-secondary"
+              }`}
             />
           </>
         );
@@ -121,13 +138,23 @@ const FormDefault = ({ FormData }) => {
               }}
               image={formData[item.name]}
               onRemove={() => handleRemoveImage(item.name)}
+              cropPreset={item.preset}
+            />
+          </div>
+        );
+
+      case "profile":
+        return (
+          <div className="flex flex-col p-28">
+            <CircularImages
+              setSelectedProfile={(img) => fileHandler(img)}
+              image={file}
             />
           </div>
         );
 
       case "files":
         return (
-          // <>
           <>
             <label htmlFor="" className="block text-sm font-medium text-white">
               {item.label}

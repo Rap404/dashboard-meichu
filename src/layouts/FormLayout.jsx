@@ -5,16 +5,25 @@ import Button from "../components/buttons/Button";
 import RegularButton from "../components/buttons/RegularButton";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const FormLayout = ({ formData, pages }) => {
+const FormLayout = ({
+  formData,
+  pages,
+  isUseButton = true,
+  changeHandler,
+  fileHandler,
+  filesHandler,
+  file,
+  data,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const path = location.pathname;
   const getBasePath = () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
-    // Mengambil segment pertama dari path untuk kembali ke halaman utama
-    return `/${pathSegments[0]}`;
+    return navigate(`/${pathSegments[0]}`);
   };
+
   return (
     <div className="ps-12 pe-6 pt-10 min-h-screen bg-hitam">
       <div className="w-full">
@@ -27,13 +36,31 @@ const FormLayout = ({ formData, pages }) => {
           <div className="text-white text-3xl font-bold">{pages[0]}</div>
         </div>
       </div>
-      <div className="">
-        <FormDefault FormData={formData} />
+      <div className="mt-10">
+        <FormDefault
+          FormData={formData}
+          changeHandler={changeHandler}
+          fileHandler={fileHandler}
+          filesHandler={filesHandler}
+          file={file}
+          data={data}
+        />
       </div>
-      <div className="flex flex-row pt-10 gap-4">
+      <div className="flex flex-row pt-10 gap-4 mb-10">
         <RegularButton nav={"/"} name={"Create"} />
-        <Button func={() => navigate(path)} name={"Create & create another"} />
-        <Button func={() => getBasePath} name={"Cancel"} />
+        {isUseButton ? (
+          <>
+            <Button
+              func={() => navigate(path)}
+              name={"Create & create another"}
+            />
+            <Button func={getBasePath} name={"cancel"} />
+          </>
+        ) : (
+          <>
+            <Button func={() => navigate("/")} name={"Cancel"} />
+          </>
+        )}
       </div>
     </div>
   );

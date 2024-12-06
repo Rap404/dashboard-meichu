@@ -23,7 +23,7 @@ const TextArea = ({
 
   return (
     <div className="w-full mt-1">
-      <div className="relative">
+      <div className="relative z-0">
         <textarea
           value={value}
           onChange={handleChange}

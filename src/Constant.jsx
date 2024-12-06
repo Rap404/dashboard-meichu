@@ -1,9 +1,12 @@
+export const baseUrl = import.meta.env.VITE_BASE_URL;
+export const mediaUrl = import.meta.env.VITE_MEDIA_URL;
+
 export const formFieldLogin = [
   {
-    id: "email",
-    name: "email",
-    type: "email",
-    placeholder: "Enter your email",
+    id: "identfier",
+    name: "identifier",
+    type: "identifier",
+    placeholder: "Enter your email or username",
     label: "Email address",
   },
   {
@@ -12,6 +15,16 @@ export const formFieldLogin = [
     type: "password",
     placeholder: "Enter your Password",
     label: "Password",
+  },
+];
+
+export const formForgotPassword = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Enter your email",
+    label: "Email",
   },
 ];
 
@@ -52,6 +65,7 @@ export const formProduct = [
     name: "thumbnail",
     type: "file",
     label: "Product Thumbnail",
+    preset: "cover",
   },
   {
     id: "images",
@@ -102,6 +116,30 @@ export const formAmbassador = [
     type: "textArea",
     label: "Ambassador description",
   },
+  {
+    id: "twitter",
+    name: "twitter",
+    type: "text",
+    label: "Ambassador twitter link ",
+  },
+  {
+    id: "instagram",
+    name: "instagram",
+    type: "text",
+    label: "Ambassador instagram link",
+  },
+  {
+    id: "youtube",
+    name: "youtube",
+    type: "text",
+    label: "Ambassador youtube link",
+  },
+  {
+    id: "tiktok",
+    name: "tiktok",
+    type: "text",
+    label: "Ambassador tiktok link",
+  },
 ];
 
 export const formEvent = [
@@ -146,5 +184,37 @@ export const formEvent = [
     type: "date",
     placeholder: "Enter event end date",
     label: "Event end date",
+  },
+];
+
+export const adminProfileForm = [
+  {
+    id: "image",
+    name: "image",
+    type: "profile",
+    placeholder: "Enter image profile",
+    label: "Image profile",
+    preset: "profile",
+  },
+  {
+    id: "username",
+    name: "username",
+    type: "text",
+    placeholder: "Enter your username",
+    label: "Username",
+  },
+  {
+    id: "email",
+    name: "email",
+    type: "text",
+    label: "Email",
+    disabled: true,
+  },
+  {
+    id: "createdAt",
+    name: "createdAt",
+    type: "text",
+    label: "Joined date",
+    disabled: true,
   },
 ];

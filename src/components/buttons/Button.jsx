@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Button = ({ func, name }) => {
   const navigate = useNavigate();
+
   return (
     <div>
       <button

@@ -4,31 +4,38 @@ import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css"; // Tambahkan ini
+import "react-image-crop/dist/ReactCrop.css";
 import setCanvasPreview from "./setCanvasPreview";
 
 const CROP_PRESET = {
   profile: {
     aspect: 1,
-    minDimension: 150,
-    width: 150,
-    height: 150,
+    minDimension: 400,
+    width: 400,
+    height: 400,
     circular: true,
     label: "Profile Photo",
   },
   cover: {
     aspect: 16 / 9,
-    minDimension: 300,
-    Width: 1200,
-    height: 675,
+    minDimension: 1200,
+    Width: 1920,
+    height: 1080,
     circular: false,
     label: "Cover Image",
+  },
+  portrait: {
+    aspect: 9 / 16,
+    minDimension: 800,
+    width: 1080,
+    height: 1920,
+    circular: false,
+    label: "Image Portrait",
   },
 };
 
 const ImageCropper = ({
   setSelectedImage,
-  updateImage,
   closeModal,
   cropPreset = "cover",
 }) => {
@@ -142,7 +149,6 @@ const ImageCropper = ({
                   }
                 });
                 const dataUrl = previewCanvasRef.current.toDataURL();
-                updateImage(dataUrl);
                 closeModal();
               }
             }}

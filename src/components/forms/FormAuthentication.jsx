@@ -2,7 +2,13 @@ import React from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { EyeOffIcon } from "lucide-react";
 
-const FormAuthentication = ({ FormData, showPass, func }) => {
+const FormAuthentication = ({
+  FormData,
+  showPass,
+  func,
+  changeHandler,
+  data,
+}) => {
   return (
     <div className="rounded-md shadow-sm space-y-5">
       {FormData.map((field, index) => (
@@ -13,8 +19,8 @@ const FormAuthentication = ({ FormData, showPass, func }) => {
           <input
             type={showPass ? "text" : field.type}
             name={field.name}
-            // value={""}
-            // onChange={""}
+            value={data[field.name] || ""}
+            onChange={changeHandler}
             placeholder={field.placeholder}
             className="bg-gray-700 rounded-md text-white border border-secondary focus:outline-none focus:border-kuning focus:ring-kuning p-2 text-sm"
           />
@@ -25,9 +31,9 @@ const FormAuthentication = ({ FormData, showPass, func }) => {
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showPass ? (
-                <EyeOffIcon className="h-5 w-5 mt-5 text-oren hover:text-oren active:text-oren transition-colors duration-150" />
-              ) : (
                 <EyeIcon className="h-5 w-5  mt-5 text-white" />
+              ) : (
+                <EyeOffIcon className="h-5 w-5 mt-5 text-oren hover:text-oren active:text-oren transition-colors duration-150" />
               )}
             </button>
           ) : (

@@ -8,21 +8,10 @@ const UploadImage = ({
   image,
   onRemove,
   showAddButton = false,
+  cropPreset = "cover",
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInfo, setFileInfo] = useState(null);
-  // const coverUrl = useRef(null);
-  // const updateCover = (imgSrc) => {
-  //   coverUrl.current = imgSrc;
-  // };
-  // const noImage = (componentTrue, componentFalse) => {
-  //   if (coverUrl.current === null) {
-  //     return componentTrue;
-  //   } else {
-  //     return componentFalse;
-  //   }
-  // };
-  // console.log(coverUrl.current);
 
   const handleImageUpload = (imgBlob) => {
     if (imgBlob) {
@@ -37,14 +26,13 @@ const UploadImage = ({
   return (
     <div
       className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
-        !image ? "py-12" : "py-0 transition-all duration-1000"
+        !image ? "py-12" : "py-0 transition-all duration-1000 "
       }`}
     >
       {image && (
-        <div className="w-full bg-oren bg-opacity-50 text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
+        <div className="w-full bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-medium">{fileInfo?.name || "Image"}</span>
               <span className="text-kuning text-sm">
                 {fileInfo?.size || ""}
               </span>
@@ -62,7 +50,6 @@ const UploadImage = ({
             className="w-full h-auto rounded-lg"
           />
         )}
-        {/* <img src={coverUrl.current} alt="" /> */}
       </div>
 
       {!image ? (
@@ -91,9 +78,8 @@ const UploadImage = ({
       {modalOpen && (
         <Modal
           setSelectedImage={handleImageUpload}
-          // updatedImage={updateCover}
           closeModal={() => setModalOpen(false)}
-          cropPreset={"cover"}
+          cropPreset={cropPreset}
         />
       )}
     </div>

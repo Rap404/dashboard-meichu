@@ -1,14 +1,17 @@
 import {
   MagnifyingGlassIcon,
   PencilSquareIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { assets } from "../../assets/Assets";
 import CheckBox from "../input/CheckBox";
+import { useNavigate } from "react-router-dom";
 
 const TableList = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const navigate = useNavigate();
 
   const categories = [
     { id: "1", name: "all", icon: {} },
@@ -22,7 +25,7 @@ const TableList = () => {
     if (selectAll) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(categories.map((cat) => cat.id));
+      setSelectedItems(list.map((cat) => cat.id));
     }
     setSelectAll(!selectAll);
   };
@@ -77,34 +80,42 @@ const TableList = () => {
               Name
             </th>
             <th className="text-left py-3 px-4 text-gray-300 font-medium">
-              Icon
+              slug
             </th>
-            <th className="w-24"></th>
+            <th className="text-left py-3 px-4 text-gray-300 font-medium">
+              product count
+            </th>
           </tr>
         </thead>
         <tbody>
-          {categories.map((category, index) => (
+          {categories.map((item, index) => (
             <tr
               key={index}
               className="border-b border-zinc-800 bg-secondary hover:bg-abutua"
             >
               <td className="py-4 px-6">
                 <CheckBox
-                  onChange={() => handleSelectItem(category.id)}
-                  checked={isItemSelected(category.id)}
+                  onChange={() => handleSelectItem(item.id)}
+                  checked={isItemSelected(item.id)}
                 />
               </td>
-              <td className="py-4 px-4 text-gray-300">{category.name}</td>
+              <td className="py-4 px-4 text-gray-300">{item.name}</td>
               <td className="py-4 px-4">
                 <div className="w-8 h-8 bg-white rounded-full overflow-hidden">
                   <img
                     src={assets.photo_profile}
-                    alt={category.name}
+                    alt={item.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
               </td>
-              <td className="py-4 px-4 text-right">
+              <td className="w-24 py-4 px-4 text-right flex gap-7">
+                <button className="text-red-500 hover:text-red-600">
+                  <span className="flex items-center">
+                    <TrashIcon className="w-4 h-4 mr-1" />
+                    Delete
+                  </span>
+                </button>
                 <button className="text-amber-500 hover:text-amber-600">
                   <span className="flex items-center">
                     <PencilSquareIcon className="w-4 h-4 mr-1" />

@@ -42,9 +42,9 @@ const UploadImages = ({
       }`}
     >
       {image && (
-        <div className="w-full bg-oren bg-opacity-50 text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
+        <div className="w-full absolute bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl items-center justify-between transition-all duration-200">
           <div className="flex flex-col">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               <span className="font-medium">{`Image ${index + 1}`}</span>
             </div>
             <span>Upload Completed</span>
