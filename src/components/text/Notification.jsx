@@ -10,7 +10,7 @@ export const successNotif = (text) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
+    // transition: Bounce,
   });
 };
 
@@ -24,7 +24,7 @@ export const errorNotif = (text) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
+    // transition: Bounce,
   });
 };
 
@@ -38,7 +38,7 @@ export const warnNotif = (text) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
+    // transition: Bounce,
   });
 };
 
@@ -52,6 +52,6 @@ export const defaultNotif = (text) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    transition: Bounce,
+    // transition: Bounce,
   });
 };

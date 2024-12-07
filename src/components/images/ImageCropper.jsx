@@ -10,7 +10,7 @@ import setCanvasPreview from "./setCanvasPreview";
 const CROP_PRESET = {
   profile: {
     aspect: 1,
-    minDimension: 400,
+    minDimension: 150,
     width: 400,
     height: 400,
     circular: true,

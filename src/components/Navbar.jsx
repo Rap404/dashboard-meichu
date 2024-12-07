@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import profile from ".././assets/photo-profile2.svg";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,8 +8,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { assets } from "../assets/Assets";
 
-const Navbar = ({ toggleSidebar, isSideBarOpen }) => {
+const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {
   const navigate = useNavigate();
+
   return (
     <div className="w-full min-w-full overflow-x-hidden">
       <nav className="w-full flex justify-between bg-zinc-900 opacity-90 min-h-4 px-2 border-b-2 border-abutua py-2 lg:py-0">
@@ -30,7 +31,13 @@ const Navbar = ({ toggleSidebar, isSideBarOpen }) => {
           className="flex items-center px-6 cursor-pointer"
           onClick={() => navigate("/profile ")}
         >
-          <UserCircleIcon className="size-10 text-white hover:text-oren" />
+          <div className="max-w-10 max-h-10 rounded-full group">
+            <img
+              className="rounded-full group-hover:opacity-80"
+              src={image}
+              alt=""
+            />
+          </div>
         </div>
       </nav>
     </div>

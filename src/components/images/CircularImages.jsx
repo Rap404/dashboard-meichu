@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { assets } from "../../assets/Assets";
 import Modal from "../modal/Modal";
 import { SquarePen } from "lucide-react";
+import { mediaUrl } from "../../Constant";
 
 const CircularImages = ({ setSelectedProfile, image }) => {
   const [modalOpen, setModalOpen] = useState();
@@ -33,12 +34,12 @@ const CircularImages = ({ setSelectedProfile, image }) => {
   return (
     <div className="relative">
       <div className="flex flex-col items-center justify-center">
-        <div className="absolute -bottom-12">
-          {editProfile ? (
+        {editProfile ? (
+          <div className="absolute -bottom-12">
             <div className="relative">
               {image ? (
                 <img
-                  src={URL.createObjectURL(image)}
+                  src={image}
                   className="w-[200px] h-[200px] rounded-full md:rounded-full lg:rounded-full border-2 border-gray-400"
                 />
               ) : (
@@ -62,14 +63,14 @@ const CircularImages = ({ setSelectedProfile, image }) => {
                 />
               )}
             </div>
-          ) : (
-            <img
-              src={assets.photo_profile}
-              //  className="size-36"
-              className="w-[150px] h-[150px] rounded-full border-2 border-gray-400"
-            />
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="text-white">tes</div>
+          // <img
+          //   src={assets.photo_profile}
+          //   className="w-20 h-20 rounded-full border-2 border-gray-400"
+          // />
+        )}
       </div>
     </div>
   );
