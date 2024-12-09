@@ -4,9 +4,11 @@ import axios from "axios";
 import { baseUrl } from "../Constant";
 import { assets } from "../assets/Assets";
 import { AiOutlineLoading } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const AmbassadorPage = () => {
   const pages = ["Ambassadors", ">", "List"];
+  const navigate = useNavigate();
   const [ambassador, setAmbassador] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -69,8 +71,8 @@ const AmbassadorPage = () => {
     <div className="">
       <PageLayout
         pages={pages}
-        nav={"/ambassadors/create"}
-        buttonName={"ambassador"}
+        func={() => navigate("/ambassadors/create")}
+        buttonName={"Create ambassador"}
         columns={columns}
         data={ambassador}
         onSearch={handleSearch}

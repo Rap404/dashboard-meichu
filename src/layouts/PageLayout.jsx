@@ -7,7 +7,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 
 const PageLayout = ({
   pages,
-  nav,
+  func,
   buttonName,
   columns,
   data,
@@ -17,6 +17,7 @@ const PageLayout = ({
   actions,
   pagination,
   loading,
+  isActions = true,
 }) => {
   return (
     <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
@@ -30,7 +31,7 @@ const PageLayout = ({
           <div className="flex flex-row justify-between my-2">
             <div className="text-white text-3xl font-bold">{pages[0]}</div>
             <div className="px-8">
-              <RegularButton nav={nav} name={buttonName} />
+              {isActions ? <RegularButton func={func} name={buttonName} /> : ""}
             </div>
           </div>
         </div>
@@ -51,6 +52,7 @@ const PageLayout = ({
                 onSelectAll={onSelectAll}
                 actions={actions}
                 pagination={pagination}
+                isActions={isActions}
               />
             )}
           </div>

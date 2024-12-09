@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
+import { useNavigate } from "react-router-dom";
 
 const EventsPage = () => {
   const pages = ["Events", ">", "List"];
+  const navigate = useNavigate();
   const [events, setEvents] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -75,8 +77,8 @@ const EventsPage = () => {
     <div>
       <PageLayout
         pages={pages}
-        nav={"/events/create"}
-        buttonName={"event"}
+        func={() => navigate("/events/create")}
+        buttonName={"Create event"}
         columns={columns}
         data={events}
         onSearch={handleSearch}

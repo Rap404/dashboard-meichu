@@ -3,9 +3,11 @@ import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
 import { Columns } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const RequestsPage = () => {
   const pages = ["Request", ">", "List"];
+  const navigate = useNavigate();
   const [requests, setRequest] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -79,8 +81,8 @@ const RequestsPage = () => {
     <div>
       <PageLayout
         pages={pages}
-        nav={"/products/create"}
-        buttonName={"product"}
+        func={() => navigate("/products/create")}
+        buttonName={"Create product"}
         columns={column}
         data={requests}
         onSearch={handleSearch}
@@ -88,6 +90,7 @@ const RequestsPage = () => {
         onRowSelect={handleRowSelect}
         loading={loading}
         pagination={true}
+        isActions={false}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { baseUrl, mediaUrl } from "../Constant";
 import { useAuth } from "../lib/AuthContext";
 import axios from "axios";
 
-const BasicLayout = ({ children }) => {
+const BasicLayout = ({ children, setUserProfile }) => {
   const { user } = useAuth();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [profile, setProfile] = useState({});
@@ -15,8 +15,6 @@ const BasicLayout = ({ children }) => {
   const [error, setError] = useState(null);
   const profileImage = mediaUrl + profile.profilePicture?.url;
   const id = user.id;
-
-  console.log("profile", profile);
 
   const toggleSidebar = () => {
     setIsSideBarOpen(!isSideBarOpen);
@@ -30,6 +28,7 @@ const BasicLayout = ({ children }) => {
       );
       const profileData = response.data;
       setProfile(profileData);
+      setUserProfile(profileData);
       setError(null);
     } catch (error) {
       setError(error.response?.data?.message) || "Failed fetch Profile";
@@ -40,7 +39,7 @@ const BasicLayout = ({ children }) => {
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  }, [setUserProfile]);
 
   if (loading) return <div className="">Loading...</div>;
   if (error) return errorNotif(error.message);

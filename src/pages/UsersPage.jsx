@@ -34,7 +34,7 @@ const UsersPage = () => {
     },
     {
       header: "Profile",
-      accessor: (item) => item.profilePicture.url,
+      accessor: (item) => item?.profilePicture?.url,
       type: "image",
     },
     {
@@ -86,6 +86,7 @@ const UsersPage = () => {
         onRowSelect={handleRowSelect}
         loading={loading}
         pagination={true}
+        isActions={false}
       />
     </div>
   );

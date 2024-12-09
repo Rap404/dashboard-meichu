@@ -18,9 +18,11 @@ import "react-toastify/ReactToastify.css";
 import { useAuth } from "./lib/AuthContext";
 import ForgotPassword from "./pages/auth pages/ForgotPassword";
 import ErrorPage from "./pages/ErrorPage";
+import { useState } from "react";
 
 function App() {
   const { user } = useAuth();
+  const [userProfile, setUserProfile] = useState({});
   return (
     <>
       <ToastContainer
@@ -41,8 +43,8 @@ function App() {
 
         {user ? (
           <>
-            <Route element={<BasicLayout />}>
-              <Route path="/" element={<HomePage />} />
+            <Route element={<BasicLayout setUserProfile={setUserProfile} />}>
+              <Route path="/" element={<HomePage profile={userProfile} />} />
 
               {/* Pages */}
               <Route path="/categories" element={<CategoriesPage />} />

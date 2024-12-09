@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
+import { useNavigate } from "react-router-dom";
 
 const ProductsPage = () => {
   const pages = ["Products", ">", "List"];
+  const navigate = useNavigate();
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -78,8 +80,8 @@ const ProductsPage = () => {
     <div>
       <PageLayout
         pages={pages}
-        nav={"/products/create"}
-        buttonName={"product"}
+        func={() => navigate("/products/create")}
+        buttonName={"Create product"}
         columns={columns}
         data={products}
         onSearch={handleSearch}

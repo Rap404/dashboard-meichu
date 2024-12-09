@@ -18,7 +18,7 @@ const CROP_PRESET = {
   },
   cover: {
     aspect: 16 / 9,
-    minDimension: 1200,
+    minDimension: 520,
     Width: 1920,
     height: 1080,
     circular: false,
@@ -26,7 +26,7 @@ const CROP_PRESET = {
   },
   portrait: {
     aspect: 9 / 16,
-    minDimension: 800,
+    minDimension: 520,
     width: 1080,
     height: 1920,
     circular: false,

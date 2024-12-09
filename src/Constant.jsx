@@ -88,8 +88,8 @@ export const formProduct = [
     label: "Product price",
   },
   {
-    id: "link",
-    name: "link",
+    id: "product_link",
+    name: "product_link",
     type: "text",
     placeholder: "Enter product link",
     label: "Product link",
@@ -158,8 +158,8 @@ export const formEvent = [
     label: "Event link",
   },
   {
-    id: "image",
-    name: "image",
+    id: "image_cover",
+    name: "image_cover",
     type: "file",
     placeholder: "Enter image cover",
     label: "Image cover",

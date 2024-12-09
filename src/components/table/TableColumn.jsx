@@ -14,11 +14,13 @@ const TableColumn = ({ item, data }) => {
         try {
           const imageUrl = item.accessor(data);
           return (
-            <img
-              src={mediaUrl + imageUrl}
-              className="max-h-20 max-w-20 object-cover"
-              alt={data.attributes?.name || "image"}
-            />
+            <div className="flex justify-center">
+              <img
+                src={mediaUrl + imageUrl}
+                className="max-h-20 max-w-20 object-cover "
+                alt={data.attributes?.name || "image"}
+              />
+            </div>
           );
           s;
         } catch (error) {
@@ -42,7 +44,7 @@ const TableColumn = ({ item, data }) => {
         try {
           const fileCount = item.accessor(data);
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <div className="bg-abumuda p-1 rounded-sm">{fileCount}</div>
               <span>Files</span>
             </div>
@@ -56,7 +58,7 @@ const TableColumn = ({ item, data }) => {
         try {
           const fileCount = item.accessor(data);
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <div className="bg-abumuda p-1 rounded-lg">{fileCount}</div>
               <span>Requests</span>
             </div>
@@ -70,7 +72,7 @@ const TableColumn = ({ item, data }) => {
         try {
           const products = item.accessor(data);
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2">
               <div className="bg-abumuda p-1 rounded-sm">{products}</div>
               <span>Products</span>
             </div>
@@ -161,7 +163,7 @@ const TableColumn = ({ item, data }) => {
         try {
           const likeCount = item.accessor(data);
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <span>{likeCount}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

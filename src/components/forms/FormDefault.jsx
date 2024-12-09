@@ -16,6 +16,7 @@ const FormDefault = ({
   changeHandler,
   fileHandler,
   filesHandler,
+  itemsSelect,
 }) => {
   // Add these helper functions to FormDefault component
   const [selectedValue, setSelectedValue] = useState([]);
@@ -24,6 +25,8 @@ const FormDefault = ({
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
+
+  // console.log(selectedItems);
 
   const transportasisOptions = [
     { id: 1, name: "Innova Merah" },

@@ -1,6 +1,6 @@
 import React from "react";
 import FormDefault from "../components/forms/FormDefault";
-import { formCategories } from "../Constant";
+import { formCategories, mediaUrl } from "../Constant";
 import RegularButton from "../components/buttons/RegularButton";
 import Button from "../components/buttons/Button";
 import { assets } from "../assets/Assets";
@@ -12,14 +12,14 @@ import WelcomeBox from "../components/text/WelcomeBox";
 import RollingMachine from "../components/RollingMachine";
 import SpinMachine from "../components/SpinMachine";
 
-const HomePage = () => {
-  const navigate = useNavigate();
+const HomePage = ({ profile }) => {
+  const imageProfile = mediaUrl + profile?.profilePicture?.url;
   return (
     <div className="justify-center h-screen bg-hitam text-putih mb-36">
       <div className="px-12 pt-10 ">
         <div className="text-white text-3xl font-bold">Dashboard</div>
         <div className="mt-6 flex flex-col md:flex-row lg:flex-row gap-8">
-          <WelcomeBox />
+          <WelcomeBox imageProfile={imageProfile} />
           <NotificationBox />
         </div>
         <div className="pt-32 ">

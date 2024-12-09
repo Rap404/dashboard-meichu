@@ -14,8 +14,10 @@ const FormLayout = ({
   filesHandler,
   file,
   data,
-  func,
+  mainFunc,
+  scFunc,
   buttonName,
+  itemsSelect,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,16 +48,14 @@ const FormLayout = ({
           filesHandler={filesHandler}
           file={file}
           data={data}
+          itemsSelect={itemsSelect}
         />
       </div>
       <div className="flex flex-row pt-10 gap-4 mb-10">
-        <RegularButton func={func} name={buttonName || "Create"} />
+        <RegularButton func={mainFunc} name={buttonName || "Create"} />
         {isUseButton ? (
           <>
-            <Button
-              func={() => navigate(path)}
-              name={"Create & create another"}
-            />
+            <Button func={scFunc} name={"Create & create another"} />
             <Button func={getBasePath} name={"cancel"} />
           </>
         ) : (

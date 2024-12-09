@@ -7,10 +7,16 @@ import SelectItem from "../components/input/SelectItem";
 import axios, { Axios } from "axios";
 import { baseUrl } from "../Constant";
 import TableComponent from "../components/table/TableComponent";
+import { useNavigate } from "react-router-dom";
 
 const CategoriesPage = () => {
   const pages = ["Categories", ">", "List"];
+  const navigate = useNavigate();
   const [categories, setCategories] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    products: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,11 +45,6 @@ const CategoriesPage = () => {
     {
       header: "Nama",
       accessor: (item) => item.attributes.name,
-      nowrap: true,
-    },
-    {
-      header: "Slug",
-      accessor: (item) => item.attributes.slug,
       nowrap: true,
     },
     {
@@ -82,8 +83,8 @@ const CategoriesPage = () => {
     <div className="">
       <PageLayout
         pages={pages}
-        nav={"/categories/create"}
-        buttonName={"category"}
+        func={() => navigate("/categories/create")}
+        buttonName={"Create Category"}
         columns={columns}
         data={categories}
         onSearch={handleSearch}
