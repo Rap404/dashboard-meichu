@@ -7,7 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const FormLayout = ({
   formData,
+  availableItems,
   pages,
+  multiSelectValue,
   isUseButton = true,
   changeHandler,
   fileHandler,
@@ -17,7 +19,7 @@ const FormLayout = ({
   mainFunc,
   scFunc,
   buttonName,
-  itemsSelect,
+  onMultiChange,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,12 +45,14 @@ const FormLayout = ({
       <div className="mt-10">
         <FormDefault
           FormData={formData}
+          file={file}
+          data={data}
+          availableItems={availableItems}
+          multiSelectValue={multiSelectValue}
           changeHandler={changeHandler}
           fileHandler={fileHandler}
           filesHandler={filesHandler}
-          file={file}
-          data={data}
-          itemsSelect={itemsSelect}
+          onMultiChange={onMultiChange}
         />
       </div>
       <div className="flex flex-row pt-10 gap-4 mb-10">

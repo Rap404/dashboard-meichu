@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import RegularButton from "../components/buttons/RegularButton";
 import TableList from "../components/table/TableList";
 import EmptyList from "../components/table/EmptyList";
 import TableComponent from "../components/table/TableComponent";
 import { AiOutlineLoading } from "react-icons/ai";
+import MiniModal from "../components/modal/MiniModal";
+import { useAuth } from "../lib/AuthContext";
+import { baseUrl } from "../Constant";
+import { errorNotif, successNotif } from "../components/text/Notification";
+import axios from "axios";
 
 const PageLayout = ({
   pages,
@@ -11,14 +16,67 @@ const PageLayout = ({
   buttonName,
   columns,
   data,
+  setError,
+  endpoint,
+  fetch,
   onSearch,
-  onRowSelect,
-  onSelectAll,
-  actions,
   pagination,
   loading,
   isActions = true,
 }) => {
+  const { getToken } = useAuth();
+  const token = getToken();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+
+  const handleSelectAll = (selectedIds) => {
+    setSelectedIds(selectedIds);
+  };
+
+  const handleRowSelect = (selectedIds) => {
+    setSelectedIds(selectedIds);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${baseUrl}/${endpoint}/${selectedId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetch();
+
+      successNotif("Successfully deleted item");
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    }
+  };
+
+  const handleMultipleDelete = async () => {
+    try {
+      await Promise.all(
+        selectedIds.map((id) =>
+          axios.delete(`${baseUrl}/${endpoint}/${id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        )
+      );
+
+      fetch();
+
+      successNotif(`Deleted ${selectedIds.length} items Successfully`);
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
       <div className="ps-12 py-10 min-h-screen w-full bg-hitam">
@@ -41,16 +99,26 @@ const PageLayout = ({
           </div>
         ) : (
           <div className="">
-            {data === undefined ? (
-              <TableList />
+            {modalOpen ? (
+              <MiniModal
+                closeModal={() => setModalOpen(false)}
+                func={() => handleDelete()}
+              />
+            ) : (
+              ""
+            )}
+            {data === undefined || data.length === 0 ? (
+              <EmptyList page={pages[0]} />
             ) : (
               <TableComponent
                 columns={columns}
                 data={data}
                 onSearch={onSearch}
-                onRowSelect={onRowSelect}
-                onSelectAll={onSelectAll}
-                actions={actions}
+                onRowSelect={handleRowSelect}
+                onSelectAll={handleSelectAll}
+                setSelectedId={setSelectedId}
+                multiDelFunc={handleMultipleDelete}
+                setModalOpen={setModalOpen}
                 pagination={pagination}
                 isActions={isActions}
               />

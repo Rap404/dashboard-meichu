@@ -5,8 +5,10 @@ import {
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import CheckBox from "../input/CheckBox";
-import { baseUrl, mediaUrl } from "../../Constant";
 import TableColumn from "./TableColumn";
+import { baseUrl } from "../../Constant";
+import axios from "axios";
+import { useAuth } from "../../lib/AuthContext";
 
 const TableComponent = ({
   columns = [],
@@ -14,7 +16,9 @@ const TableComponent = ({
   onSearch,
   onSelectAll,
   onRowSelect,
-  actions = [],
+  setSelectedId,
+  multiDelFunc,
+  setModalOpen,
   pagination = true,
   isActions = true,
 }) => {
@@ -22,6 +26,8 @@ const TableComponent = ({
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [tableData, setTableData] = useState([]);
+
+  const y = 3;
 
   useEffect(() => {
     // handle if data is an object with nested data array
@@ -31,14 +37,13 @@ const TableComponent = ({
     }
 
     setTableData(Array.isArray(data) ? data : []);
-  });
+  }, []);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
     if (onSearch) onSearch(e.target.value);
   };
 
-  // Handle "select all" checkBox
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedItems([]);
@@ -51,7 +56,6 @@ const TableComponent = ({
     setSelectAll(!selectAll);
   };
 
-  // Handle individual row selection
   const handleRowSelect = (id) => {
     const updatedSelection = selectedItems.includes(id)
       ? selectedItems.filter((selectedId) => selectedId !== id)
@@ -59,6 +63,11 @@ const TableComponent = ({
 
     setSelectedItems(updatedSelection);
     if (onRowSelect) onRowSelect(updatedSelection);
+  };
+
+  const handleRemoveItem = (id) => {
+    setSelectedId(id);
+    setModalOpen(true);
   };
 
   return (
@@ -73,7 +82,10 @@ const TableComponent = ({
               </span>
             </div>
             <div className="">
-              <button className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800">
+              <button
+                className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800"
+                onClick={multiDelFunc}
+              >
                 <span className="text-red">
                   <TrashIcon className="h-5 w-5 text-red-500" />
                 </span>
@@ -151,12 +163,12 @@ const TableComponent = ({
               {isActions ? (
                 <td className="py-4 pe-11 text-right">
                   <div className="flex justify-end gap-2">
-                    <button>
+                    <button onClick={() => console.log(item.id)}>
                       <span className="text-abumuda hover:text-oren">
                         <PencilIcon className="text-red w-5 h-5" />
                       </span>
                     </button>
-                    <button>
+                    <button onClick={() => handleRemoveItem(item.id)}>
                       <span className="text-abumuda hover:text-red-500">
                         <TrashIcon className="text-red w-5 h-5" />
                       </span>

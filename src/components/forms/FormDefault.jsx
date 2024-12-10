@@ -13,10 +13,12 @@ const FormDefault = ({
   FormData,
   data,
   file,
+  availableItems,
+  multiSelectValue,
   changeHandler,
   fileHandler,
   filesHandler,
-  itemsSelect,
+  onMultiChange,
 }) => {
   // Add these helper functions to FormDefault component
   const [selectedValue, setSelectedValue] = useState([]);
@@ -24,20 +26,13 @@ const FormDefault = ({
   const [images, setImages] = useState([]);
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
 
-  // console.log(selectedItems);
-
-  const transportasisOptions = [
-    { id: 1, name: "Innova Merah" },
-    { id: 2, name: "Kawasaki Ninja" },
-    { id: 3, name: "Honda Pilot" },
-    { id: 4, name: "Fortuner Hitam" },
-    { id: 5, name: "Avanza,Xenia" },
-    { id: 6, name: "Toyota Camry" },
-    { id: 7, name: "Nissan GTR" },
-    // ... more options
-  ];
+  const selectOptions = Array.isArray(availableItems)
+    ? availableItems?.map((item) => ({
+        id: item?.id,
+        name: item?.attributes?.name,
+      }))
+    : [];
 
   const options = [
     { value: "10", label: "10 per page" },
@@ -77,6 +72,10 @@ const FormDefault = ({
     setImages((prev) => [...prev, null]);
   };
 
+  const handleMultiSelectChange = (selectedOptions) => {
+    onMultiChange(selectedOptions);
+  };
+
   const renderFormInput = (item) => {
     switch (item.type) {
       case "text":
@@ -112,7 +111,7 @@ const FormDefault = ({
             <SelectItem
               options={options}
               value={selectedValue}
-              onChange={setSelectedValue}
+              onChange={handleMultiSelect}
               placeholder={item.placeholder}
             />
           </div>
@@ -122,9 +121,9 @@ const FormDefault = ({
         return (
           <div className="">
             <MultiSelect
-              value={selectedItems}
-              onChange={setSelectedItems}
-              options={transportasisOptions}
+              value={multiSelectValue}
+              onChange={handleMultiSelectChange}
+              options={selectOptions}
             />
           </div>
         );

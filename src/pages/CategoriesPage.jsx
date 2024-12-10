@@ -43,7 +43,7 @@ const CategoriesPage = () => {
 
   const columns = [
     {
-      header: "Nama",
+      header: "Name",
       accessor: (item) => item.attributes.name,
       nowrap: true,
     },
@@ -54,15 +54,6 @@ const CategoriesPage = () => {
     },
   ];
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${baseUrl}/categories/${id}`);
-      await fetchCategories();
-    } catch (err) {
-      setError("Gagal menghapus kategori");
-    }
-  };
-
   const handleEdit = (id) => {
     window.location.href = `/categories/edit/${id}`;
   };
@@ -71,25 +62,17 @@ const CategoriesPage = () => {
     console.log("Search query:", query);
   };
 
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("Selected rows:", selectedIds);
-  };
-
   return (
     <div className="">
       <PageLayout
         pages={pages}
         func={() => navigate("/categories/create")}
+        fetch={fetchCategories}
         buttonName={"Create Category"}
         columns={columns}
         data={categories}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        setError={setError}
+        endpoint={"categories"}
         loading={loading}
         pagination={true}
       />

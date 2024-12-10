@@ -6,14 +6,17 @@ import axios from "axios";
 import { useAuth } from "../../lib/AuthContext";
 import { errorNotif, successNotif } from "../../components/text/Notification";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const CreateCategory = () => {
   const { getToken } = useAuth();
   const navigate = useNavigate();
   const pages = ["Categories", ">", "Create"];
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const initialFormState = {
+    uuid: uuidv4(),
     name: "",
-    products: [],
+    products: selectedProducts,
   };
   const [formData, setFormData] = useState(initialFormState);
   const [products, setProducts] = useState({});
@@ -28,11 +31,22 @@ const CreateCategory = () => {
       setProducts(response.data.data || []);
       setError(null);
     } catch (error) {
+      console.error(error);
       setError(error.message) || "Failed fetch Products";
       setProducts([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  console.log(formData);
+
+  const onMultiChangeHandler = (value) => {
+    setSelectedProducts(value);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      products: value,
+    }));
   };
 
   const createCategory = async (nav, resetForm = false) => {
@@ -42,6 +56,7 @@ const CreateCategory = () => {
         {
           data: {
             name: formData.name,
+            uuid: formData.uuid,
           },
         },
         {
@@ -100,7 +115,7 @@ const CreateCategory = () => {
       }
 
       setError(error);
-      throw error; // Rethrow untuk penanganan lebih lanjut
+      throw error;
     }
   };
 
@@ -115,11 +130,13 @@ const CreateCategory = () => {
     <div>
       <FormLayout
         pages={pages}
+        availableItems={products}
         formData={formCategories}
         changeHandler={(e) => handleChange(e, setFormData)}
         data={formData}
-        itemsSelect={products}
-        func={() => createCategory("/categories")}
+        multiSelectValue={selectedProducts}
+        onMultiChange={onMultiChangeHandler}
+        mainFunc={() => createCategory("/categories")}
         scFunc={() => createCategory("/categories/create", true)}
       />
     </div>
