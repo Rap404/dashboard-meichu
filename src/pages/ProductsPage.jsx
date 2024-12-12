@@ -35,30 +35,31 @@ const ProductsPage = () => {
 
   const columns = [
     {
-      header: "Nama",
-      accessor: (item) => item.attributes.name,
+      header: "Name",
+      accessor: (item) => item?.attributes?.name,
       nowrap: true,
     },
     {
       header: "Thumbnail",
-      accessor: (item) => item.attributes.thumbnail.data.attributes.url,
+      accessor: (item) => item?.attributes?.thumbnail?.data?.attributes?.url,
       nowrap: true,
       type: "image",
     },
     {
       header: "Images",
-      accessor: (item) => item.attributes.images.data.length,
+      accessor: (item) => item?.attributes?.images?.data?.length,
       nowrap: true,
       type: "files",
     },
     {
-      header: "Category",
-      accessor: (item) => item.attributes.category.data.attributes.name,
+      header: "Price",
+      accessor: (item) => item?.attributes?.price,
       nowrap: true,
+      type: "price",
     },
     {
       header: "Likes",
-      accessor: (item) => item.attributes.likes.data.length,
+      accessor: (item) => item?.attributes?.likes?.data?.length,
       nowrap: true,
       type: "likes",
     },
@@ -81,12 +82,12 @@ const ProductsPage = () => {
       <PageLayout
         pages={pages}
         func={() => navigate("/products/create")}
+        fetch={fetchProducts}
         buttonName={"Create product"}
         columns={columns}
         data={products}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        setError={setError}
+        endpoint={"products"}
         loading={loading}
         pagination={true}
       />

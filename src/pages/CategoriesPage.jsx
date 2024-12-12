@@ -13,10 +13,6 @@ const CategoriesPage = () => {
   const pages = ["Categories", ">", "List"];
   const navigate = useNavigate();
   const [categories, setCategories] = useState({});
-  const [formData, setFormData] = useState({
-    name: "",
-    products: "",
-  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

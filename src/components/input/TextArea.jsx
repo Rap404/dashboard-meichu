@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 
 const TextArea = ({
+  id,
+  name,
   placeholder = "Ketik pesan anda...",
-  initialValue = "",
-  onValueChange,
+  value,
+  onChange,
   error,
+  required = false,
   disabled = false,
   maxLength,
   rows = 4,
 }) => {
-  const [value, setValue] = useState(initialValue);
   const [charCount, setCharCount] = useState(0);
 
   const handleChange = (e) => {
@@ -25,9 +27,12 @@ const TextArea = ({
     <div className="w-full mt-1">
       <div className="relative z-0">
         <textarea
+          id={id}
+          name={name}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           disabled={disabled}
+          required={required}
           maxLength={maxLength}
           rows={rows}
           placeholder={placeholder}
@@ -72,7 +77,7 @@ const TextArea = ({
         </div>
         {maxLength && (
           <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-            {charCount}/{maxLength}
+            {value.length}/{maxLength}
           </div>
         )}
       </div>

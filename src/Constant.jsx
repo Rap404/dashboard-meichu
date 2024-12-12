@@ -51,6 +51,7 @@ export const formProduct = [
     name: "name",
     type: "text",
     placeholder: "Enter product name",
+    required: true,
     label: "Product name",
   },
   {
@@ -65,19 +66,23 @@ export const formProduct = [
     name: "thumbnail",
     type: "file",
     label: "Product Thumbnail",
-    preset: "cover",
+    required: true,
+    preset: "portrait",
   },
   {
     id: "images",
     name: "images",
     type: "files",
     label: "Product images",
+    required: true,
+    preset: "portrait",
   },
   {
     id: "description",
     name: "description",
     type: "textArea",
     placeholder: "Enter product description",
+    required: true,
     label: "Product description",
   },
   {
@@ -85,6 +90,7 @@ export const formProduct = [
     name: "price",
     type: "text",
     placeholder: "Enter product price",
+    required: true,
     label: "Product price",
   },
   {
@@ -92,6 +98,7 @@ export const formProduct = [
     name: "product_link",
     type: "text",
     placeholder: "Enter product link",
+    required: true,
     label: "Product link",
   },
 ];

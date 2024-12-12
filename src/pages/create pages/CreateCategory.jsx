@@ -87,10 +87,11 @@ const CreateCategory = () => {
       }
 
       successNotif("Category successfully made");
-      navigate(nav);
 
       if (resetForm) {
         setFormData(initialFormState);
+      } else {
+        navigate(nav);
       }
     } catch (error) {
       console.error(
@@ -100,7 +101,6 @@ const CreateCategory = () => {
         error.response?.status
       );
 
-      // Tampilkan pesan error spesifik
       if (error.response) {
         switch (error.response.status) {
           case 403:
@@ -124,16 +124,17 @@ const CreateCategory = () => {
   }, []);
 
   if (loading) return <div className="">load...</div>;
-  if (loading) return <div className="">{errorNotif(error.message)}</div>;
+  if (loading)
+    return <div className="">{errorNotif(error?.message || error)}</div>;
 
   return (
     <div>
       <FormLayout
+        formConstant={formCategories}
+        formData={formData}
         pages={pages}
         availableItems={products}
-        formData={formCategories}
         changeHandler={(e) => handleChange(e, setFormData)}
-        data={formData}
         multiSelectValue={selectedProducts}
         onMultiChange={onMultiChangeHandler}
         mainFunc={() => createCategory("/categories")}

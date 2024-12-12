@@ -9,6 +9,7 @@ const AuthContext = createContext();
 // AuthProvider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       try {
         setUser(JSON.parse(userData));
         setIsAuthenticated(true);
+        setToken(token);
       } catch (error) {
         // Clear invalid stored data
         localStorage.removeItem("token");
@@ -97,6 +99,7 @@ export const AuthProvider = ({ children }) => {
     user,
     isAuthenticated,
     loading,
+    token,
     login,
     logout,
     checkAuth,

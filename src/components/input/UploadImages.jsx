@@ -10,31 +10,20 @@ const UploadImages = ({
   onRemove,
   isLast,
   onAdd,
+  cropPreset,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [fileInfo, setFileInfo] = useState(null);
+  // const [fileInfo, setFileInfo] = useState(null);
 
-  const handleImageUpload = (imgBlob) => {
-    if (imgBlob) {
-      setFileInfo({
-        name: `image-${index + 1}.jpg`,
-        size: (imgBlob.size / 1024).toFixed(2) + " KB",
-      });
-      setSelectedImage(imgBlob);
-    }
-  };
-  // const coverUrl = useRef(null);
-  // const updateCover = (imgSrc) => {
-  //   coverUrl.current = imgSrc;
-  // };
-  // const noImage = (componentTrue, componentFalse) => {
-  //   if (coverUrl.current === null) {
-  //     return componentTrue;
-  //   } else {
-  //     return componentFalse;
+  // const handleImageUpload = (imgBlob) => {
+  //   if (imgBlob) {
+  //     setFileInfo({
+  //       name: `image-${index + 1}.jpg`,
+  //       size: (imgBlob.size / 1024).toFixed(2) + " KB",
+  //     });
+  //     setSelectedImage(imgBlob);
   //   }
   // };
-  // console.log(coverUrl.current);
   return (
     <div
       className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
@@ -42,7 +31,7 @@ const UploadImages = ({
       }`}
     >
       {image && (
-        <div className="w-full absolute bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl items-center justify-between transition-all duration-200">
+        <div className="w-full bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl items-center justify-between transition-all duration-200">
           <div className="flex flex-col">
             <div className="flex items-center">
               <span className="font-medium">{`Image ${index + 1}`}</span>
@@ -52,29 +41,15 @@ const UploadImages = ({
         </div>
       )}
 
-      <div className="relative w-full px-10 py-4">
+      <div className="flex justify-center w-full px-10 pb-7">
         {image && (
           <img
             src={URL.createObjectURL(image)}
             alt=""
-            className="w-full h-auto rounded-lg"
+            className="max-w-64 h-auto rounded-lg"
           />
         )}
-        {/* <img src={coverUrl.current} alt="" /> */}
       </div>
-
-      {/* {image && (
-        
-        <img
-          src={URL.createObjectURL(image)}
-          alt={`Upload ${index + 1}`}
-          className="w-full h-auto rounded-lg px-6"
-        />
-      )} */}
-
-      {/* <div className="px-10">
-        <img src={coverUrl.current} alt="" />
-      </div> */}
 
       {!image ? (
         <button
@@ -88,11 +63,11 @@ const UploadImages = ({
             size={70}
           />
           <p className="text-abumuda text-center">
-            Upload product image {index + 1}
+            Upload product image {index + 1} upload
           </p>
         </button>
       ) : (
-        <div className="justify-end flex flex-row gap-3 absolute py-2">
+        <div className="justify-end flex flex-row gap-3 absolute py-5">
           <Button func={onRemove} name={"Hapus"} />
           <Button func={() => setModalOpen(true)} name={"Edit"} />
           {isLast && <Button func={onAdd} name={"Tambah"} />}
@@ -101,9 +76,8 @@ const UploadImages = ({
       {modalOpen && (
         <Modal
           setSelectedImage={setSelectedImage}
-          // updatedImage={updateCover}
           closeModal={() => setModalOpen(false)}
-          cropPreset={"cover"}
+          cropPreset={cropPreset}
         />
       )}
     </div>

@@ -6,10 +6,13 @@ import RegularButton from "../components/buttons/RegularButton";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FormLayout = ({
+  formConstant,
   formData,
+  setFormData,
   availableItems,
   pages,
   multiSelectValue,
+  selectValue,
   isUseButton = true,
   changeHandler,
   fileHandler,
@@ -20,6 +23,7 @@ const FormLayout = ({
   scFunc,
   buttonName,
   onMultiChange,
+  onSelectChange,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,6 +32,18 @@ const FormLayout = ({
   const getBasePath = () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
     return navigate(`/${pathSegments[0]}`);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const buttonClicked = e.nativeEvent.submitter.value;
+
+    if (buttonClicked === "create") {
+      mainFunc();
+    } else if (buttonClicked === "createanother") {
+      scFunc();
+    }
   };
 
   return (
@@ -42,32 +58,40 @@ const FormLayout = ({
           <div className="text-white text-3xl font-bold">{pages[0]}</div>
         </div>
       </div>
-      <div className="mt-10">
-        <FormDefault
-          FormData={formData}
-          file={file}
-          data={data}
-          availableItems={availableItems}
-          multiSelectValue={multiSelectValue}
-          changeHandler={changeHandler}
-          fileHandler={fileHandler}
-          filesHandler={filesHandler}
-          onMultiChange={onMultiChange}
-        />
-      </div>
-      <div className="flex flex-row pt-10 gap-4 mb-10">
-        <RegularButton func={mainFunc} name={buttonName || "Create"} />
-        {isUseButton ? (
-          <>
-            <Button func={scFunc} name={"Create & create another"} />
-            <Button func={getBasePath} name={"cancel"} />
-          </>
-        ) : (
-          <>
-            <Button func={() => navigate("/")} name={"Cancel"} />
-          </>
-        )}
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="mt-10">
+          <FormDefault
+            formConstant={formConstant}
+            FormData={formData}
+            setFormData={setFormData}
+            file={file}
+            availableItems={availableItems}
+            multiSelectValue={multiSelectValue}
+            selectValue={selectValue}
+            changeHandler={changeHandler}
+            fileHandler={fileHandler}
+            filesHandler={filesHandler}
+            onMultiChange={onMultiChange}
+            onSelectChange={onSelectChange}
+          />
+        </div>
+        <div className="flex flex-row pt-10 gap-4 mb-10">
+          <RegularButton value="create" name={buttonName || "Create"} />
+          {isUseButton ? (
+            <>
+              <Button
+                value={"createanother"}
+                name={"Create & create another"}
+              />
+              <Button func={getBasePath} name={"cancel"} />
+            </>
+          ) : (
+            <>
+              <Button func={() => navigate("/")} name={"Cancel"} />
+            </>
+          )}
+        </div>
+      </form>
     </div>
   );
 };

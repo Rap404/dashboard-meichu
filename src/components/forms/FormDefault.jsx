@@ -7,25 +7,22 @@ import UploadImages from "../input/UploadImages";
 import MultiSelect from "../input/MultiSelect";
 import DateInput from "../input/DateInput";
 import CircularImages from "../images/CircularImages";
-import { baseUrl } from "../../Constant";
 
 const FormDefault = ({
+  formConstant,
   FormData,
-  data,
+  setFormData,
   file,
   availableItems,
   multiSelectValue,
+  selectValue,
   changeHandler,
   fileHandler,
   filesHandler,
   onMultiChange,
+  onSelectChange,
 }) => {
-  // Add these helper functions to FormDefault component
   const [selectedValue, setSelectedValue] = useState([]);
-  const [formData, setFormData] = useState({});
-  const [images, setImages] = useState([]);
-  const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
 
   const selectOptions = Array.isArray(availableItems)
     ? availableItems?.map((item) => ({
@@ -34,14 +31,8 @@ const FormDefault = ({
       }))
     : [];
 
-  const options = [
-    { value: "10", label: "10 per page" },
-    { value: "20", label: "20 per page" },
-    { value: "50", label: "50 per page" },
-    { value: "100", label: "100 per page" },
-  ];
-
   const handleImageUpload = (img, fieldName) => {
+    console.log("tes", FormData[fieldName]);
     setFormData((prev) => ({
       ...prev,
       [fieldName]: img,
@@ -56,24 +47,44 @@ const FormDefault = ({
     });
   };
 
-  const handleMultiImageUpload = (img, index) => {
-    setImages((prev) => {
-      const newImages = [...prev];
+  const handleMultiImageUpload = (img, index, fieldName) => {
+    setFormData((prev) => {
+      const newImages = [...(prev[fieldName] || [])];
       newImages[index] = img;
-      return newImages;
+
+      return {
+        ...prev,
+        [fieldName]: newImages,
+      };
     });
   };
 
-  const handleRemoveMultiImage = (index) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+  const handleRemoveMultiImage = (index, fieldName) => {
+    setFormData((prev) => {
+      const newImages = prev[fieldName].filter((_, i) => i !== index);
+      return {
+        ...prev,
+        [fieldName]: newImages,
+      };
+    });
   };
 
-  const handleAddImage = () => {
-    setImages((prev) => [...prev, null]);
+  const handleAddImage = (fieldName) => {
+    setFormData((prev) => {
+      const currentImages = prev[fieldName] || [];
+      return {
+        ...prev,
+        [fieldName]: [...currentImages, null],
+      };
+    });
   };
 
   const handleMultiSelectChange = (selectedOptions) => {
     onMultiChange(selectedOptions);
+  };
+
+  const handleSelectChange = (selectedOptions) => {
+    onSelectChange(selectedOptions);
   };
 
   const renderFormInput = (item) => {
@@ -82,7 +93,7 @@ const FormDefault = ({
         return (
           <>
             <label
-              htmlFor=""
+              htmlFor={item.name}
               className={`block text-sm font-medium text-white`}
             >
               {item.label}
@@ -90,9 +101,35 @@ const FormDefault = ({
             <input
               type="text"
               name={item.name}
+              required={item?.required || false}
               id={item.id}
               disabled={item.disabled ? item.disabled : false}
-              value={data[item.name] || ""}
+              value={FormData[item.name] || ""}
+              onChange={changeHandler}
+              placeholder={item.placeholder}
+              className={`mt-1 block w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
+                item.disabled ? "bg-abumuda" : "bg-secondary"
+              }`}
+            />
+          </>
+        );
+
+      case "price":
+        return (
+          <>
+            <label
+              htmlFor={item.name}
+              className={`block text-sm font-medium text-white`}
+            >
+              {item.label}
+            </label>
+            <input
+              type="number"
+              name={item.name}
+              id={item.id}
+              required={item?.required || false}
+              disabled={item.disabled ? item.disabled : false}
+              value={FormData[item.name] || ""}
               onChange={changeHandler}
               placeholder={item.placeholder}
               className={`mt-1 block w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
@@ -105,13 +142,16 @@ const FormDefault = ({
       case "select":
         return (
           <div className="">
-            <label htmlFor="" className="block text-sm font-medium text-white">
+            <label
+              htmlFor={item.name}
+              className="block text-sm font-medium text-white"
+            >
               {item.label}
             </label>
             <SelectItem
-              options={options}
+              options={selectOptions}
               value={selectedValue}
-              onChange={handleMultiSelect}
+              onChange={handleSelectChange}
               placeholder={item.placeholder}
             />
           </div>
@@ -135,10 +175,8 @@ const FormDefault = ({
               {item.label}
             </label>
             <UploadImage
-              setSelectedImage={(img) => {
-                handleImageUpload(img, item.name);
-              }}
-              image={formData[item.name]}
+              setSelectedImage={(img) => handleImageUpload(img, item.name)}
+              image={FormData[item.name]}
               onRemove={() => handleRemoveImage(item.name)}
               cropPreset={item.preset}
             />
@@ -162,21 +200,28 @@ const FormDefault = ({
               {item.label}
             </label>
             <div className="flex flex-col gap-6">
-              {images.map((image, index) => (
+              {FormData[item.name].map((image, index) => (
                 <UploadImages
                   key={index}
                   index={index}
                   image={image}
-                  setSelectedImage={(img) => handleMultiImageUpload(img, index)}
-                  onRemove={() => handleRemoveMultiImage(index)}
-                  isLast={index === images.length - 1}
-                  onAdd={() => handleAddImage()}
+                  setSelectedImage={(img) => {
+                    handleMultiImageUpload(img, index, item.name);
+                  }}
+                  onRemove={() => handleRemoveMultiImage(index, item.name)}
+                  isLast={index === FormData[item.name].length - 1}
+                  onAdd={() => handleAddImage(item.name)}
+                  cropPreset={item.preset}
                 />
               ))}
-              {images.length === 0 && (
+              {FormData[item.name].length === 0 && (
                 <UploadImage
-                  setSelectedImage={(img) => handleMultiImageUpload(img, 0)}
+                  setSelectedImage={(img) =>
+                    handleMultiImageUpload(img, 0, item.name)
+                  }
                   showAddButton
+                  cropPreset={item.preset}
+                  onAdd={() => handleAddImage(item.name)}
                 />
               )}
             </div>
@@ -186,15 +231,21 @@ const FormDefault = ({
       case "textArea":
         return (
           <>
-            <label htmlFor="" className="block text-sm font-medium text-white">
+            <label
+              htmlFor={item.name}
+              className="block text-sm font-medium text-white"
+            >
               {item.label}
             </label>
             <TextArea
+              id={item.id}
               label={item.label}
-              value={""}
-              onChange={(e) => setMessage(e.target.value)}
+              name={item.name}
+              value={FormData[item.name]}
+              onChange={changeHandler}
               placeholder={item.placeholder}
               maxLength={600}
+              required={item?.required || false}
             />
           </>
         );
@@ -215,7 +266,7 @@ const FormDefault = ({
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-      {FormData.map((field, index) => (
+      {formConstant.map((field, index) => (
         <div className="w-full" key={index}>
           {renderFormInput(field)}
         </div>

@@ -40,7 +40,7 @@ const CircularImages = ({ setSelectedProfile, image }) => {
               {image ? (
                 <img
                   src={image}
-                  className="w-[200px] h-[200px] rounded-full md:rounded-full lg:rounded-full border-2 border-gray-400"
+                  className="max-w-48 max-h-auto block rounded-full md:rounded-full lg:rounded-full border-2 border-gray-400"
                 />
               ) : (
                 <img

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import RegularButton from "../components/buttons/RegularButton";
-import TableList from "../components/table/TableList";
 import EmptyList from "../components/table/EmptyList";
 import TableComponent from "../components/table/TableComponent";
 import { AiOutlineLoading } from "react-icons/ai";
 import MiniModal from "../components/modal/MiniModal";
 import { useAuth } from "../lib/AuthContext";
 import { baseUrl } from "../Constant";
-import { errorNotif, successNotif } from "../components/text/Notification";
+import { successNotif } from "../components/text/Notification";
 import axios from "axios";
 
 const PageLayout = ({
@@ -79,7 +78,7 @@ const PageLayout = ({
 
   return (
     <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
-      <div className="ps-12 py-10 min-h-screen w-full bg-hitam">
+      <div className="ps-5 md:ps-6 lg:px-10 lg:ps-12 py-10 min-h-screen w-full bg-hitam">
         <div className="w-full">
           <div className="flex flex-row gap-4 text-sm text-zinc-400">
             {pages.map((page, index) => (
@@ -98,7 +97,7 @@ const PageLayout = ({
             <AiOutlineLoading className="text-red-200 animate-spin w-10 h-10 mr-3" />
           </div>
         ) : (
-          <div className="">
+          <div className="overflow-x-auto">
             {modalOpen ? (
               <MiniModal
                 closeModal={() => setModalOpen(false)}

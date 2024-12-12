@@ -8,6 +8,7 @@ const UploadImage = ({
   image,
   onRemove,
   showAddButton = false,
+  onAdd,
   cropPreset = "cover",
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,12 +43,12 @@ const UploadImage = ({
         </div>
       )}
 
-      <div className="relative w-full px-10 py-4">
+      <div className="flex justify-center pb-7">
         {image && (
           <img
             src={URL.createObjectURL(image)}
             alt=""
-            className="w-full h-auto rounded-lg"
+            className="max-w-64 h-auto rounded-lg"
           />
         )}
       </div>
@@ -66,12 +67,10 @@ const UploadImage = ({
           <p className=" text-abumuda text-center">Upload product image</p>
         </button>
       ) : (
-        <div className="absolute flex flex-row gap-3">
+        <div className="absolute flex flex-row gap-3 py-5">
           <Button func={onRemove} name={"Hapus"} />
           <Button func={() => setModalOpen(true)} name={"Edit"} />
-          {showAddButton && (
-            <Button func={() => setSelectedImage(null)} name={"Tambah"} />
-          )}
+          {showAddButton && <Button func={() => onAdd} name={"Tambah"} />}
         </div>
       )}
 

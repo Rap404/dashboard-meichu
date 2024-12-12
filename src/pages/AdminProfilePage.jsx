@@ -147,15 +147,15 @@ const AdminProfilePage = () => {
   return (
     <>
       <FormLayout
+        formConstant={adminProfileForm}
         key={avatar}
-        formData={adminProfileForm}
         pages={pages}
         isUseButton={false}
         changeHandler={(e) => handleChange(e, setFormData)}
         fileHandler={handleAvatar}
         file={avatar}
-        data={formData}
-        func={handleUpdateProfile}
+        formData={formData}
+        mainFunc={handleUpdateProfile}
         buttonName={loading ? "Updating.." : "Update Profile"}
       />
     </>

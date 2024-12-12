@@ -40,6 +40,19 @@ const TableColumn = ({ item, data }) => {
           return <div className="text-red-500">Data Not Alvailable</div>;
         }
 
+      case "price":
+        try {
+          const price = item.accessor(data);
+          return (
+            <div className="">
+              <span>${price}</span>
+            </div>
+          );
+        } catch (error) {
+          console.error("Error rendering image:", error);
+          return <div className="text-red-500">Data Not Alvailable</div>;
+        }
+
       case "files":
         try {
           const fileCount = item.accessor(data);

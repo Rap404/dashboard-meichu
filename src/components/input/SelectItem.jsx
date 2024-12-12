@@ -11,7 +11,8 @@ const SelectItem = ({
   const [selectedOption, setSelectedOption] = useState(value);
   const dropdownRef = useRef(null);
 
-  // handle click outside
+  // console.log(options);
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -25,7 +26,7 @@ const SelectItem = ({
 
   const handleSelect = (option) => {
     setSelectedOption(option);
-    onChange(option);
+    onChange(option.id);
     setIsOpen(false);
   };
 
@@ -40,10 +41,10 @@ const SelectItem = ({
       >
         <span
           className={`block truncate ${
-            selectedOption ? "text-white" : "text-gray-400"
+            selectedOption != 0 ? "text-gray-300" : "text-gray-400"
           }`}
         >
-          {selectedOption ? selectedOption.label : placeholder}
+          {selectedOption != 0 ? selectedOption.name : placeholder}
         </span>
         <ChevronDown
           size={20}
@@ -61,19 +62,19 @@ const SelectItem = ({
         >
           {options.map((option, index) => (
             <div
-              key={option.value}
+              key={option.id}
               onClick={() => handleSelect(option)}
               className={`px-4 py-2 cursor-pointer text-gray-300
                 ${
                   index !== options.length - 1 ? "border-b border-zinc-700" : ""
                 }
                 ${
-                  selectedOption?.value === option.value
+                  selectedOption?.id === option.id
                     ? "bg-amber-500/10 text-amber-500"
                     : "hover:bg-zinc-700"
                 }`}
             >
-              {option.label}
+              {option.name}
             </div>
           ))}
         </div>
