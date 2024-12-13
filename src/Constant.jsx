@@ -33,6 +33,7 @@ export const formCategories = [
     id: "name",
     name: "name",
     type: "text",
+    required: true,
     placeholder: "Enter category name",
     label: "Category name",
   },

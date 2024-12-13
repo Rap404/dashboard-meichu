@@ -75,7 +75,13 @@ const CreateProduct = () => {
         (formData.thumbnail && formData.thumbnail instanceof File) ||
         formData.thumbnail instanceof Blob
       ) {
-        const thumbnailResponse = await uploadFileTostrapi(formData.thumbnail);
+        const filePayload = new FormData();
+        filePayload.append(
+          "files",
+          formData.thumbnail,
+          `${productData.name}Thumbnail`
+        );
+        const thumbnailResponse = await uploadFileTostrapi(filePayload);
         thumbnail_id = thumbnailResponse[0].id;
         console.log(thumbnail_id);
         productData.thumbnail = thumbnail_id;
@@ -87,6 +93,11 @@ const CreateProduct = () => {
           const imageResponse = await uploadFileTostrapi(image);
           imageIds.push(imageResponse[0].id);
         }
+        productData.images.append(
+          "Image",
+          imageIds,
+          `${productData.name}Thumbnail`
+        );
         productData.images = imageIds;
       }
 
