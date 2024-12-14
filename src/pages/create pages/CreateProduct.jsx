@@ -7,6 +7,9 @@ import { errorNotif, successNotif } from "../../components/text/Notification";
 import axios from "axios";
 import { useAuth } from "../../lib/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { uploadFileTostrapi } from "../../lib/ImageHandler";
+import ReactLoading from "react-loading";
+import LoadingComponent from "../../components/text/Loading";
 
 const CreateProduct = () => {
   const pages = ["Products", ">", "Create"];
@@ -45,23 +48,11 @@ const CreateProduct = () => {
   useEffect(() => {
     fetchCategories();
   }, []);
-  const uploadFileTostrapi = async (file) => {
-    const formData = new FormData();
-    formData.append("files", file);
-
-    const response = await axios.post(`${baseUrl}/upload`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return response.data;
-  };
 
   const handleCreateProducts = async (e, resetForm = false) => {
     e?.preventDefault();
     try {
+      setLoading(true);
       const productData = {
         name: formData.name,
         category: formData.category,
@@ -69,38 +60,28 @@ const CreateProduct = () => {
         price: formData.price,
         product_link: formData.product_link,
       };
-
       let thumbnail_id = null;
       if (
-        (formData.thumbnail && formData.thumbnail instanceof File) ||
+        formData.thumbnail ||
+        formData.thumbnail instanceof File ||
         formData.thumbnail instanceof Blob
       ) {
-        const filePayload = new FormData();
-        filePayload.append(
-          "files",
+        const thumbnailResponse = await uploadFileTostrapi(
           formData.thumbnail,
-          `${productData.name}Thumbnail`
+          token
         );
-        const thumbnailResponse = await uploadFileTostrapi(filePayload);
+        // console.log(thumbnailResponse);
         thumbnail_id = thumbnailResponse[0].id;
-        console.log(thumbnail_id);
         productData.thumbnail = thumbnail_id;
       }
-
       let imageIds = [];
       if (formData.images && Array.isArray(formData.images)) {
         for (let image of formData.images) {
-          const imageResponse = await uploadFileTostrapi(image);
+          const imageResponse = await uploadFileTostrapi(image, token);
           imageIds.push(imageResponse[0].id);
         }
-        productData.images.append(
-          "Image",
-          imageIds,
-          `${productData.name}Thumbnail`
-        );
         productData.images = imageIds;
       }
-
       const response = await axios.post(
         `${baseUrl}/products`,
         { data: productData },
@@ -110,8 +91,6 @@ const CreateProduct = () => {
           },
         }
       );
-
-      console.log("products sucessfully upload:", response);
       if (resetForm) {
         setFormData(initialFormState);
         setSelectedCategory(null);
@@ -120,8 +99,11 @@ const CreateProduct = () => {
       }
       successNotif("Products successfully made");
     } catch (error) {
-      console.error("eror uploading product:", error);
-      setError(error);
+      console.error("error", error.response.data.error.message);
+
+      setError(error.response.data.error.name);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,9 +115,11 @@ const CreateProduct = () => {
     }));
   };
 
-  if (loading) return <div className="">load...</div>;
-  if (loading)
-    return <div className="">{errorNotif(error?.message || error)}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error)
+    return (
+      <div className="">{errorNotif(error || "Error uploading product")}</div>
+    );
 
   return (
     <div>
@@ -145,7 +129,7 @@ const CreateProduct = () => {
         setFormData={setFormData}
         pages={pages}
         availableItems={categories}
-        changeHandler={(e) => handleChange(e, setFormData)}
+        changeHandler={(e) => handleChange(e, setFormData, setError)}
         selectValue={selectedCategory}
         onSelectChange={handleSelectChange}
         mainFunc={(e) => handleCreateProducts(e)}

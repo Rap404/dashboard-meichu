@@ -27,7 +27,7 @@ const Pagination = ({
   };
 
   const decreasePage = () => {
-    if (value <= 0) {
+    if (value == 1) {
       setCurrentPage(pages.length);
     } else {
       setCurrentPage(value - 1);

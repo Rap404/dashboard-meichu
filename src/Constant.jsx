@@ -156,13 +156,15 @@ export const formEvent = [
     name: "name",
     type: "text",
     placeholder: "Enter event name",
+    required: true,
     label: "Event name",
   },
   {
-    id: "link",
-    name: "link",
+    id: "event_link",
+    name: "event_link",
     type: "text",
     placeholder: "Enter event link",
+    required: true,
     label: "Event link",
   },
   {
@@ -177,6 +179,7 @@ export const formEvent = [
     name: "description",
     type: "textArea",
     placeholder: "Enter event description",
+    required: true,
     label: "Event description",
   },
   {
@@ -184,6 +187,7 @@ export const formEvent = [
     name: "start_date",
     type: "date",
     placeholder: "Enter event start date",
+    required: true,
     label: "Event start date",
   },
   {
@@ -191,6 +195,7 @@ export const formEvent = [
     name: "end_date",
     type: "date",
     placeholder: "Enter event end date",
+    required: true,
     label: "Event end date",
   },
 ];

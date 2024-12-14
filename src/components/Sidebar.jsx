@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       )}
       {/* sidebar */}
       <div
-        className={`fixed lg:static top-0 left-0 h-screen bg-hitam text-white z-50  md:z-0 lg:z-0
+        className={`fixed lg:static top-0 left-0 h-screen bg-hitam text-white z-50  md:z-50 lg:z-0
           transition-transform duration-300 ease-in-out lg:translate-x-0
           ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >

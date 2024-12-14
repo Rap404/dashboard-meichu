@@ -256,7 +256,12 @@ const FormDefault = ({
             <label htmlFor="" className="block text-sm font-medium text-white">
               {item.label}
             </label>
-            <DateInput />
+            <DateInput
+              name={item.name}
+              value={FormData[item.name]}
+              onChange={changeHandler}
+              isRequired={item.required}
+            />
           </div>
         );
 

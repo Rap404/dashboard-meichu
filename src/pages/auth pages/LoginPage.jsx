@@ -4,8 +4,7 @@ import { formFieldLogin } from "../../Constant";
 import SubmitButton from "../../components/buttons/SubmitButton";
 import CheckBox from "../../components/input/CheckBox";
 import { handleChange } from "../../lib/FormHandler";
-import { errorNotif, successNotif } from "../../components/text/Notification";
-import axios from "axios";
+import { errorNotif } from "../../components/text/Notification";
 import { useAuth } from "../../lib/AuthContext";
 import { useNavigate } from "react-router-dom";
 

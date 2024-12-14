@@ -40,7 +40,7 @@ const EventsPage = () => {
     },
     {
       header: "Image",
-      accessor: (item) => item.attributes.image_cover.data.attributes.url,
+      accessor: (item) => item.attributes?.image_cover?.data?.attributes?.url,
       nowrap: true,
       type: "image",
     },
@@ -78,12 +78,12 @@ const EventsPage = () => {
       <PageLayout
         pages={pages}
         func={() => navigate("/events/create")}
+        fetch={fetchEvents}
         buttonName={"Create event"}
         columns={columns}
         data={events}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        setError={setError}
+        endpoint={"events"}
         loading={loading}
         pagination={true}
       />

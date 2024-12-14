@@ -1,10 +1,30 @@
-export const handleChange = function handleChange(e, setFormData) {
-  setFormData((prevFormData) => {
-    return {
+export const handleChange = (e, setFormData, setError) => {
+  const { type, value, name } = e.target;
+
+  if (type === "number") {
+    if (/^\d*$/.test(value)) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+      // Hapus error jika input valid
+      setError((prevError) => ({
+        ...prevError,
+        [name]: "",
+      }));
+    } else {
+      // Set error jika input tidak valid
+      setError((prevError) => ({
+        ...prevError,
+        [name]: "Hanya angka yang diperbolehkan",
+      }));
+    }
+  } else {
+    setFormData((prevFormData) => ({
       ...prevFormData,
-      [e.target.name]: e.target.value,
-    };
-  });
+      [name]: value,
+    }));
+  }
 };
 
 export const oneHandleChange = (e, setInput) => {
