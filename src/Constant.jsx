@@ -110,6 +110,7 @@ export const formAmbassador = [
     name: "name",
     type: "text",
     placeholder: "Enter ambassador name",
+    required: true,
     label: "Ambassador name",
   },
   {
@@ -117,11 +118,13 @@ export const formAmbassador = [
     name: "image",
     type: "file",
     label: "Ambassador image",
+    preset: "portrait",
   },
   {
     id: "description",
     name: "description",
     type: "textArea",
+    required: true,
     label: "Ambassador description",
   },
   {
@@ -129,24 +132,28 @@ export const formAmbassador = [
     name: "twitter",
     type: "text",
     label: "Ambassador twitter link ",
+    placeholder: "Add ambassador twitter link",
   },
   {
     id: "instagram",
     name: "instagram",
     type: "text",
     label: "Ambassador instagram link",
+    placeholder: "Add ambassador instagram link",
   },
   {
     id: "youtube",
     name: "youtube",
     type: "text",
     label: "Ambassador youtube link",
+    placeholder: "Add ambassador youtube link",
   },
   {
     id: "tiktok",
     name: "tiktok",
     type: "text",
     label: "Ambassador tiktok link",
+    placeholder: "Add ambassador tiktok link",
   },
 ];
 

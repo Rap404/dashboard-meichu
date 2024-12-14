@@ -34,11 +34,35 @@ const Pagination = ({
     }
   };
 
-  const handlePostperPage = (e) => {
-    // const newPostsPerPage = parseInt(e.target.value);
-    setPostPerPage(e.target.value);
-    setCurrentPage(1);
+  const getVisiblePages = () => {
+    const totalPages = pages.length;
+    const currentPage = value;
+    const maxVisiblePages = 10;
+
+    if (totalPages <= maxVisiblePages) {
+      return pages;
+    }
+
+    let startPage, endPage;
+    if (currentPage <= 5) {
+      startPage = 1;
+      endPage = maxVisiblePages;
+    } else if (currentPage > totalPages - 5) {
+      startPage = totalPages - maxVisiblePages + 1;
+      endPage = totalPages;
+    } else {
+      startPage = currentPage - 4;
+      endPage = currentPage + 5;
+    }
+
+    return pages.slice(startPage - 1, endPage);
   };
+
+  // const handlePostperPage = (e) => {
+  //   // const newPostsPerPage = parseInt(e.target.value);
+  //   setPostPerPage(e.target.value);
+  //   setCurrentPage(1);
+  // };
 
   return (
     <div className="flex justify-between min-w-full px-7 py-5 pt-10">
@@ -55,7 +79,7 @@ const Pagination = ({
             </button>
           </div>
           <div className="flex gap-4">
-            {pages.map((page, index) => {
+            {getVisiblePages().map((page, index) => {
               return (
                 <div
                   className={`rounded-md p-2 ${

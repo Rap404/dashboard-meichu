@@ -44,7 +44,7 @@ const AmbassadorPage = () => {
     },
     {
       header: "image",
-      accessor: (item) => item.attributes.image.data.attributes.url,
+      accessor: (item) => item?.attributes?.image?.data?.attributes?.url,
       nowrap: true,
       type: "image",
     },

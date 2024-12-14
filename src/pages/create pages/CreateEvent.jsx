@@ -34,6 +34,7 @@ const CreateEvent = () => {
     try {
       setLoading(true);
       const eventData = {
+        uuid: formData.uuid,
         name: formData.name,
         description: formData.description,
         event_link: formData.event_link,
@@ -42,8 +43,9 @@ const CreateEvent = () => {
       };
       let imageId = null;
       if (
-        (formData.image_cover && formData.image_cover instanceof File) ||
-        formData.image_cover instanceof Blob
+        formData.image_cover &&
+        (formData.image_cover instanceof File ||
+          formData.image_cover instanceof Blob)
       ) {
         const imageResponse = await uploadFileTostrapi(
           formData.image_cover,

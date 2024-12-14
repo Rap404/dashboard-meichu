@@ -31,27 +31,27 @@ const UploadImage = ({
       }`}
     >
       {image && (
-        <div className="w-full bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="text-kuning text-sm">
-                {fileInfo?.size || ""}
-              </span>
+        <>
+          <div className="w-full  to-transparent text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <span className="text-kuning text-sm">
+                  {fileInfo?.size || ""}
+                </span>
+              </div>
+              <span>Upload Completed</span>
             </div>
-            <span>Upload Completed</span>
           </div>
-        </div>
-      )}
 
-      <div className="flex justify-center pb-7">
-        {image && (
-          <img
-            src={URL.createObjectURL(image)}
-            alt=""
-            className="max-w-64 h-auto rounded-lg"
-          />
-        )}
-      </div>
+          <div className="flex justify-center pb-7">
+            <img
+              src={URL.createObjectURL(image)}
+              alt=""
+              className="max-w-64 h-auto rounded-lg"
+            />
+          </div>
+        </>
+      )}
 
       {!image ? (
         <button

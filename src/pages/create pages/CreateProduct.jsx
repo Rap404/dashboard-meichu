@@ -54,6 +54,7 @@ const CreateProduct = () => {
     try {
       setLoading(true);
       const productData = {
+        uuid: formData.uuid,
         name: formData.name,
         category: formData.category,
         description: formData.description,
@@ -62,9 +63,9 @@ const CreateProduct = () => {
       };
       let thumbnail_id = null;
       if (
-        formData.thumbnail ||
-        formData.thumbnail instanceof File ||
-        formData.thumbnail instanceof Blob
+        formData.thumbnail &&
+        (formData.thumbnail instanceof File ||
+          formData.thumbnail instanceof Blob)
       ) {
         const thumbnailResponse = await uploadFileTostrapi(
           formData.thumbnail,
