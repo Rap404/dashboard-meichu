@@ -19,7 +19,11 @@ const HomePage = ({ profile }) => {
       <div className="px-12 pt-10 ">
         <div className="text-white text-3xl font-bold">Dashboard</div>
         <div className="mt-6 flex flex-col md:flex-row lg:flex-row gap-8">
-          <WelcomeBox imageProfile={imageProfile} />
+          <WelcomeBox
+            imageProfile={
+              profile.profilePicture ? imageProfile : assets.photo_profile
+            }
+          />
           <NotificationBox />
         </div>
         <div className="pt-32 ">

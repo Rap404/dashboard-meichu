@@ -66,14 +66,16 @@ const AdminProfilePage = () => {
       );
       const profileData = response.data;
 
-      handleAvatar(profileData.profilePicture.url);
-
       setFormData({
-        profilePicture: profileData.profilePicture.url || null,
-        username: profileData.username || "",
+        username: profileData.username,
         email: profileData.email,
         createdAt: formatDateTime(profileData.createdAt),
       });
+
+      if (profileData.profilePicture !== null) {
+        handleAvatar(profileData.profilePicture.url);
+      }
+
       setError(null);
     } catch (error) {
       setError(error.response?.data?.message) || "Failed fetch Profile";

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "../modal/Modal";
 import Button from "../buttons/Button";
 import { CloudDownload } from "lucide-react";
@@ -13,17 +13,25 @@ const UploadImages = ({
   cropPreset,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const [fileInfo, setFileInfo] = useState(null);
+  const [selectedImg, setSelectedImg] = useState(null);
 
-  // const handleImageUpload = (imgBlob) => {
-  //   if (imgBlob) {
-  //     setFileInfo({
-  //       name: `image-${index + 1}.jpg`,
-  //       size: (imgBlob.size / 1024).toFixed(2) + " KB",
-  //     });
-  //     setSelectedImage(imgBlob);
-  //   }
-  // };
+  const handleReturnImage = () => {
+    setSelectedImg(null);
+    if (image instanceof File || image instanceof Blob) {
+      const objectUrl = URL.createObjectURL(image);
+      setSelectedImg(objectUrl);
+    } else if (typeof image === "object") {
+      setSelectedImg(image?.attributes?.url);
+    } else {
+      setSelectedImg(null);
+    }
+  };
+
+  useEffect(() => {
+    if (image) {
+      handleReturnImage();
+    }
+  }, [image]);
   return (
     <div
       className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
@@ -44,7 +52,7 @@ const UploadImages = ({
       <div className="flex justify-center w-full px-10 pb-7">
         {image && (
           <img
-            src={URL.createObjectURL(image)}
+            src={selectedImg}
             alt=""
             className="max-w-64 h-auto rounded-lg"
           />

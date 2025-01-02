@@ -80,7 +80,6 @@ export const AuthProvider = ({ children }) => {
     // Reset state
     setUser(null);
     setIsAuthenticated(false);
-    successNotif("Logged out successfully");
   };
 
   // Function to check if user is authenticated

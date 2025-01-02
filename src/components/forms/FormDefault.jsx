@@ -15,7 +15,6 @@ const FormDefault = ({
   file,
   availableItems,
   multiSelectValue,
-  selectValue,
   changeHandler,
   fileHandler,
   filesHandler,
@@ -32,7 +31,6 @@ const FormDefault = ({
     : [];
 
   const handleImageUpload = (img, fieldName) => {
-    console.log("tes", FormData[fieldName]);
     setFormData((prev) => ({
       ...prev,
       [fieldName]: img,
@@ -132,7 +130,7 @@ const FormDefault = ({
               value={FormData[item.name] || ""}
               onChange={changeHandler}
               placeholder={item.placeholder}
-              className={`mt-1 block w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
+              className={`mt-1 block overflow-scroll w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
                 item.disabled ? "bg-abumuda" : "bg-secondary"
               }`}
             />
@@ -141,12 +139,12 @@ const FormDefault = ({
 
       case "select":
         return (
-          <div className="">
+          <>
             <label
               htmlFor={item.name}
               className="block text-sm font-medium text-white"
             >
-              {item.label}
+              tes
             </label>
             <SelectItem
               options={selectOptions}
@@ -154,7 +152,7 @@ const FormDefault = ({
               onChange={handleSelectChange}
               placeholder={item.placeholder}
             />
-          </div>
+          </>
         );
 
       case "multiselect":
@@ -164,6 +162,7 @@ const FormDefault = ({
               value={multiSelectValue}
               onChange={handleMultiSelectChange}
               options={selectOptions}
+              label={item.label}
             />
           </div>
         );
@@ -200,21 +199,7 @@ const FormDefault = ({
               {item.label}
             </label>
             <div className="flex flex-col gap-6">
-              {FormData[item.name].map((image, index) => (
-                <UploadImages
-                  key={index}
-                  index={index}
-                  image={image}
-                  setSelectedImage={(img) => {
-                    handleMultiImageUpload(img, index, item.name);
-                  }}
-                  onRemove={() => handleRemoveMultiImage(index, item.name)}
-                  isLast={index === FormData[item.name].length - 1}
-                  onAdd={() => handleAddImage(item.name)}
-                  cropPreset={item.preset}
-                />
-              ))}
-              {FormData[item.name].length === 0 && (
+              {FormData[item.name].length === 0 ? (
                 <UploadImage
                   setSelectedImage={(img) =>
                     handleMultiImageUpload(img, 0, item.name)
@@ -223,6 +208,23 @@ const FormDefault = ({
                   cropPreset={item.preset}
                   onAdd={() => handleAddImage(item.name)}
                 />
+              ) : (
+                <>
+                  {FormData[item.name]?.map((image, index) => (
+                    <UploadImages
+                      key={index}
+                      index={index}
+                      image={image}
+                      setSelectedImage={(img) => {
+                        handleMultiImageUpload(img, index, item.name);
+                      }}
+                      onRemove={() => handleRemoveMultiImage(index, item.name)}
+                      isLast={index === FormData[item.name].length - 1}
+                      onAdd={() => handleAddImage(item.name)}
+                      cropPreset={item.preset}
+                    />
+                  ))}
+                </>
               )}
             </div>
           </>

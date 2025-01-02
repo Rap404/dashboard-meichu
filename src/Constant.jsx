@@ -28,6 +28,16 @@ export const formForgotPassword = [
   },
 ];
 
+export const formResetPassword = [
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Enter your new password",
+    label: "New password",
+  },
+];
+
 export const formCategories = [
   {
     id: "name",
@@ -56,11 +66,11 @@ export const formProduct = [
     label: "Product name",
   },
   {
-    id: "category",
-    name: "category",
-    type: "select",
-    placeholder: "Select product category",
-    label: "Product category",
+    id: "categories",
+    name: "categories",
+    type: "multiselect",
+    placeholder: "Select product categories",
+    label: "Product categories",
   },
   {
     id: "thumbnail",
@@ -89,7 +99,7 @@ export const formProduct = [
   {
     id: "price",
     name: "price",
-    type: "text",
+    type: "price",
     placeholder: "Enter product price",
     required: true,
     label: "Product price",

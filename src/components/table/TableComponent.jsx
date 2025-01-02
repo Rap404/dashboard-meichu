@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import CheckBox from "../input/CheckBox";
 import TableColumn from "./TableColumn";
 import Pagination from "./Pagination";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TableComponent = ({
   columns = [],
@@ -21,6 +22,8 @@ const TableComponent = ({
   pagination = true,
   isActions = true,
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +35,6 @@ const TableComponent = ({
   const currenPosts = tableData.slice(firstPostIndex, lastPostindex);
 
   useEffect(() => {
-    // handle if data is an object with nested data array
     if (typeof data === "object" && !Array.isArray(data)) {
       setTableData(Array.isArray(data.data) ? data.data : []);
       return;
@@ -151,11 +153,17 @@ const TableComponent = ({
             {currenPosts.map((item, index) => (
               <tr
                 key={index}
-                className={`border-b border-zinc-800 hover:bg-abutua bg-secondary `}
+                className={`border-b border-zinc-800 hover:bg-abutua bg-secondary z-0`}
+                onClick={() =>
+                  navigate(`${location.pathname}/edit/${item.attributes.uuid}`)
+                }
               >
                 <td className="py-4 px-6">
                   <CheckBox
-                    onChange={() => handleRowSelect(item.id)}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleRowSelect(item.id);
+                    }}
                     checked={selectedItems.includes(item.id)}
                   />
                 </td>
@@ -176,12 +184,24 @@ const TableComponent = ({
                 {isActions ? (
                   <td className="py-4 pe-11 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => console.log(item.id)}>
+                      <button
+                        onClick={() =>
+                          navigate(
+                            `${location.pathname}/edit/${item.attributes.uuid}`
+                          )
+                        }
+                      >
                         <span className="text-abumuda hover:text-oren">
                           <PencilIcon className="text-red w-5 h-5" />
                         </span>
                       </button>
-                      <button onClick={() => handleRemoveItem(item.id)}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveItem(item.attributes.uuid);
+                          // console.log(item.attributes.uuid);
+                        }}
+                      >
                         <span className="text-abumuda hover:text-red-500">
                           <TrashIcon className="text-red w-5 h-5" />
                         </span>

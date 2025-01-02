@@ -18,7 +18,6 @@ const FormLayout = ({
   fileHandler,
   filesHandler,
   file,
-  data,
   mainFunc,
   scFunc,
   buttonName,
@@ -31,7 +30,7 @@ const FormLayout = ({
   const path = location.pathname;
   const getBasePath = () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
-    return navigate(`/${pathSegments[0]}`);
+    return navigate(pathSegments.length === 1 ? "/" : `/${pathSegments[0]}`);
   };
 
   const handleSubmit = async (e) => {
@@ -39,7 +38,7 @@ const FormLayout = ({
 
     const buttonClicked = e.nativeEvent.submitter.value;
 
-    if (buttonClicked === "create") {
+    if (buttonClicked === "main") {
       mainFunc();
     } else if (buttonClicked === "createanother") {
       scFunc();
@@ -76,7 +75,7 @@ const FormLayout = ({
           />
         </div>
         <div className="flex flex-row pt-10 gap-4 mb-10">
-          <RegularButton value="create" name={buttonName || "Create"} />
+          <RegularButton value="main" name={buttonName || pages[2]} />
           {isUseButton ? (
             <>
               <Button
@@ -87,7 +86,7 @@ const FormLayout = ({
             </>
           ) : (
             <>
-              <Button func={() => navigate("/")} name={"Cancel"} />
+              <Button func={getBasePath} name={"Cancel"} />
             </>
           )}
         </div>

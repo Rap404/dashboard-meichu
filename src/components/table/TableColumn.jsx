@@ -2,21 +2,17 @@ import React from "react";
 import { mediaUrl } from "../../Constant";
 
 const TableColumn = ({ item, data }) => {
-  // console.log(today.toLocaleDateString("en-US", options));
-
   const renderColumn = () => {
-    // pastikan item dan data ada sebelum diakses
     if (!item || !data) return null;
 
     switch (item.type) {
       case "image":
-        // pengecekan ulang
         try {
           const imageUrl = item.accessor(data);
           return (
             <div className="flex justify-center">
               <img
-                src={mediaUrl + imageUrl}
+                src={imageUrl}
                 className="max-h-20 max-w-20 object-cover "
                 alt={data.attributes?.name || "image"}
               />

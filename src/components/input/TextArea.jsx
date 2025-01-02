@@ -33,7 +33,7 @@ const TextArea = ({
           onChange={onChange}
           disabled={disabled}
           required={required}
-          maxLength={maxLength}
+          maxLength={maxLength || 0}
           rows={rows}
           placeholder={placeholder}
           className={`
@@ -77,7 +77,7 @@ const TextArea = ({
         </div>
         {maxLength && (
           <div className="absolute bottom-2 right-2 text-xs text-gray-500">
-            {value.length}/{maxLength}
+            {value?.length}/{maxLength}
           </div>
         )}
       </div>

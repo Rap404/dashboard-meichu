@@ -34,7 +34,7 @@ const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {
           <div className="max-w-10 max-h-10 rounded-full group">
             <img
               className="rounded-full group-hover:opacity-80"
-              src={image}
+              src={image || profile}
               alt=""
             />
           </div>

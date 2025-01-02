@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { assets } from "../../assets/Assets";
 import Modal from "../modal/Modal";
 import { SquarePen } from "lucide-react";
-import { mediaUrl } from "../../Constant";
 
 const CircularImages = ({ setSelectedProfile, image }) => {
   const [modalOpen, setModalOpen] = useState();
@@ -40,7 +39,7 @@ const CircularImages = ({ setSelectedProfile, image }) => {
               {image ? (
                 <img
                   src={image}
-                  className="max-w-48 max-h-auto block rounded-full md:rounded-full lg:rounded-full border-2 border-gray-400"
+                  className="w-48 h-auto block rounded-full md:rounded-full lg:rounded-full border-2 border-gray-400"
                 />
               ) : (
                 <img
@@ -57,7 +56,6 @@ const CircularImages = ({ setSelectedProfile, image }) => {
               {modalOpen && (
                 <Modal
                   setSelectedImage={handleProfileUpload}
-                  // updateImage={updateAvatar}
                   closeModal={() => setModalOpen(false)}
                   cropPreset={"profile"}
                 />

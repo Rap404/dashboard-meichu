@@ -1,7 +1,8 @@
 import { CloudDownload } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "../modal/Modal";
 import Button from "../buttons/Button";
+import { mediaUrl } from "../../Constant";
 
 const UploadImage = ({
   setSelectedImage,
@@ -13,6 +14,7 @@ const UploadImage = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [fileInfo, setFileInfo] = useState(null);
+  const [selectedImg, setSelectedImg] = useState(null);
 
   const handleImageUpload = (imgBlob) => {
     if (imgBlob) {
@@ -24,6 +26,26 @@ const UploadImage = ({
     setSelectedImage(imgBlob);
   };
 
+  const handleReturnImage = () => {
+    setSelectedImg(null);
+    if (image instanceof File || image instanceof Blob) {
+      const objectUrl = URL.createObjectURL(image);
+      setSelectedImg(objectUrl);
+    } else if (typeof image === "string") {
+      setSelectedImg(image);
+    } else {
+      setSelectedImg(null);
+    }
+  };
+
+  // console.log(selectedImg);
+
+  useEffect(() => {
+    if (image) {
+      handleReturnImage();
+    }
+  }, [image]);
+
   return (
     <div
       className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
@@ -33,19 +55,19 @@ const UploadImage = ({
       {image && (
         <>
           <div className="w-full  to-transparent text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-kuning text-sm">
                   {fileInfo?.size || ""}
                 </span>
               </div>
               <span>Upload Completed</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex justify-center pb-7">
             <img
-              src={URL.createObjectURL(image)}
+              src={selectedImg}
               alt=""
               className="max-w-64 h-auto rounded-lg"
             />

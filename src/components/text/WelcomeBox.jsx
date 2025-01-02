@@ -24,7 +24,7 @@ const WelcomeBox = ({ imageProfile }) => {
     <div className="w-full bg-secondary border border-abutua rounded-xl py-5 px-10 flex justify-between">
       <div className="flex gap-5">
         <img
-          src={imageProfile ? imageProfile : assets.photo_profile}
+          src={imageProfile}
           alt=""
           className="hidden md:block lg:block w-11 h-11 rounded-full"
         />

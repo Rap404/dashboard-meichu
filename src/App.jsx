@@ -7,9 +7,9 @@ import ProductsPage from "./pages/ProductsPage";
 import EventsPage from "./pages/EventsPage";
 import UsersPage from "./pages/UsersPage";
 import Ambassador from "./pages/AmbassadorPage";
-import CreateCategory from "./pages/create pages/CreateCategory";
+import CreateCategory from "./pages/create pages/FormCategory";
 import CreateAmbassador from "./pages/create pages/CreateAmbassador";
-import CreateProduct from "./pages/create pages/CreateProduct";
+import CreateProduct from "./pages/create pages/FormProduct";
 import CreateEvent from "./pages/create pages/CreateEvent";
 import RequestsPage from "./pages/RequestsPage";
 import AdminProfilePage from "./pages/AdminProfilePage";
@@ -19,6 +19,9 @@ import { useAuth } from "./lib/AuthContext";
 import ForgotPassword from "./pages/auth pages/ForgotPassword";
 import ErrorPage from "./pages/ErrorPage";
 import { useState } from "react";
+import FormCategory from "./pages/create pages/FormCategory";
+import FormProduct from "./pages/create pages/FormProduct";
+import ResetPassword from "./pages/auth pages/ResetPassword";
 
 function App() {
   const { user } = useAuth();
@@ -55,14 +58,20 @@ function App() {
               <Route path="/users" element={<UsersPage />} />
               <Route path="/profile" element={<AdminProfilePage />} />
 
-              {/* Create Pages */}
-              <Route path="/categories/create" element={<CreateCategory />} />
+              {/* Form Pages */}
+              <Route path="/categories/create" element={<FormCategory />} />
+              <Route path="/categories/edit/:id" element={<FormCategory />} />
+
               <Route
                 path="/ambassadors/create"
                 element={<CreateAmbassador />}
               />
-              <Route path="/products/create" element={<CreateProduct />} />
+
+              <Route path="/products/create" element={<FormProduct />} />
+              <Route path="/products/edit/:id" element={<FormProduct />} />
+
               <Route path="/events/create" element={<CreateEvent />} />
+              <Route path="/events/edit" element={<CreateEvent />} />
 
               {/* Detail Pages */}
 
@@ -74,6 +83,7 @@ function App() {
           <>
             <Route path="/" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </>
         )}
       </Routes>

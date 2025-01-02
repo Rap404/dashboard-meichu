@@ -6,12 +6,10 @@ import {
 import React, { useState } from "react";
 import { assets } from "../../assets/Assets";
 import CheckBox from "../input/CheckBox";
-import { useNavigate } from "react-router-dom";
 
 const TableList = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const navigate = useNavigate();
 
   const categories = [
     { id: "1", name: "all", icon: {} },

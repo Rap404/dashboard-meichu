@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 import { baseUrl, mediaUrl } from "../Constant";
 import { useAuth } from "../lib/AuthContext";
 import axios from "axios";
+import { assets } from "../assets/Assets";
 
 const BasicLayout = ({ children, setUserProfile }) => {
   const { user } = useAuth();
@@ -49,7 +50,9 @@ const BasicLayout = ({ children, setUserProfile }) => {
       <Navbar
         toggleSidebar={toggleSidebar}
         isSideBarOpen={isSideBarOpen}
-        image={profileImage}
+        image={
+          profile.profilePicture?.url ? profileImage : assets.photo_profile
+        }
       />
       <div className="flex flex-grow">
         <Sidebar setIsOpen={toggleSidebar} isOpen={isSideBarOpen} />

@@ -1,7 +1,7 @@
 import { ChevronDown, X } from "lucide-react";
 import React, { useState } from "react";
 
-const MultiSelect = ({ value = [], onChange, options = [] }) => {
+const MultiSelect = ({ value = [], onChange, options = [], label }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const availableItems = options.filter(
@@ -21,13 +21,14 @@ const MultiSelect = ({ value = [], onChange, options = [] }) => {
   const selectedItems = options.filter((item) => value.includes(item.id));
 
   return (
-    <div className="w-ful relative">
+    <div className="w-full relative">
       <div className="block text-sm font-medium text-white">
-        products ({selectedItems.length})
+        {label} ({selectedItems.length})
       </div>
 
       {/* dropdown button */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-2 mt-1 text-left bg-secondary text-gray-400 rounded-md focus:outline-none border border-abumuda focus:border-oren flex flex-row items-center justify-between"
       >
@@ -48,7 +49,7 @@ const MultiSelect = ({ value = [], onChange, options = [] }) => {
       </button>
 
       {isOpen && availableItems.length > 0 && (
-        <div className="absolute w-full mt-2 bg--gray rounded-md shadow-lg max-h-60 overflow-auto bg-secondary">
+        <div className="absolute w-full z-10 mt-2 bg--gray rounded-md shadow-lg max-h-60 overflow-auto bg-secondary">
           {availableItems.map((item) => (
             <div
               className="px-4 py-2 hover:bg-gray-700 cursor-pointer flex items-center justify-between"
