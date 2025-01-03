@@ -65,6 +65,10 @@ function App() {
               <Route path="/categories/edit/:id" element={<FormCategory />} />
 
               <Route path="/ambassadors/create" element={<FormAmbassador />} />
+              <Route
+                path="/ambassadors/edit/:id"
+                element={<FormAmbassador />}
+              />
 
               <Route path="/products/create" element={<FormProduct />} />
               <Route path="/products/edit/:id" element={<FormProduct />} />

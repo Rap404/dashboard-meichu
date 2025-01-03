@@ -147,7 +147,7 @@ const FormEvent = () => {
       );
 
       console.log(response);
-      successNotif("Events successfully updated");
+      successNotif("Event successfully updated");
       navigate("/events");
     } catch (error) {
       console.error("error", error);
