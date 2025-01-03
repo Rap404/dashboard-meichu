@@ -1,7 +1,7 @@
 export const formatDateTime = (dateTimeString) => {
   if (!dateTimeString) return "";
   const date = new Date(dateTimeString);
-  return date.toLocaleString("id-ID", {
+  return date.toLocaleString("en-EN", {
     year: "numeric",
     month: "long",
     day: "numeric",

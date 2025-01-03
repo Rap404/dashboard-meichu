@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import profile from ".././assets/photo-profile2.svg";
 import { useNavigate } from "react-router-dom";
-import {
-  Bars2Icon,
-  UserCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { assets } from "../assets/Assets";
 
 const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {

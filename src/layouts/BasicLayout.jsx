@@ -14,7 +14,7 @@ const BasicLayout = ({ children, setUserProfile }) => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const profileImage = mediaUrl + profile.profilePicture?.url;
+  const profileImage = profile?.profilePicture?.url;
   const id = user.id;
 
   const toggleSidebar = () => {

@@ -13,7 +13,7 @@ import RollingMachine from "../components/RollingMachine";
 import SpinMachine from "../components/SpinMachine";
 
 const HomePage = ({ profile }) => {
-  const imageProfile = mediaUrl + profile?.profilePicture?.url;
+  const imageProfile = profile?.profilePicture?.url;
   return (
     <div className="justify-center h-screen bg-hitam text-putih mb-36">
       <div className="px-12 pt-10 ">

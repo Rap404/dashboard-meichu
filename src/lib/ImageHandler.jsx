@@ -1,9 +1,13 @@
 import axios from "axios";
 import { baseUrl, mediaUrl } from "../Constant";
 
-export const uploadFileTostrapi = async (file, token) => {
+export const uploadFileTostrapi = async (file, fileName, token) => {
   const formData = new FormData();
-  formData.append("files", file);
+
+  const renamedFile = `${fileName} image`;
+  const newFile = new File([file], renamedFile, { type: file.type });
+
+  formData.append("files", newFile);
 
   const response = await axios.post(`${baseUrl}/upload`, formData, {
     headers: {

@@ -26,8 +26,6 @@ const FormProduct = () => {
   };
   const [formData, setFormData] = useState(initialFormState);
   const [categories, setCategories] = useState({});
-  const [imageInfo, setImageInfo] = useState({});
-  const [imagesInfo, setImagesInfo] = useState([]);
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -62,9 +60,6 @@ const FormProduct = () => {
         images: [],
         categories: [],
       });
-      if (response?.data?.data?.attributes?.thumbnail?.data) {
-        setImageInfo(response.data.data.attributes.thumbnail);
-      }
       if (response.data.data.attributes.categories) {
         setSelectedCategories([]);
         response.data.data.attributes.categories.data.map((item) =>
@@ -81,10 +76,6 @@ const FormProduct = () => {
         }));
       }
       if (response?.data?.data?.attributes?.images?.data) {
-        setImagesInfo([]);
-        response.data.data.attributes.images.data.map((item) =>
-          setImagesInfo((prev) => [...(prev || []), item])
-        );
         setFormData((prev) => ({
           ...prev,
           images: [
@@ -98,13 +89,10 @@ const FormProduct = () => {
       setError(error?.message || "Failed fetch product");
       console.error(error?.message || []);
       setProduct([]);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchCategories();
-    id ? fetchProducts() : "";
-  }, []);
 
   const handleCreateProducts = async (e, resetForm = false) => {
     e?.preventDefault();
@@ -125,6 +113,7 @@ const FormProduct = () => {
       ) {
         const thumbnailResponse = await uploadFileTostrapi(
           formData.thumbnail,
+          formData.name + " thumbnail",
           token
         );
         thumbnail_id = thumbnailResponse[0].id;
@@ -133,7 +122,11 @@ const FormProduct = () => {
       let imageIds = [];
       if (formData.images && Array.isArray(formData.images)) {
         for (let image of formData.images) {
-          const imageResponse = await uploadFileTostrapi(image, token);
+          const imageResponse = await uploadFileTostrapi(
+            image,
+            formData.name,
+            token
+          );
           imageIds.push(imageResponse[0].id);
         }
         productData.images = imageIds;
@@ -154,9 +147,9 @@ const FormProduct = () => {
       }
       successNotif("Products successfully made");
     } catch (error) {
-      console.error("error", error.response.data.error.message);
+      console.error("error", error);
 
-      setError(error.response.data.error.name);
+      setError(error?.response?.data?.error?.name);
     } finally {
       setLoading(false);
     }
@@ -181,6 +174,7 @@ const FormProduct = () => {
       ) {
         const thumbnailResponse = await uploadFileTostrapi(
           formData.thumbnail,
+          formData.name + " thumbnail",
           token
         );
         console.log(thumbnailResponse);
@@ -192,7 +186,11 @@ const FormProduct = () => {
         const processImages = async () => {
           const imagePromises = formData.images.map(async (image) => {
             if (image instanceof File || image instanceof Blob) {
-              const response = await uploadFileTostrapi(image, token);
+              const response = await uploadFileTostrapi(
+                image,
+                formData.name,
+                token
+              );
               return response[0].id;
             } else if (typeof image === "object" && image.id) {
               return image.id;
@@ -210,12 +208,11 @@ const FormProduct = () => {
       }
 
       const response = await axios.put(
-        `${baseUrl}/products/${product.data.attributes.uuid}`,
+        `${baseUrl}/products/${id}`,
         { data: productData },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            // "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -240,6 +237,11 @@ const FormProduct = () => {
     }));
   };
 
+  useEffect(() => {
+    fetchCategories();
+    id ? fetchProducts() : "";
+  }, []);
+
   if (loading) return <LoadingComponent />;
   if (error)
     return (
@@ -261,6 +263,7 @@ const FormProduct = () => {
           id ? handleUpdateProducts(e) : handleCreateProducts(e)
         }
         scFunc={(e) => handleCreateProducts(e, true)}
+        isUseButton={id ? false : true}
       />
     </div>
   );

@@ -8,9 +8,9 @@ import EventsPage from "./pages/EventsPage";
 import UsersPage from "./pages/UsersPage";
 import Ambassador from "./pages/AmbassadorPage";
 import CreateCategory from "./pages/create pages/FormCategory";
-import CreateAmbassador from "./pages/create pages/CreateAmbassador";
+import CreateAmbassador from "./pages/create pages/FormAmbassadors";
 import CreateProduct from "./pages/create pages/FormProduct";
-import CreateEvent from "./pages/create pages/CreateEvent";
+import CreateEvent from "./pages/create pages/FormEvent";
 import RequestsPage from "./pages/RequestsPage";
 import AdminProfilePage from "./pages/AdminProfilePage";
 import { Bounce, toast, ToastContainer } from "react-toastify";
@@ -22,6 +22,8 @@ import { useState } from "react";
 import FormCategory from "./pages/create pages/FormCategory";
 import FormProduct from "./pages/create pages/FormProduct";
 import ResetPassword from "./pages/auth pages/ResetPassword";
+import FormAmbassador from "./pages/create pages/FormAmbassadors";
+import FormEvent from "./pages/create pages/FormEvent";
 
 function App() {
   const { user } = useAuth();
@@ -62,19 +64,15 @@ function App() {
               <Route path="/categories/create" element={<FormCategory />} />
               <Route path="/categories/edit/:id" element={<FormCategory />} />
 
-              <Route
-                path="/ambassadors/create"
-                element={<CreateAmbassador />}
-              />
+              <Route path="/ambassadors/create" element={<FormAmbassador />} />
 
               <Route path="/products/create" element={<FormProduct />} />
               <Route path="/products/edit/:id" element={<FormProduct />} />
 
-              <Route path="/events/create" element={<CreateEvent />} />
-              <Route path="/events/edit" element={<CreateEvent />} />
+              <Route path="/events/create" element={<FormEvent />} />
+              <Route path="/events/edit/:id" element={<FormEvent />} />
 
               {/* Detail Pages */}
-
               <Route path="/products/detail" element={<CreateProduct />} />
               <Route path="/requests/detail" element={<CreateProduct />} />
             </Route>

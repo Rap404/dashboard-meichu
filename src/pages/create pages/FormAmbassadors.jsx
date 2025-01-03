@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import FormLayout from "../../layouts/FormLayout";
-import { baseUrl, formEvent } from "../../Constant";
+import { baseUrl, formAmbassador } from "../../Constant";
 import { handleChange } from "../../lib/FormHandler";
-import { v4 as uuidV4 } from "uuid";
+import LoadingComponent from "../../components/text/Loading";
+import { errorNotif, successNotif } from "../../components/text/Notification";
 import { uploadFileTostrapi } from "../../lib/ImageHandler";
 import { useAuth } from "../../lib/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { errorNotif, successNotif } from "../../components/text/Notification";
-import LoadingComponent from "../../components/text/Loading";
 
-const CreateEvent = () => {
-  const pages = ["Events", ">", "Create"];
+const FormAmbassador = () => {
+  const pages = ["Ambassadors", ">", "Create"];
   const navigate = useNavigate();
   const { token } = useAuth();
   const initialFormState = {
-    uuid: uuidV4(),
     name: "",
-    image_cover: null,
+    image: null,
     description: "",
-    event_link: "",
-    start_date: "",
-    end_date: "",
+    twitter: "",
+    instagram: "",
+    youtube: "",
+    tiktok: "",
   };
   const [formData, setFormData] = useState(initialFormState);
   const [loading, setLoading] = useState(false);
@@ -29,36 +28,34 @@ const CreateEvent = () => {
 
   console.log(formData);
 
-  const handleCreateEvent = async (e, resetForm = false) => {
+  const handleCreateAmbassador = async (e, resetForm = false) => {
     e?.preventDefault();
     try {
       setLoading(true);
-      const eventData = {
-        uuid: formData.uuid,
+      const ambassadorData = {
         name: formData.name,
         description: formData.description,
-        event_link: formData.event_link,
-        start_date: formData.start_date,
-        end_date: formData.end_date,
+        socmed_links: {
+          twitter: formData.twitter,
+          instagram: formData.instagram,
+          youtube: formData.youtube,
+          tiktok: formData.tiktok,
+        },
       };
       let imageId = null;
       if (
-        formData.image_cover &&
-        (formData.image_cover instanceof File ||
-          formData.image_cover instanceof Blob)
+        formData.image &&
+        (formData.image instanceof File || formData.image instanceof Blob)
       ) {
-        const imageResponse = await uploadFileTostrapi(
-          formData.image_cover,
-          token
-        );
+        const imageResponse = await uploadFileTostrapi(formData.image, token);
         console.log(imageResponse);
         imageId = imageResponse[0].id;
-        eventData.image_cover = imageId;
+        ambassadorData.image = imageId;
       }
 
       const response = await axios.post(
-        `${baseUrl}/events`,
-        { data: eventData },
+        `${baseUrl}/ambassadors`,
+        { data: ambassadorData },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,13 +66,13 @@ const CreateEvent = () => {
       if (resetForm) {
         setFormData(initialFormState);
       } else {
-        navigate("/events");
+        navigate("/ambassadors");
       }
-      successNotif("Events sucessfully made");
+      successNotif("Ambassador sucessfully created");
     } catch (error) {
       console.error(error);
 
-      setError(error.response.data.error.message);
+      setError(error?.response?.data?.error?.message);
     } finally {
       setLoading(false);
     }
@@ -87,16 +84,16 @@ const CreateEvent = () => {
   return (
     <div>
       <FormLayout
-        formConstant={formEvent}
+        formConstant={formAmbassador}
         formData={formData}
         setFormData={setFormData}
         pages={pages}
         changeHandler={(e) => handleChange(e, setFormData, setError)}
-        mainFunc={(e) => handleCreateEvent(e)}
-        scFunc={(e) => handleCreateEvent(e, true)}
+        mainFunc={(e) => handleCreateAmbassador(e)}
+        scFunc={(e) => handleCreateAmbassador(e, true)}
       />
     </div>
   );
 };
 
-export default CreateEvent;
+export default FormAmbassador;

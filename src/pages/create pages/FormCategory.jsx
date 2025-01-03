@@ -6,7 +6,6 @@ import axios from "axios";
 import { useAuth } from "../../lib/AuthContext";
 import { errorNotif, successNotif } from "../../components/text/Notification";
 import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 const FormCategory = () => {
   const { token } = useAuth();
@@ -15,7 +14,6 @@ const FormCategory = () => {
   const pages = ["Categories", ">", id ? "Edit" : "Create"];
   const [selectedProducts, setSelectedProducts] = useState([]);
   const initialFormState = {
-    uuid: uuidv4(),
     name: "",
     products: selectedProducts,
   };
@@ -73,13 +71,18 @@ const FormCategory = () => {
 
   const createCategory = async (nav, resetForm = false) => {
     try {
+      const categoryData = {
+        name: formData.name,
+      };
+
+      if (formData.products && formData.products.length > 0) {
+        categoryData.products = formData.products;
+      }
+
       const categoryResponse = await axios.post(
         `${baseUrl}/categories`,
         {
-          data: {
-            name: formData.name,
-            uuid: formData.uuid,
-          },
+          data: categoryData,
         },
         {
           headers: {
@@ -89,24 +92,7 @@ const FormCategory = () => {
         }
       );
 
-      const newCategoryId = categoryResponse.data.data.id;
-
-      if (formData.products && formData.products.length > 0) {
-        await axios.put(
-          `${baseUrl}/categories/${newCategoryId}`,
-          {
-            data: {
-              products: formData.products,
-            },
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-      }
+      console.log("categoryResponse", categoryResponse);
 
       successNotif("Category successfully made");
 
@@ -143,11 +129,10 @@ const FormCategory = () => {
   const updateCategory = async (nav) => {
     try {
       const categoryResponse = await axios.put(
-        `${baseUrl}/categories/${category.id}`,
+        `${baseUrl}/categories/${category.attributes.uuid}`,
         {
           data: {
             name: formData.name,
-            uuid: formData.uuid,
             products: formData?.products || [],
           },
         },
@@ -173,13 +158,13 @@ const FormCategory = () => {
       if (error.response) {
         switch (error.response.status) {
           case 403:
-            errorNotif("You don't have permissions to update a products");
+            errorNotif("You don't have permissions to update a category");
             break;
           case 401:
             errorNotif("Authentication is failed, please re-login");
             break;
           default:
-            errorNotif("Some isues happen while updated product");
+            errorNotif("Some isues happen while updated category");
         }
       }
 
@@ -210,8 +195,8 @@ const FormCategory = () => {
         mainFunc={() =>
           id ? updateCategory("/categories") : createCategory("/categories")
         }
-        isUseButton={id ? false : true}
         scFunc={() => createCategory("/categories/create", true)}
+        isUseButton={id ? false : true}
       />
     </div>
   );
