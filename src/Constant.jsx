@@ -248,3 +248,5 @@ export const adminProfileForm = [
     disabled: true,
   },
 ];
+
+// export const detailRequest = [{}];

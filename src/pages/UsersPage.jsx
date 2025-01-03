@@ -12,11 +12,8 @@ const UsersPage = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${baseUrl}/users?populate=requests,likes,profilePicture`
-      );
+      const response = await axios.get(`${baseUrl}/users?populate=*`);
       setUsers(response.data || "error");
-      // console.log(users[0].likes.length);
       setError(null);
     } catch (error) {
       setError(error.message) || "Failed fetch Products";

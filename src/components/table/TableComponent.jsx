@@ -43,8 +43,6 @@ const TableComponent = ({
     setTableData(Array.isArray(data) ? data : []);
   }, []);
 
-  console.log(selectedItems);
-
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
     if (onSearch) onSearch(e.target.value);
@@ -133,23 +131,29 @@ const TableComponent = ({
         <table className="w-full bg-hitam">
           <thead>
             <tr className="border-b border-zinc-800 bg-abutua">
-              <th className="w-8 py-3 px-4">
-                <CheckBox onChange={handleSelectAll} checked={selectAll} />
-              </th>
+              {isActions ? (
+                <th className="w-8 py-3 px-4">
+                  <CheckBox onChange={handleSelectAll} checked={selectAll} />
+                </th>
+              ) : (
+                <th></th>
+              )}
+
               <th className="w-8 py-3 px-4">
                 <span className="text-gray-300 font-medium">No</span>
               </th>
               {columns.map((col, index) => (
                 <th
                   key={index}
-                  className="text-center py-3 px-6 text-gray-300 font-medium"
+                  className="text-center py-3 ps-6 text-gray-300 font-medium"
                 >
                   {col.header}
                 </th>
               ))}
+              {currenPosts[0]?.attributes?.isNew && <th></th>}
               {isActions ? (
-                <th className="text-right py-3 px-11 text-gray-300 font-medium">
-                  {""}
+                <th className="text-right py-3 pe-11 text-gray-300 font-medium">
+                  Actions
                 </th>
               ) : (
                 ""
@@ -165,16 +169,19 @@ const TableComponent = ({
                   navigate(`${location.pathname}/edit/${item.attributes.uuid}`)
                 }
               >
-                <td className="py-4 px-6">
-                  <CheckBox
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      handleRowSelect(item.attributes.uuid);
-                    }}
-                    checked={selectedItems.includes(item.attributes.uuid)}
-                  />
-                </td>
-
+                {isActions ? (
+                  <td className="py-4 px-6">
+                    <CheckBox
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleRowSelect(item.attributes.uuid);
+                      }}
+                      checked={selectedItems.includes(item?.attributes?.uuid)}
+                    />
+                  </td>
+                ) : (
+                  <td></td>
+                )}
                 <td className="py-4 px-6">
                   <span className="text-gray-300 font-medium">
                     {calculateRowNumber(index)}
@@ -183,25 +190,30 @@ const TableComponent = ({
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className="text-center justify-center py-4 px-4 text-gray-300 text-sm"
+                    className="text-center justify-center py-4 ps-4 text-gray-300 text-sm"
                   >
                     <TableColumn item={col} data={item} />
                   </td>
                 ))}
-                {isActions ? (
+
+                {item?.attributes?.uuid && (
                   <td className="py-4 pe-11 text-right">
                     <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() =>
-                          navigate(
-                            `${location.pathname}/edit/${item.attributes.uuid}`
-                          )
-                        }
-                      >
-                        <span className="text-abumuda hover:text-oren">
-                          <PencilIcon className="text-red w-5 h-5" />
-                        </span>
-                      </button>
+                      {isActions ? (
+                        <button
+                          onClick={() =>
+                            navigate(
+                              `${location.pathname}/edit/${item.attributes.uuid}`
+                            )
+                          }
+                        >
+                          <span className="text-abumuda hover:text-oren">
+                            <PencilIcon className="text-red w-5 h-5" />
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -214,8 +226,6 @@ const TableComponent = ({
                       </button>
                     </div>
                   </td>
-                ) : (
-                  ""
                 )}
               </tr>
             ))}
