@@ -4,11 +4,16 @@ import axios from "axios";
 import { baseUrl } from "../Constant";
 import { Columns } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
+import UseDebounce from "../hooks/UseDebounce";
 
 const RequestsPage = () => {
   const pages = ["Request", ">", "List"];
   const navigate = useNavigate();
-  const [requests, setRequest] = useState({});
+  const [requests, setRequests] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -16,22 +21,47 @@ const RequestsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(`${baseUrl}/requests`);
-      setRequest(response.data.data || []);
+      setRequests(response.data.data || []);
       setError(null);
     } catch (error) {
-      setError(error.message) || "Failed fetch Products";
-      setRequest([]);
+      setError(error.message) || "Failed fetch requests";
+      setRequests([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSearchedRequests = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/requests/search?query=${query}`
+      );
+      setRequests(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Failed to search requests");
+      setRequests([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedRequests(debounceSearchValue);
+    } else {
+      fetchRequests();
+    }
+  }, [debounceSearchValue]);
+
+  useEffect(() => {
     fetchRequests();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const column = [
     {
@@ -65,29 +95,19 @@ const RequestsPage = () => {
     },
   ];
 
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("Selected rows:", selectedIds);
-  };
-
   return (
     <div>
       <PageLayout
         pages={pages}
         func={() => navigate("/products/create")}
+        fetch={fetchRequests}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         buttonName={"Create product"}
         columns={column}
         data={requests}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        setError={setError}
+        endpoint={"requests"}
         loading={loading}
         pagination={true}
         isActions={false}

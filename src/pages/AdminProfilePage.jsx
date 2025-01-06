@@ -61,9 +61,7 @@ const AdminProfilePage = () => {
   const fetchProfile = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${baseUrl}/users/${id}?populate=profilePicture`
-      );
+      const response = await axios.get(`${baseUrl}/users/${id}?populate=*`);
       const profileData = response.data;
 
       setFormData({
@@ -72,8 +70,8 @@ const AdminProfilePage = () => {
         createdAt: formatDateTime(profileData.createdAt),
       });
 
-      if (profileData.profilePicture !== null) {
-        handleAvatar(profileData.profilePicture.url);
+      if (profileData?.profilePicture !== null) {
+        handleAvatar(profileData?.profilePicture?.url);
       }
 
       setError(null);

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import SubmitButton from "../components/buttons/SubmitButton";
-import RegularButton from "../components/buttons/RegularButton";
-import TableList from "../components/table/TableList";
 import PageLayout from "../layouts/PageLayout";
-import SelectItem from "../components/input/SelectItem";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { baseUrl } from "../Constant";
-import TableComponent from "../components/table/TableComponent";
 import { useNavigate } from "react-router-dom";
+import UseDebounce from "../hooks/UseDebounce";
+import { errorNotif } from "../components/text/Notification";
+import LoadingComponent from "../components/text/Loading";
 
 const CategoriesPage = () => {
   const pages = ["Categories", ">", "List"];
   const navigate = useNavigate();
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,23 @@ const CategoriesPage = () => {
       setCategories(response.data.data || []);
       setError(null);
     } catch (error) {
-      setError(error.message) || "Failed fetch categories";
+      setError(error.message || "Failed to fetch categories");
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSearchedCategories = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/categories/search?query=${query}`
+      );
+      setCategories(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      setError(error.message || "Failed to search categories");
       setCategories([]);
     } finally {
       setLoading(false);
@@ -31,11 +47,19 @@ const CategoriesPage = () => {
   };
 
   useEffect(() => {
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedCategories(debounceSearchValue);
+    } else {
+      fetchCategories();
+    }
+  }, [debounceSearchValue]);
+
+  useEffect(() => {
     fetchCategories();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const columns = [
     {
@@ -50,20 +74,14 @@ const CategoriesPage = () => {
     },
   ];
 
-  const handleEdit = (id) => {
-    window.location.href = `/categories/edit/${id}`;
-  };
-
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
   return (
     <div className="">
       <PageLayout
         pages={pages}
         func={() => navigate("/categories/create")}
         fetch={fetchCategories}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         buttonName={"Create Category"}
         columns={columns}
         data={categories}

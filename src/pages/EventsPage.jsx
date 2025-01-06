@@ -3,11 +3,16 @@ import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
 import { useNavigate } from "react-router-dom";
+import UseDebounce from "../hooks/UseDebounce";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
 
 const EventsPage = () => {
   const pages = ["Events", ">", "List"];
   const navigate = useNavigate();
   const [events, setEvents] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,7 +23,24 @@ const EventsPage = () => {
       setEvents(response.data.data || []);
       setError(null);
     } catch (error) {
-      setError(error.message) || "Failed fetch Events";
+      setError(error.message) || "Failed fetch events";
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSearchedEvents = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/events/search?query=${query}`
+      );
+      setEvents(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Failed to search events");
       setEvents([]);
     } finally {
       setLoading(false);
@@ -26,11 +48,19 @@ const EventsPage = () => {
   };
 
   useEffect(() => {
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedEvents(debounceSearchValue);
+    } else {
+      fetchEvents();
+    }
+  }, [debounceSearchValue]);
+
+  useEffect(() => {
     fetchEvents();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const columns = [
     {
@@ -61,24 +91,14 @@ const EventsPage = () => {
     },
   ];
 
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("Selected rows:", selectedIds);
-  };
-
   return (
     <div>
       <PageLayout
         pages={pages}
         func={() => navigate("/events/create")}
         fetch={fetchEvents}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         buttonName={"Create event"}
         columns={columns}
         data={events}

@@ -58,12 +58,6 @@ const Pagination = ({
     return pages.slice(startPage - 1, endPage);
   };
 
-  // const handlePostperPage = (e) => {
-  //   // const newPostsPerPage = parseInt(e.target.value);
-  //   setPostPerPage(e.target.value);
-  //   setCurrentPage(1);
-  // };
-
   return (
     <div className="flex justify-between min-w-full px-7 py-5 pt-10">
       <div className="items-center py-2">

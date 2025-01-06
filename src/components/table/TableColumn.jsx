@@ -1,5 +1,6 @@
 import React from "react";
 import { mediaUrl } from "../../Constant";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 
 const TableColumn = ({ item, data }) => {
   const renderColumn = () => {
@@ -54,8 +55,10 @@ const TableColumn = ({ item, data }) => {
           const fileCount = item.accessor(data);
           return (
             <div className="flex justify-center items-center gap-2">
-              <div className="bg-abumuda p-1 rounded-sm">{fileCount}</div>
-              <span>Files</span>
+              <div className="bg-secondary p-1 rounded-sm">{fileCount}</div>
+              <span className="w-5 h-5 text-white">
+                <PhotoIcon />
+              </span>
             </div>
           );
         } catch (error) {
@@ -68,7 +71,7 @@ const TableColumn = ({ item, data }) => {
           const fileCount = item.accessor(data);
           return (
             <div className="flex justify-center items-center gap-2">
-              <div className="bg-abumuda p-1 rounded-lg">{fileCount}</div>
+              <div className="">{fileCount}</div>
               <span>Requests</span>
             </div>
           );

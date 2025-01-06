@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Check token on initial load
   useEffect(() => {
@@ -38,6 +39,9 @@ export const AuthProvider = ({ children }) => {
 
     try {
       setLoading(true);
+      if (loading) {
+        console.log("loading");
+      }
       const response = await axios.post(url, { identifier, password });
 
       // Extract user and JWT token from response
@@ -54,46 +58,38 @@ export const AuthProvider = ({ children }) => {
 
       return { user: userData, token: jwt };
     } catch (error) {
-      // Handle login errors
       const errorMessage =
         error.response?.data?.error?.message || "Login failed";
-      errorNotif(errorMessage);
 
-      // Clear any existing auth data
+      setError("error");
       setUser(null);
       setIsAuthenticated(false);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      throw error;
+      throw { ...error, message: errorMessage };
     } finally {
       setLoading(false);
     }
   };
 
-  // Logout Function
   const logout = () => {
-    // Clear user data from localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    // Reset state
     setUser(null);
     setIsAuthenticated(false);
   };
 
-  // Function to check if user is authenticated
   const checkAuth = () => {
     const token = localStorage.getItem("token");
     return !!token;
   };
 
-  // Function to get authentication token
   const getToken = () => {
     return localStorage.getItem("token");
   };
 
-  // Context value
   const contextValue = {
     user,
     isAuthenticated,

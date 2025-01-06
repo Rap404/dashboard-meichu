@@ -2,39 +2,65 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
-import { assets } from "../assets/Assets";
-import { AiOutlineLoading } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
+import UseDebounce from "../hooks/UseDebounce";
 
 const AmbassadorPage = () => {
   const pages = ["Ambassadors", ">", "List"];
   const navigate = useNavigate();
-  const [ambassador, setAmbassador] = useState({});
+  const [ambassadors, setAmbassadors] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchAmbassador = async () => {
+  const fetchAmbassadors = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${baseUrl}/ambassadors`);
-      setAmbassador(response.data.data || []);
+      setAmbassadors(response.data.data || []);
       setError(null);
     } catch (error) {
-      setError(error.message) || "Failed fetch Ambassador";
-      setAmbassador([]);
+      setError(error.message) || "Failed fetch Ambassadors";
+      setAmbassadors([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSearchedAmbassadors = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/ambassadors/search?query=${query}`
+      );
+      setAmbassadors(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Failed to search Ambassadors");
+      setAmbassadors([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchAmbassador();
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedAmbassadors(debounceSearchValue);
+    } else {
+      fetchAmbassadors();
+    }
+  }, [debounceSearchValue]);
+
+  useEffect(() => {
+    fetchAmbassadors();
   }, []);
 
-  // console.log(ambassador);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const columns = [
     {
@@ -55,29 +81,19 @@ const AmbassadorPage = () => {
     },
   ];
 
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("Selected rows:", selectedIds);
-  };
-
   return (
     <div className="">
       <PageLayout
         pages={pages}
         func={() => navigate("/ambassadors/create")}
-        buttonName={"Create ambassador"}
+        fetch={fetchAmbassadors}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        buttonName={"Create ambassadors"}
         columns={columns}
-        data={ambassador}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        data={ambassadors}
+        setError={setError}
+        endpoint={"ambassadors"}
         loading={loading}
         pagination={true}
       />

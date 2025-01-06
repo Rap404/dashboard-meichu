@@ -86,7 +86,7 @@ export const formProduct = [
     type: "files",
     label: "Product images",
     required: true,
-    preset: "portrait",
+    preset: "square",
   },
   {
     id: "description",

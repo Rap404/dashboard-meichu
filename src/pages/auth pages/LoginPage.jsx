@@ -31,10 +31,15 @@ const LoginPage = () => {
       await login(formData.identifier, formData.password);
       navigate("/");
     } catch (error) {
-      console.log(error);
-      errorNotif(error.message);
+      console.error("error", error);
+      setError("login failed");
     }
   };
+
+  // console.log("Error:", error);
+
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div className="text-red-500">{errorNotif(error)}</div>;
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-hitam">

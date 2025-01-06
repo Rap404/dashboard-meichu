@@ -18,7 +18,8 @@ const PageLayout = ({
   setError,
   endpoint,
   fetch,
-  onSearch,
+  setSearchQuery,
+  searchQuery,
   pagination,
   loading,
   isActions = true,
@@ -66,15 +67,15 @@ const PageLayout = ({
           })
         )
       );
-
       fetch();
-
       successNotif(`Deleted ${selectedIds.length} items Successfully`);
     } catch (error) {
       console.error(error);
       setError(error);
     }
   };
+
+  console.log(selectedIds);
 
   return (
     <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
@@ -101,21 +102,26 @@ const PageLayout = ({
             {modalOpen ? (
               <MiniModal
                 closeModal={() => setModalOpen(false)}
-                func={() => handleDelete()}
+                func={() =>
+                  selectedId != null ? handleDelete() : handleMultipleDelete()
+                }
               />
             ) : (
               ""
             )}
-            {data === undefined || data.length === 0 ? (
+            {(data === undefined || data.length === 0) && !searchQuery ? (
               <EmptyList page={pages[0]} />
             ) : (
               <TableComponent
                 columns={columns}
                 data={data}
-                onSearch={onSearch}
+                setSearchQuery={setSearchQuery}
+                searchQuery={searchQuery}
                 onRowSelect={handleRowSelect}
                 onSelectAll={handleSelectAll}
                 setSelectedId={setSelectedId}
+                setSelectedIds={setSelectedIds}
+                selectedIds={selectedIds}
                 multiDelFunc={handleMultipleDelete}
                 setModalOpen={setModalOpen}
                 pagination={pagination}

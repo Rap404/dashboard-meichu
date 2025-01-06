@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
+import UseDebounce from "../hooks/UseDebounce";
 
 const UsersPage = () => {
   const pages = ["Users", ">", "List"];
   const [users, setUsers] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -22,6 +27,40 @@ const UsersPage = () => {
       setLoading(false);
     }
   };
+
+  const fetchSearchedUsers = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${baseUrl}/users`);
+      setUsers(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Failed to search users");
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedUsers(debounceSearchValue);
+    } else {
+      fetchUsers();
+    }
+  }, [debounceSearchValue]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const column = [
     {
@@ -51,36 +90,18 @@ const UsersPage = () => {
     },
   ];
 
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("selected rows:", selectedIds);
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
-
   return (
     <div>
       <PageLayout
         pages={pages}
-        nav={"/users/create"}
+        fetch={fetchUsers}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         buttonName={"user"}
         columns={column}
         data={users}
-        onSearch={handleSearch}
-        onSelectAll={handleSelectAll}
-        onRowSelect={handleRowSelect}
+        setError={setError}
+        endpoint={"users"}
         loading={loading}
         pagination={true}
         isActions={false}

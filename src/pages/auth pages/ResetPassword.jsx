@@ -15,7 +15,7 @@ const ResetPassword = () => {
     <div className="min-h-screen flex justify-center items-center bg-hitam">
       <div className="max-w-md w-full space-y-8 flex flex-col bg-secondary px-10 py-8 rounded-lg">
         <div className="absolute">
-          <button onClick={() => navigate("/login")}>
+          <button onClick={() => navigate("/")}>
             <ArrowLeftIcon className="h-6 w-6 text-white" />
           </button>
         </div>
@@ -38,7 +38,7 @@ const ResetPassword = () => {
               </span>
             </div>
           </div>
-          <SubmitButton func={() => console.log("")} />
+          <SubmitButton name={"Submit"} func={() => console.log("")} />
         </form>
       </div>
     </div>

@@ -3,11 +3,16 @@ import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
 import { useNavigate } from "react-router-dom";
+import UseDebounce from "../hooks/UseDebounce";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
 
 const ProductsPage = () => {
   const pages = ["Products", ">", "List"];
   const navigate = useNavigate();
   const [products, setProducts] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const debounceSearchValue = UseDebounce(searchQuery, 800);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -25,12 +30,36 @@ const ProductsPage = () => {
     }
   };
 
+  const fetchSearchedProducts = async (query) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/products/search?query=${query}`
+      );
+      setProducts(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      setError(error.message || "Failed to search products");
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (debounceSearchValue?.trim()) {
+      fetchSearchedProducts(debounceSearchValue);
+    } else {
+      fetchProducts();
+    }
+  }, [debounceSearchValue]);
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
 
   const columns = [
     {
@@ -64,24 +93,14 @@ const ProductsPage = () => {
     },
   ];
 
-  const handleSearch = (query) => {
-    console.log("Search query:", query);
-  };
-
-  const handleSelectAll = (selectedIds) => {
-    console.log("Selected all:", selectedIds);
-  };
-
-  const handleRowSelect = (selectedIds) => {
-    console.log("selected rows:", selectedIds);
-  };
-
   return (
     <div>
       <PageLayout
         pages={pages}
         func={() => navigate("/products/create")}
         fetch={fetchProducts}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         buttonName={"Create product"}
         columns={columns}
         data={products}
