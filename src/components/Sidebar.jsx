@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  BeakerIcon,
   CalendarDaysIcon,
-  ChatBubbleBottomCenterIcon,
   ChatBubbleLeftRightIcon,
   HomeIcon,
   PencilSquareIcon,
   RectangleStackIcon,
   UserCircleIcon,
   UserGroupIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 import SideItems from "./text/SideItems";

@@ -21,7 +21,9 @@ const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {
               <Bars2Icon className="h-6 w-6" />
             )}
           </button>
-          <img src={assets.logo} alt="" className="hidden lg:block w-28" />
+          <button className="" onClick={() => navigate("/")}>
+            <img src={assets.logo} alt="" className="hidden lg:block w-28" />
+          </button>
         </div>
         <div
           className="flex items-center px-6 cursor-pointer"

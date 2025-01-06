@@ -7,10 +7,10 @@ import ProductsPage from "./pages/ProductsPage";
 import EventsPage from "./pages/EventsPage";
 import UsersPage from "./pages/UsersPage";
 import Ambassador from "./pages/AmbassadorPage";
-import CreateCategory from "./pages/create pages/FormCategory";
-import CreateAmbassador from "./pages/create pages/FormAmbassadors";
-import CreateProduct from "./pages/create pages/FormProduct";
-import CreateEvent from "./pages/create pages/FormEvent";
+import CreateCategory from "./pages/form pages/FormCategory";
+import CreateAmbassador from "./pages/form pages/FormAmbassadors";
+import CreateProduct from "./pages/form pages/FormProduct";
+import CreateEvent from "./pages/form pages/FormEvent";
 import RequestsPage from "./pages/RequestsPage";
 import AdminProfilePage from "./pages/AdminProfilePage";
 import { Bounce, toast, ToastContainer } from "react-toastify";
@@ -19,11 +19,12 @@ import { useAuth } from "./lib/AuthContext";
 import ForgotPassword from "./pages/auth pages/ForgotPassword";
 import ErrorPage from "./pages/ErrorPage";
 import { useState } from "react";
-import FormCategory from "./pages/create pages/FormCategory";
-import FormProduct from "./pages/create pages/FormProduct";
+import FormCategory from "./pages/form pages/FormCategory";
+import FormProduct from "./pages/form pages/FormProduct";
 import ResetPassword from "./pages/auth pages/ResetPassword";
-import FormAmbassador from "./pages/create pages/FormAmbassadors";
-import FormEvent from "./pages/create pages/FormEvent";
+import FormAmbassador from "./pages/form pages/FormAmbassadors";
+import FormEvent from "./pages/form pages/FormEvent";
+import Requestdetail from "./pages/detail pages/Requestdetail";
 
 function App() {
   const { user } = useAuth();
@@ -78,7 +79,7 @@ function App() {
 
               {/* Detail Pages */}
               <Route path="/products/detail" element={<CreateProduct />} />
-              <Route path="/requests/detail" element={<CreateProduct />} />
+              <Route path="/requests/detail/:id" element={<Requestdetail />} />
             </Route>
           </>
         ) : (

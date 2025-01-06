@@ -1,6 +1,5 @@
 import React from "react";
 import FormDefault from "../components/forms/FormDefault";
-import { formCategories } from "../Constant";
 import Button from "../components/buttons/Button";
 import RegularButton from "../components/buttons/RegularButton";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -27,7 +26,6 @@ const FormLayout = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const path = location.pathname;
   const getBasePath = () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
     return navigate(pathSegments.length === 1 ? "/" : `/${pathSegments[0]}`);

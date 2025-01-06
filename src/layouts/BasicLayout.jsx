@@ -7,6 +7,8 @@ import { baseUrl, mediaUrl } from "../Constant";
 import { useAuth } from "../lib/AuthContext";
 import axios from "axios";
 import { assets } from "../assets/Assets";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
 
 const BasicLayout = ({ children, setUserProfile }) => {
   const { user } = useAuth();
@@ -42,7 +44,7 @@ const BasicLayout = ({ children, setUserProfile }) => {
     fetchProfile();
   }, [setUserProfile]);
 
-  if (loading) return <div className="">Loading...</div>;
+  if (loading) return <LoadingComponent />;
   if (error) return errorNotif(error.message);
 
   return (

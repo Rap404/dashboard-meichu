@@ -249,4 +249,30 @@ export const adminProfileForm = [
   },
 ];
 
-// export const detailRequest = [{}];
+export const detailRequest = [
+  {
+    id: "name",
+    name: "name",
+    label: "Name :",
+  },
+  {
+    id: "isIMVU",
+    name: "isIMVU",
+    label: "is IMVU+ :",
+  },
+  {
+    id: "type",
+    name: "type",
+    label: "Type :",
+  },
+  {
+    id: "user",
+    name: "user",
+    label: "User :",
+  },
+  {
+    id: "phone",
+    name: "phone",
+    label: "Phone number :",
+  },
+];

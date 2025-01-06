@@ -19,13 +19,13 @@ const TableComponent = ({
   setSelectedId,
   setSelectedIds,
   selectedIds,
-  multiDelFunc,
   setModalOpen,
   pagination = true,
   isActions = true,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isDetail, setIsDetail] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,7 +34,14 @@ const TableComponent = ({
   const firstPostIndex = lastPostindex - postPerPage;
   const currentPosts = tableData.slice(firstPostIndex, lastPostindex);
 
+  const handleDetail = () => {
+    if (location.pathname === "/requests") {
+      setIsDetail(true);
+    }
+  };
+
   useEffect(() => {
+    handleDetail();
     if (typeof data === "object" && !Array.isArray(data)) {
       setTableData(Array.isArray(data.data) ? data.data : []);
       return;
@@ -85,7 +92,11 @@ const TableComponent = ({
   const handleEditPage = (id) => {
     if (!id) return null;
 
-    navigate(`${location.pathname}/edit/${id}`);
+    if (isDetail == true) {
+      navigate(`${location.pathname}/detail/${id}`);
+    } else {
+      navigate(`${location.pathname}/edit/${id}`);
+    }
   };
 
   return (

@@ -75,8 +75,6 @@ const PageLayout = ({
     }
   };
 
-  console.log(selectedIds);
-
   return (
     <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
       <div className="ps-5 md:ps-6 lg:px-10 lg:ps-12 py-10 min-h-screen w-full bg-hitam">

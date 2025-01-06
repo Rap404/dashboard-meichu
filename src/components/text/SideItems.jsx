@@ -5,9 +5,10 @@ const SideItems = ({ page, icon, text }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isActive, setIsActive] = useState(false);
+  const pathSegments = location.pathname.split("/").filter(Boolean);
 
   const handleActiveItems = () => {
-    if (location.pathname === page) {
+    if (`/${pathSegments[0]}` === page) {
       setIsActive(true);
     } else {
       setIsActive(false);
@@ -16,7 +17,7 @@ const SideItems = ({ page, icon, text }) => {
 
   useEffect(() => {
     handleActiveItems();
-  }, []);
+  }, [pathSegments[0]]);
 
   return (
     <div className="" onClick={() => navigate(`${page}`)}>

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAuth } from "../../lib/AuthContext";
 import { errorNotif, successNotif } from "../../components/text/Notification";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingComponent from "../../components/text/Loading";
 
 const FormCategory = () => {
   const { token } = useAuth();
@@ -178,9 +179,8 @@ const FormCategory = () => {
     id ? fetchCategory() : "";
   }, []);
 
-  if (loading) return <div className="">load...</div>;
-  if (loading)
-    return <div className="">{errorNotif(error?.message || error)}</div>;
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error?.message || error);
 
   return (
     <div>
