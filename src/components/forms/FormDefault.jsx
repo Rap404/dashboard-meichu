@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SelectItem from "../input/SelectItem";
 import { assets } from "../../assets/Assets";
 import TextArea from "../input/TextArea";
@@ -17,11 +17,10 @@ const FormDefault = ({
   multiSelectValue,
   changeHandler,
   fileHandler,
-  filesHandler,
   onMultiChange,
   onSelectChange,
 }) => {
-  const [selectedValue, setSelectedValue] = useState([]);
+  // const [selectedValue, setSelectedValue] = useState([]);
 
   const selectOptions = Array.isArray(availableItems)
     ? availableItems?.map((item) => ({
@@ -34,6 +33,13 @@ const FormDefault = ({
     setFormData((prev) => ({
       ...prev,
       [fieldName]: img,
+    }));
+  };
+
+  const handleBool = (value, fieldName) => {
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: value,
     }));
   };
 
@@ -112,6 +118,71 @@ const FormDefault = ({
           </>
         );
 
+      case "bool":
+        const [isActive, setIsActive] = useState(false);
+        const buttonRef = useRef(null);
+
+        const handleClickButton = (value) => {
+          handleBool(value, item.name);
+          setIsActive(true);
+        };
+
+        useEffect(() => {
+          const handleClickOutside = (e) => {
+            if (buttonRef.current && !buttonRef.current.contains(e.target)) {
+              setIsActive(false);
+            }
+          };
+
+          document.addEventListener("mousedown", handleClickOutside);
+          return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+        }, []);
+
+        return (
+          <>
+            <label
+              htmlFor={item.name}
+              className="block text-sm font-medium text-white"
+            >
+              {item.label}
+            </label>
+            <input
+              id={item.id}
+              name={item.name}
+              value={FormData[item.name]}
+              onChange={changeHandler}
+              type="text"
+              hidden
+            />
+            <div
+              className={`flex w-60  bg-secondary p-2 text-white justify-between mt-2 px-5 items-center rounded-md border ${
+                isActive === false ? "border-abumuda" : "border-kuning"
+              }`}
+              ref={buttonRef}
+            >
+              <button
+                className={`px-1 text-sm rounded-sm p-1 ${
+                  FormData[item.name] !== true &&
+                  "bg-abutua text-red-600 border border-abumuda"
+                }`}
+                onClick={() => handleClickButton(false)}
+              >
+                <span className="px-6">False</span>
+              </button>
+              <button
+                className={`px-1 text-sm rounded-sm p-1 ${
+                  FormData[item.name] === true &&
+                  "bg-abutua text-ungu border border-abumuda"
+                }`}
+                onClick={() => handleClickButton(true)}
+              >
+                <span className="px-6">True</span>
+              </button>
+            </div>
+          </>
+        );
+
       case "price":
         return (
           <>
@@ -137,23 +208,23 @@ const FormDefault = ({
           </>
         );
 
-      case "select":
-        return (
-          <>
-            <label
-              htmlFor={item.name}
-              className="block text-sm font-medium text-white"
-            >
-              tes
-            </label>
-            <SelectItem
-              options={selectOptions}
-              value={selectedValue}
-              onChange={handleSelectChange}
-              placeholder={item.placeholder}
-            />
-          </>
-        );
+      // case "select":
+      //   return (
+      //     <>
+      //       <label
+      //         htmlFor={item.name}
+      //         className="block text-sm font-medium text-white"
+      //       >
+      //         tes
+      //       </label>
+      //       <SelectItem
+      //         options={selectOptions}
+      //         value={selectedValue}
+      //         onChange={handleSelectChange}
+      //         placeholder={item.placeholder}
+      //       />
+      //     </>
+      //   );
 
       case "multiselect":
         return (

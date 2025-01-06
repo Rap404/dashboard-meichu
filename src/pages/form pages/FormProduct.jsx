@@ -23,12 +23,14 @@ const FormProduct = () => {
     description: "",
     price: "",
     product_link: "",
+    isBundle: false,
   };
   const [formData, setFormData] = useState(initialFormState);
   const [categories, setCategories] = useState({});
-  const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  console.log(formData);
 
   const fetchCategories = async () => {
     try {
@@ -48,7 +50,6 @@ const FormProduct = () => {
     try {
       setLoading(true);
       const response = await axios.get(`${baseUrl}/products/${id}`);
-      setProduct(response.data || []);
       setFormData({
         name: response.data.data.attributes.name,
         thumbnail:
@@ -57,9 +58,11 @@ const FormProduct = () => {
         description: response.data.data.attributes.description,
         price: response.data.data.attributes.price,
         product_link: response.data.data.attributes.product_link,
+        isBundle: response.data.data.attributes.isBundle,
         images: [],
         categories: [],
       });
+      console.log(response);
       if (response.data.data.attributes.categories) {
         setSelectedCategories([]);
         response.data.data.attributes.categories.data.map((item) =>
@@ -88,7 +91,6 @@ const FormProduct = () => {
     } catch (error) {
       setError(error?.message || "Failed fetch product");
       console.error(error?.message || []);
-      setProduct([]);
     } finally {
       setLoading(false);
     }
@@ -104,6 +106,7 @@ const FormProduct = () => {
         description: formData.description,
         price: formData.price,
         product_link: formData.product_link,
+        isBundle: formData?.isBundle || null,
       };
       let thumbnail_id = null;
       if (
@@ -165,7 +168,10 @@ const FormProduct = () => {
         description: formData.description,
         price: formData.price,
         product_link: formData.product_link,
+        isBundle: formData.isBundle,
       };
+
+      console.log("pro", productData);
 
       let thumbnail_id = null;
       if (

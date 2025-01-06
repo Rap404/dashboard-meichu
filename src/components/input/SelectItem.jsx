@@ -11,8 +11,6 @@ const SelectItem = ({
   const [selectedOption, setSelectedOption] = useState(value);
   const dropdownRef = useRef(null);
 
-  // console.log(options);
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {

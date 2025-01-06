@@ -112,6 +112,12 @@ export const formProduct = [
     required: true,
     label: "Product link",
   },
+  {
+    id: "isBundle",
+    name: "isBundle",
+    type: "bool",
+    label: "Is Bundle",
+  },
 ];
 
 export const formAmbassador = [
