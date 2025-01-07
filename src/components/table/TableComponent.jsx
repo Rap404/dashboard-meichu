@@ -152,7 +152,7 @@ const TableComponent = ({
                   {col.header}
                 </th>
               ))}
-              {currentPosts[0]?.attributes?.isNew && <th></th>}
+              {isDetail && <th></th>}
               {isActions ? (
                 <th className="text-right py-3 ps-6 md:ps-0 lg:ps-0 pe-11 text-gray-300 font-medium">
                   Actions

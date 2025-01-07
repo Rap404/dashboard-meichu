@@ -54,7 +54,6 @@ export const AuthProvider = ({ children }) => {
       // Update state
       setUser(userData);
       setIsAuthenticated(true);
-      successNotif("Login successful");
 
       return { user: userData, token: jwt };
     } catch (error) {

@@ -78,6 +78,10 @@ const UsersPage = () => {
       accessor: (item) => item.email,
     },
     {
+      header: "Phone number",
+      accessor: (item) => item.telephoneNumber,
+    },
+    {
       header: "Likes",
       accessor: (item) => item.likes.length,
       nowrap: true,

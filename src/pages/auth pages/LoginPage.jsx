@@ -17,6 +17,8 @@ const LoginPage = () => {
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const rememberHandler = () => {
     if (remember == false) {
@@ -28,18 +30,21 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
       await login(formData.identifier, formData.password);
       navigate("/");
     } catch (error) {
-      console.error("error", error);
+      // errorNotif("dpalkpldw");
+      // console.error("error", error.message);
       setError("login failed");
+      errorNotif(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // console.log("Error:", error);
-
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div className="text-red-500">{errorNotif(error)}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">{errorNotif(error)}</div>;
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-hitam">

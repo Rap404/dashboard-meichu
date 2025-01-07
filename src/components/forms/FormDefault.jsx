@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import SelectItem from "../input/SelectItem";
-import { assets } from "../../assets/Assets";
 import TextArea from "../input/TextArea";
 import UploadImage from "../input/UploadImage";
 import UploadImages from "../input/UploadImages";
@@ -20,8 +18,6 @@ const FormDefault = ({
   onMultiChange,
   onSelectChange,
 }) => {
-  // const [selectedValue, setSelectedValue] = useState([]);
-
   const selectOptions = Array.isArray(availableItems)
     ? availableItems?.map((item) => ({
         id: item?.id,
@@ -207,24 +203,6 @@ const FormDefault = ({
             />
           </>
         );
-
-      // case "select":
-      //   return (
-      //     <>
-      //       <label
-      //         htmlFor={item.name}
-      //         className="block text-sm font-medium text-white"
-      //       >
-      //         tes
-      //       </label>
-      //       <SelectItem
-      //         options={selectOptions}
-      //         value={selectedValue}
-      //         onChange={handleSelectChange}
-      //         placeholder={item.placeholder}
-      //       />
-      //     </>
-      //   );
 
       case "multiselect":
         return (

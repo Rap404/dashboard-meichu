@@ -277,6 +277,11 @@ export const detailRequest = [
     label: "User :",
   },
   {
+    id: "email",
+    name: "email",
+    label: "Email",
+  },
+  {
     id: "phone",
     name: "phone",
     label: "Phone number :",

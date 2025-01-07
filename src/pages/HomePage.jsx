@@ -1,19 +1,42 @@
-import React from "react";
-import FormDefault from "../components/forms/FormDefault";
-import { formCategories, mediaUrl } from "../Constant";
-import RegularButton from "../components/buttons/RegularButton";
-import Button from "../components/buttons/Button";
+import React, { useEffect, useState } from "react";
 import { assets } from "../assets/Assets";
-import IconGrayButton from "../components/buttons/IconGrayButton";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
 import NotificationBox from "../components/text/NotificationBox";
 import WelcomeBox from "../components/text/WelcomeBox";
-import RollingMachine from "../components/RollingMachine";
 import SpinMachine from "../components/SpinMachine";
+import LoadingComponent from "../components/text/Loading";
+import { errorNotif } from "../components/text/Notification";
+import axios from "axios";
+import { baseUrl } from "../Constant";
 
 const HomePage = ({ profile }) => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const imageProfile = profile?.profilePicture?.url;
+  const [newRequest, setNewRequest] = useState({});
+
+  const fetchNewRequest = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${baseUrl}/requests?filters[isNew]=true`
+      );
+      setNewRequest(response.data.data || []);
+      setError(null);
+    } catch (error) {
+      console.error(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNewRequest();
+  }, []);
+
+  if (loading) return <LoadingComponent />;
+  if (error) return errorNotif(error);
+
   return (
     <div className="justify-center h-screen bg-hitam text-putih mb-36">
       <div className="px-12 pt-10 ">
@@ -24,7 +47,7 @@ const HomePage = ({ profile }) => {
               profile.profilePicture ? imageProfile : assets.photo_profile
             }
           />
-          <NotificationBox />
+          <NotificationBox newRequest={newRequest} />
         </div>
         <div className="pt-32 ">
           <SpinMachine />

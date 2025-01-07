@@ -20,6 +20,7 @@ const Requestdetail = () => {
     isIMVU: "",
     type: "",
     user: "",
+    email: "",
     phone: "",
   });
   const [loading, setLoading] = useState(false);
@@ -37,11 +38,26 @@ const Requestdetail = () => {
         type: response?.data?.data?.attributes?.productType,
         user: response?.data?.data?.attributes?.user?.data?.attributes
           ?.username,
+        email: response?.data.data.attributes.user.data.attributes.email,
         phone:
           response?.data?.data?.attributes?.user?.data?.attributes
             ?.telephoneNumber,
       });
-      console.log(response);
+
+      const newResponse = await axios.put(
+        `${baseUrl}/requests/${id}`,
+        {
+          data: {
+            isNew: false,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setError(null);
     } catch (error) {
       console.error(error);
@@ -70,14 +86,14 @@ const Requestdetail = () => {
           <div className="text-white text-3xl font-bold">{pages[0]}</div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row lg:flex-row gap-20 items-center">
+      <div className="flex flex-col md:flex-row lg:flex-row gap-20 my-7 items-center">
         <div className="rounded-lg">
           <img className="max-h-96 p-3" src={formData.image} alt="" />
         </div>
         <div className="flex flex-col">
           {detailRequest.map((field, index) => (
             <div key={index} className="flex">
-              <div className="flex my-7 ps-5 items-center gap-5">
+              <div className="flex my-3 ps-5 items-center gap-5">
                 <label
                   htmlFor={field.id}
                   className="text-white w-20 md:w-32 lg:w-32"
@@ -101,7 +117,7 @@ const Requestdetail = () => {
             func={() => navigate("/products/create")}
             name={"Create products"}
           />
-          <Button func={() => navigate("/requests")} name={"cancel"} />
+          <Button func={() => navigate("/requests")} name={"Back"} />
         </>
       </div>
     </div>
