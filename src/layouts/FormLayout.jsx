@@ -20,6 +20,7 @@ const FormLayout = ({
   mainFunc,
   scFunc,
   buttonName,
+  scButtonName,
   onMultiChange,
   onSelectChange,
 }) => {
@@ -78,7 +79,7 @@ const FormLayout = ({
             <>
               <Button
                 value={"createanother"}
-                name={"Create & create another"}
+                name={scButtonName ? scButtonName : "Create & create another"}
               />
               <Button func={getBasePath} name={"cancel"} />
             </>

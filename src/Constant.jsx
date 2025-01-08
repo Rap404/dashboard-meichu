@@ -1,3 +1,8 @@
+import {
+  ExclamationCircleIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/outline";
+
 export const baseUrl = import.meta.env.VITE_BASE_URL;
 export const mediaUrl = import.meta.env.VITE_MEDIA_URL;
 

@@ -6,9 +6,11 @@ import axios from "axios";
 import { useAuth } from "../lib/AuthContext";
 import { errorNotif, successNotif } from "../components/text/Notification";
 import { formatDateTime } from "../lib/DateFormatter";
+import { useNavigate } from "react-router-dom";
+import MiniModal from "../components/modal/MiniModal";
 
 const AdminProfilePage = () => {
-  const { user, getToken } = useAuth();
+  const { user, token, logout } = useAuth();
   const id = user.id;
   const pages = ["Profile", ">", "Edit"];
   const [formData, setFormData] = useState({
@@ -17,10 +19,21 @@ const AdminProfilePage = () => {
     email: "",
     createdAt: "",
   });
-  const token = getToken();
   const [avatar, setAvatar] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      errorNotif(error.message);
+    }
+  };
 
   const handleAvatar = (img) => {
     try {
@@ -150,14 +163,24 @@ const AdminProfilePage = () => {
         formConstant={adminProfileForm}
         key={avatar}
         pages={pages}
-        isUseButton={false}
         changeHandler={(e) => handleChange(e, setFormData)}
         fileHandler={handleAvatar}
         file={avatar}
         formData={formData}
         mainFunc={handleUpdateProfile}
+        scFunc={() => setModalOpen(!modalOpen)}
         buttonName={loading ? "Updating.." : "Update Profile"}
+        scButtonName={"Logout"}
       />
+      {modalOpen && (
+        <MiniModal
+          closeModal={() => setModalOpen(false)}
+          func={() => handleLogout}
+          text={"you want to log out?"}
+          isText={false}
+          buttonName="Log out"
+        />
+      )}
     </>
   );
 };

@@ -34,8 +34,6 @@ const LoginPage = () => {
       await login(formData.identifier, formData.password);
       navigate("/");
     } catch (error) {
-      // errorNotif("dpalkpldw");
-      // console.error("error", error.message);
       setError("login failed");
       errorNotif(error.message);
     } finally {
@@ -61,8 +59,8 @@ const LoginPage = () => {
             changeHandler={(e) => handleChange(e, setFormData)}
             data={formData}
           />
-          <div className="flex items-center justify-between py-5">
-            <div className="flex items-center">
+          <div className="flex items-center justify-end py-5">
+            {/* <div className="flex items-center">
               <CheckBox onChange={rememberHandler} checked={remember} />
               <label
                 htmlFor="remember-me"
@@ -70,7 +68,7 @@ const LoginPage = () => {
               >
                 Remember me
               </label>
-            </div>
+            </div> */}
             <div className="">
               <button onClick={() => navigate("/forgot-password")}>
                 <span className="text-oren text-sm">Forgot password?</span>

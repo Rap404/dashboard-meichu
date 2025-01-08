@@ -1,7 +1,13 @@
 import { ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
-const MiniModal = ({ closeModal, func }) => {
+const MiniModal = ({
+  closeModal,
+  func,
+  text = "You won't be able to revert this!",
+  isText = true,
+  buttonName = "remove",
+}) => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -32,14 +38,14 @@ const MiniModal = ({ closeModal, func }) => {
                     className="text-4xl leading-6 font-medium text-white"
                     id="modal-title"
                   >
-                    Are you sure?
+                    Are you sure ?
                   </span>
                 </div>
-                <div className="mt-2">
-                  <p className="text-lg text-gray-500">
-                    You won't be able to revert this!
-                  </p>
-                </div>
+                {isText && (
+                  <div className="mt-2">
+                    <p className="text-lg text-gray-500">{text}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -56,7 +62,7 @@ const MiniModal = ({ closeModal, func }) => {
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-oren text-base font-medium text-white hover:bg-kuning focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={func}
             >
-              Remove
+              {buttonName}
             </button>
           </div>
         </div>

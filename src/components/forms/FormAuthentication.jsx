@@ -31,9 +31,9 @@ const FormAuthentication = ({
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showPass ? (
-                <EyeIcon className="h-5 w-5  mt-5 text-white" />
-              ) : (
                 <EyeOffIcon className="h-5 w-5 mt-5 text-oren hover:text-oren active:text-oren transition-colors duration-150" />
+              ) : (
+                <EyeIcon className="h-5 w-5  mt-5 text-white" />
               )}
             </button>
           ) : (

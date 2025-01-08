@@ -1,25 +1,10 @@
 import React from "react";
 import IconGrayButton from "../buttons/IconGrayButton";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
-import { assets } from "../../assets/Assets";
-import { useNavigate } from "react-router-dom";
-import { errorNotif } from "./Notification";
-import { useAuth } from "../../lib/AuthContext";
-
+import {
+  ArrowLeftEndOnRectangleIcon,
+  MoonIcon,
+} from "@heroicons/react/24/outline";
 const WelcomeBox = ({ imageProfile }) => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      errorNotif(error.message);
-    }
-  };
-
   return (
     <div className="w-full bg-secondary border border-abutua rounded-xl py-5 px-10 flex justify-between">
       <div className="flex gap-5">
@@ -34,9 +19,9 @@ const WelcomeBox = ({ imageProfile }) => {
         </div>
       </div>
       <IconGrayButton
-        icon={<ArrowLeftEndOnRectangleIcon />}
-        text={"Sign Out"}
-        func={handleLogout}
+        icon={<MoonIcon />}
+        text={"Switch mode"}
+        func={() => console.log("aplpawl")}
       />
     </div>
   );
