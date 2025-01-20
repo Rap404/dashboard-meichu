@@ -76,16 +76,18 @@ const PageLayout = ({
   };
 
   return (
-    <div className="min-h-screen w-full bg-hitam overflow-x-hidden overscroll-none">
-      <div className="ps-5 md:ps-6 lg:px-10 lg:ps-12 py-10 min-h-screen w-full bg-hitam">
+    <div className="max-h-screen w-full bg-white dark:bg-hitam overflow-x-hidden overflow-auto pb-20">
+      <div className="ps-5 md:ps-6 lg:px-10 lg:ps-12 py-10 min-h-screen w-full bg-white dark:bg-hitam">
         <div className="w-full">
-          <div className="flex flex-row gap-4 text-sm text-zinc-400">
+          <div className="flex flex-row gap-4 text-sm text-abumuda">
             {pages.map((page, index) => (
               <span key={index}>{page}</span>
             ))}
           </div>
           <div className="flex flex-row justify-between my-2">
-            <div className="text-white text-3xl font-bold">{pages[0]}</div>
+            <div className="text-hitam dark:text-white text-3xl font-bold">
+              {pages[0]}
+            </div>
             <div className="px-8">
               {isActions ? <RegularButton func={func} name={buttonName} /> : ""}
             </div>

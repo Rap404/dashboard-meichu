@@ -48,10 +48,10 @@ const CircularImages = ({ setSelectedProfile, image }) => {
                 />
               )}
               <button
-                className="absolute bottom-0 right-0 rounded-full border-2 border-hitam p-2 bg-white hover:bg-oren"
+                className="absolute bottom-0 right-0 rounded-full border-2 hover:border-oren hover:text-oren text-hitam dark:hover:border-oren dark:border-hitam p-2 bg-white"
                 onClick={() => setModalOpen(true)}
               >
-                <SquarePen className="text-hijau" size={20} strokeWidth={2.1} />
+                <SquarePen className="" size={20} strokeWidth={2.1} />
               </button>
               {modalOpen && (
                 <Modal

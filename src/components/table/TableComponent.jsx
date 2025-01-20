@@ -100,19 +100,19 @@ const TableComponent = ({
   };
 
   return (
-    <div className="me-6 mt-8 bg-zinc-900 border border-secondary rounded-xl overflow-x-hidden">
+    <div className="me-6 mt-8 bg-white dark:bg-secondary border border-2-secondary dark:border-secondary rounded-xl overflow-x-hidden">
       {/* search bar */}
       <div className="flex justify-between items-center px-5 py-2">
         {selectedIds.length > 0 ? (
           <div className="flex flex-col md:flex-row lg:flex-row gap-2 items-center">
             <div className="">
-              <span className="text-white text-sm flex-col">
+              <span className="text-hitam dark:text-white text-sm flex-col">
                 {selectedIds.length} items Selected
               </span>
             </div>
             <div className="">
               <button
-                className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800"
+                className="flex gap-1 dark:bg-abutua p-1 rounded-md hover:bg-red-100 dark:hover:border hover:border-red-800"
                 onClick={() => setModalOpen(true)}
               >
                 <span className="text-red">
@@ -130,9 +130,9 @@ const TableComponent = ({
 
       <div className="overflow-x-auto">
         {/* Table */}
-        <table className="w-full bg-hitam">
+        <table className="w-full bg-white dark:bg-hitam">
           <thead>
-            <tr className="border-b border-zinc-800 bg-abutua">
+            <tr className="border border-2-abutua dark:border-abutua bg-putihtrd dark:bg-abutua">
               {isActions ? (
                 <th className="w-8 py-3 px-4">
                   <CheckBox onChange={handleSelectAll} checked={selectAll} />
@@ -142,19 +142,21 @@ const TableComponent = ({
               )}
 
               <th className="w-8 py-3 px-4">
-                <span className="text-gray-300 font-medium">No</span>
+                <span className="text-hitam dark:text-gray-300 font-medium">
+                  No
+                </span>
               </th>
               {columns.map((col, index) => (
                 <th
                   key={index}
-                  className="text-center py-3 ps-6 text-gray-300 font-medium"
+                  className="text-center py-3 ps-6 text-hitam dark:text-gray-300 font-medium"
                 >
                   {col.header}
                 </th>
               ))}
               {isDetail && <th></th>}
               {isActions ? (
-                <th className="text-right py-3 ps-6 md:ps-0 lg:ps-0 pe-11 text-gray-300 font-medium">
+                <th className="text-right py-3 ps-6 md:ps-0 lg:ps-0 pe-11 text-hitam dark:text-gray-300 font-medium">
                   Actions
                 </th>
               ) : (
@@ -170,7 +172,7 @@ const TableComponent = ({
                 {currentPosts.map((item, index) => (
                   <tr
                     key={index}
-                    className={`border-b border-zinc-800 hover:bg-abutua bg-secondary z-0`}
+                    className={`border-b border-2-abutua dark:border-abutua hover:bg-putihtrd dark:hover:bg-abutua bg-putihsc dark:bg-secondary z-0`}
                     onClick={() => handleEditPage(item?.attributes?.uuid)}
                   >
                     {isActions ? (
@@ -187,14 +189,14 @@ const TableComponent = ({
                       <td></td>
                     )}
                     <td className="py-4 px-6">
-                      <span className="text-gray-300 font-medium">
+                      <span className="text-hitam dark:text-gray-300 font-medium">
                         {calculateRowNumber(index)}
                       </span>
                     </td>
                     {columns.map((col, colIndex) => (
                       <td
                         key={colIndex}
-                        className="text-center justify-center py-4 ps-4 text-gray-300 text-sm"
+                        className="text-center justify-center py-4 ps-4 text-hitam dark:text-gray-300 text-sm"
                       >
                         <TableColumn item={col} data={item} />
                       </td>

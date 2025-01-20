@@ -8,6 +8,7 @@ import { errorNotif, successNotif } from "../components/text/Notification";
 import { formatDateTime } from "../lib/DateFormatter";
 import { useNavigate } from "react-router-dom";
 import MiniModal from "../components/modal/MiniModal";
+import LoadingComponent from "../components/text/Loading";
 
 const AdminProfilePage = () => {
   const { user, token, logout } = useAuth();
@@ -17,6 +18,7 @@ const AdminProfilePage = () => {
     profilePicture: null,
     username: "",
     email: "",
+    phone: "",
     createdAt: "",
   });
   const [avatar, setAvatar] = useState(null);
@@ -27,11 +29,14 @@ const AdminProfilePage = () => {
 
   const handleLogout = async () => {
     try {
+      setLoading(true);
       await logout();
       navigate("/");
     } catch (error) {
       console.log(error);
       errorNotif(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,6 +85,7 @@ const AdminProfilePage = () => {
       setFormData({
         username: profileData.username,
         email: profileData.email,
+        phone: profileData.telephoneNumber,
         createdAt: formatDateTime(profileData.createdAt),
       });
 
@@ -100,6 +106,7 @@ const AdminProfilePage = () => {
       setLoading(true);
       const payload = {
         username: formData.username,
+        telephoneNumber: formData.phone,
       };
 
       if (
@@ -135,6 +142,7 @@ const AdminProfilePage = () => {
       setFormData({
         profilePicture: response.data.profilePicture?.url || null,
         username: response.data.username || "",
+        phone: response.data.telephoneNumber || "",
         email: response.data.email,
         createdAt: formatDateTime(response.data.createdAt),
       });
@@ -154,7 +162,7 @@ const AdminProfilePage = () => {
     fetchProfile();
   }, []);
 
-  if (loading) return <div className="">Loading...</div>;
+  if (loading) return <LoadingComponent />;
   if (error) return errorNotif(error.message);
 
   return (
@@ -175,7 +183,7 @@ const AdminProfilePage = () => {
       {modalOpen && (
         <MiniModal
           closeModal={() => setModalOpen(false)}
-          func={() => handleLogout}
+          func={handleLogout}
           text={"you want to log out?"}
           isText={false}
           buttonName="Log out"

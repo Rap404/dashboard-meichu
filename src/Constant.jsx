@@ -252,6 +252,12 @@ export const adminProfileForm = [
     disabled: true,
   },
   {
+    id: "phone",
+    name: "phone",
+    type: "text",
+    label: "Phone number",
+  },
+  {
     id: "createdAt",
     name: "createdAt",
     type: "text",

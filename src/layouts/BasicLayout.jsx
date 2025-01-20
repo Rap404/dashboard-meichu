@@ -48,7 +48,7 @@ const BasicLayout = ({ children, setUserProfile }) => {
   if (error) return errorNotif(error.message);
 
   return (
-    <div className="min-h-screen w-full overflow-hidden">
+    <div className="max-h-screen w-full dark:bg-hitam overflow-hidden">
       <Navbar
         toggleSidebar={toggleSidebar}
         isSideBarOpen={isSideBarOpen}
@@ -58,7 +58,7 @@ const BasicLayout = ({ children, setUserProfile }) => {
       />
       <div className="flex flex-grow">
         <Sidebar setIsOpen={toggleSidebar} isOpen={isSideBarOpen} />
-        <main className="flex-grow overflow-auto">
+        <main className="flex-grow">
           <Outlet />
         </main>
       </div>

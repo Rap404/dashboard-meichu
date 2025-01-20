@@ -79,17 +79,17 @@ const UsersPage = () => {
     },
     {
       header: "Phone number",
-      accessor: (item) => item.telephoneNumber,
+      accessor: (item) => item?.telephoneNumber,
     },
     {
       header: "Likes",
-      accessor: (item) => item.likes.length,
+      accessor: (item) => item?.likes?.length || "0",
       nowrap: true,
       type: "likes",
     },
     {
       header: "Requests",
-      accessor: (item) => item.requests.length,
+      accessor: (item) => item?.requests?.length || "0",
       type: "req",
     },
   ];

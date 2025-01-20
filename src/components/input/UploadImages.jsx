@@ -34,7 +34,7 @@ const UploadImages = ({
   }, [image]);
   return (
     <div
-      className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
+      className={`flex flex-col mt-1 gap-1 items-center justify-end border-2 dark:border-abutua rounded-3xl hover:bg-gray-200 dark:hover:bg-secondary ${
         !image ? "py-12" : "py-0 transition-all duration-1000"
       }`}
     >
@@ -75,7 +75,7 @@ const UploadImages = ({
           </p>
         </button>
       ) : (
-        <div className="justify-end flex flex-row gap-3 absolute py-5">
+        <div className="justify-end flex flex-row gap-3 py-5">
           <Button func={onRemove} name={"Hapus"} />
           <Button func={() => setModalOpen(true)} name={"Edit"} />
           {isLast && <Button func={onAdd} name={"Tambah"} />}

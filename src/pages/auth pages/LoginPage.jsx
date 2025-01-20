@@ -51,7 +51,7 @@ const LoginPage = () => {
           <p className="font-semibold text-lg">Meichuu Dashboard</p>
           <span className="mt-3 font-extrabold text-2xl">Sign In</span>
         </div>
-        <form>
+        <form onSubmit={handleLogin}>
           <FormAuthentication
             FormData={formFieldLogin}
             showPass={showPassword}
@@ -60,19 +60,10 @@ const LoginPage = () => {
             data={formData}
           />
           <div className="flex items-center justify-end py-5">
-            {/* <div className="flex items-center">
-              <CheckBox onChange={rememberHandler} checked={remember} />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-white"
-              >
-                Remember me
-              </label>
-            </div> */}
             <div className="">
-              <button onClick={() => navigate("/forgot-password")}>
+              <div onClick={() => navigate("/forgot-password")}>
                 <span className="text-oren text-sm">Forgot password?</span>
-              </button>
+              </div>
             </div>
           </div>
           <SubmitButton func={handleLogin} />

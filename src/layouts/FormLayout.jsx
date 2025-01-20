@@ -45,7 +45,7 @@ const FormLayout = ({
   };
 
   return (
-    <div className="ps-12 pe-6 pt-10 min-h-screen bg-hitam">
+    <div className="ps-12 pe-6 pt-10 bg-white dark:bg-hitam mb-40">
       <div className="w-full">
         <div className="flex flex-row gap-4 text-sm text-zinc-400">
           {pages.map((page, index) => (
@@ -53,7 +53,9 @@ const FormLayout = ({
           ))}
         </div>
         <div className="flex flex-row justify-between my-2">
-          <div className="text-white text-3xl font-bold">{pages[0]}</div>
+          <div className="text-hitam dark:text-white text-3xl font-bold">
+            {pages[0]}
+          </div>
         </div>
       </div>
       <form onSubmit={handleSubmit}>

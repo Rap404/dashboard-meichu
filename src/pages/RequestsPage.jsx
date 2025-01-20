@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../components/text/Loading";
 import { errorNotif } from "../components/text/Notification";
 import UseDebounce from "../hooks/UseDebounce";
+import { useAuth } from "../lib/AuthContext";
 
 const RequestsPage = () => {
+  const { token } = useAuth();
   const pages = ["Request", ">", "List"];
   const navigate = useNavigate();
   const [requests, setRequests] = useState({});
@@ -20,7 +22,11 @@ const RequestsPage = () => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${baseUrl}/requests`);
+      const response = await axios.get(`${baseUrl}/requests`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setRequests(response.data.data || []);
       setError(null);
     } catch (error) {
@@ -35,7 +41,12 @@ const RequestsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${baseUrl}/requests/search?query=${query}`
+        `${baseUrl}/requests/search?query=${query}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setRequests(response.data.data || []);
       setError(null);

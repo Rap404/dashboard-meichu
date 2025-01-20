@@ -44,6 +44,8 @@ export const AuthProvider = ({ children }) => {
       }
       const response = await axios.post(url, { identifier, password });
 
+      console.log(response);
+
       // Extract user and JWT token from response
       const { jwt, user: userData } = response.data;
 

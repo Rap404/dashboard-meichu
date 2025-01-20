@@ -166,7 +166,7 @@ const FormEvent = () => {
   if (error) return errorNotif(error);
 
   return (
-    <div>
+    <div className="h-screen overflow-auto">
       <FormLayout
         formConstant={formEvent}
         formData={formData}

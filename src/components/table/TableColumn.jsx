@@ -19,7 +19,6 @@ const TableColumn = ({ item, data }) => {
               />
             </div>
           );
-          s;
         } catch (error) {
           console.error("Error rendering image:", error);
           return <div className="text-white">Image Not Alvailable</div>;
@@ -55,8 +54,8 @@ const TableColumn = ({ item, data }) => {
           const fileCount = item.accessor(data);
           return (
             <div className="flex justify-center items-center gap-2">
-              <div className="bg-secondary p-1 rounded-sm">{fileCount}</div>
-              <span className="w-5 h-5 text-white">
+              <div className="p-1 rounded-sm">{fileCount}</div>
+              <span className="w-5 h-5 text-hitam dark:text-white">
                 <PhotoIcon />
               </span>
             </div>
@@ -85,7 +84,7 @@ const TableColumn = ({ item, data }) => {
           const products = item.accessor(data);
           return (
             <div className="flex justify-center items-center gap-2">
-              <div className="bg-abumuda p-1 rounded-sm">{products}</div>
+              <div className="p-1 rounded-sm">{products}</div>
               <span>Products</span>
             </div>
           );

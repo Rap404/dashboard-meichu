@@ -9,7 +9,7 @@ const CheckBox = ({ checked, onChange }) => {
                     ${
                       checked
                         ? "bg-amber-500 border-amber-500"
-                        : "bg-zinc-800 border-zinc-700 hover:border-zinc-600"
+                        : "bg-putihtrd dark:bg-zinc-800 border-2 dark:border-zinc-700 hover:border-zinc-600"
                     }`}
     >
       {checked && <Check size={14} className="text-white" />}

@@ -75,7 +75,7 @@ const Requestdetail = () => {
   if (error) return errorNotif(error);
 
   return (
-    <div className="ps-12 pe-6 pt-10 min-h-screen bg-hitam">
+    <div className="ps-12 pe-6 pt-10 min-h-screen dark:bg-hitam">
       <div className="w-full">
         <div className="flex flex-row gap-4 text-sm text-zinc-400">
           {pages.map((page, index) => (
@@ -83,7 +83,9 @@ const Requestdetail = () => {
           ))}
         </div>
         <div className="flex flex-row justify-between my-2">
-          <div className="text-white text-3xl font-bold">{pages[0]}</div>
+          <div className="text-hitam dark:text-white text-3xl font-bold">
+            {pages[0]}
+          </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row lg:flex-row gap-20 my-7 items-center">
@@ -96,13 +98,13 @@ const Requestdetail = () => {
               <div className="flex my-3 ps-5 items-center gap-5">
                 <label
                   htmlFor={field.id}
-                  className="text-white w-20 md:w-32 lg:w-32"
+                  className="dark:text-white w-20 md:w-32 lg:w-32"
                 >
                   {field.label}
                 </label>
                 <input
                   type="text"
-                  className="bg-secondary text-abumuda p-2 rounded-md"
+                  className="border-2 dark:border-abutua dark:bg-secondary dark:text-abumuda p-2 rounded-md"
                   value={formData[field.id] || "-"}
                   disabled
                 />

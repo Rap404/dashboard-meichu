@@ -92,12 +92,6 @@ const FormDefault = ({
       case "text":
         return (
           <>
-            <label
-              htmlFor={item.name}
-              className={`block text-sm font-medium text-white`}
-            >
-              {item.label}
-            </label>
             <input
               type="text"
               name={item.name}
@@ -107,8 +101,10 @@ const FormDefault = ({
               value={FormData[item.name] || ""}
               onChange={changeHandler}
               placeholder={item.placeholder}
-              className={`mt-1 block w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
-                item.disabled ? "bg-abumuda" : "bg-secondary"
+              className={`mt-1 block w-full rounded-lg border dark:border-abumuda text-hitam dark:text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
+                item.disabled
+                  ? "bg-putihtrd dark:bg-abumuda"
+                  : " dark:bg-secondary"
               }`}
             />
           </>
@@ -137,12 +133,6 @@ const FormDefault = ({
 
         return (
           <>
-            <label
-              htmlFor={item.name}
-              className="block text-sm font-medium text-white"
-            >
-              {item.label}
-            </label>
             <input
               id={item.id}
               name={item.name}
@@ -152,24 +142,26 @@ const FormDefault = ({
               hidden
             />
             <div
-              className={`flex w-60  bg-secondary p-2 text-white justify-between mt-2 px-5 items-center rounded-md border ${
-                isActive === false ? "border-abumuda" : "border-kuning"
+              className={`flex w-60 bg-white dark:bg-secondary p-2 text-hitam dark:text-white justify-between mt-2 px-5 items-center rounded-md border ${
+                isActive === false
+                  ? "border-2 dark:border-abumuda"
+                  : "border-kuning"
               }`}
               ref={buttonRef}
             >
               <button
-                className={`px-1 text-sm rounded-sm p-1 ${
+                className={`px-1 text-sm rounded-sm p-2 my-1${
                   FormData[item.name] !== true &&
-                  "bg-abutua text-red-600 border border-abumuda"
+                  "dark:bg-abutua text-red-600 border border-abumuda"
                 }`}
                 onClick={() => handleClickButton(false)}
               >
                 <span className="px-6">False</span>
               </button>
               <button
-                className={`px-1 text-sm rounded-sm p-1 ${
+                className={`px-1 text-sm rounded-sm p-1 my-1 ${
                   FormData[item.name] === true &&
-                  "bg-abutua text-ungu border border-abumuda"
+                  "dark:bg-abutua text-ungu border border-abumuda"
                 }`}
                 onClick={() => handleClickButton(true)}
               >
@@ -182,12 +174,6 @@ const FormDefault = ({
       case "price":
         return (
           <>
-            <label
-              htmlFor={item.name}
-              className={`block text-sm font-medium text-white`}
-            >
-              {item.label}
-            </label>
             <input
               type="number"
               name={item.name}
@@ -197,8 +183,8 @@ const FormDefault = ({
               value={FormData[item.name] || ""}
               onChange={changeHandler}
               placeholder={item.placeholder}
-              className={`mt-1 block overflow-scroll w-full rounded-lg border border-abumuda text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
-                item.disabled ? "bg-abumuda" : "bg-secondary"
+              className={`mt-1 block overflow-scroll w-full rounded-lg border-2 dark:border-abumuda dark:text-gray-300 focus:outline-none focus:border-none focus:ring-1 focus:ring-oren py-2 px-3 ${
+                item.disabled ? "bg-abumuda" : "dark:bg-secondary"
               }`}
             />
           </>
@@ -219,9 +205,6 @@ const FormDefault = ({
       case "file":
         return (
           <div className="">
-            <label htmlFor="" className="block text-sm font-medium text-white">
-              {item.label}
-            </label>
             <UploadImage
               setSelectedImage={(img) => handleImageUpload(img, item.name)}
               image={FormData[item.name]}
@@ -244,10 +227,7 @@ const FormDefault = ({
       case "files":
         return (
           <>
-            <label htmlFor="" className="block text-sm font-medium text-white">
-              {item.label}
-            </label>
-            <div className="flex flex-col gap-6">
+            <div className="static flex flex-col gap-6">
               {FormData[item.name].length === 0 ? (
                 <UploadImage
                   setSelectedImage={(img) =>
@@ -282,12 +262,6 @@ const FormDefault = ({
       case "textArea":
         return (
           <>
-            <label
-              htmlFor={item.name}
-              className="block text-sm font-medium text-white"
-            >
-              {item.label}
-            </label>
             <TextArea
               id={item.id}
               label={item.label}
@@ -304,9 +278,6 @@ const FormDefault = ({
       case "date":
         return (
           <div className="">
-            <label htmlFor="" className="block text-sm font-medium text-white">
-              {item.label}
-            </label>
             <DateInput
               name={item.name}
               value={FormData[item.name]}
@@ -324,6 +295,16 @@ const FormDefault = ({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       {formConstant.map((field, index) => (
         <div className="w-full" key={index}>
+          {field.type === "profile" ? (
+            ""
+          ) : (
+            <label
+              htmlFor=""
+              className="block text-sm font-medium text-hitam dark:text-white"
+            >
+              {field.label}
+            </label>
+          )}
           {renderFormInput(field)}
         </div>
       ))}

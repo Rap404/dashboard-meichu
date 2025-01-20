@@ -25,11 +25,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       )}
       {/* sidebar */}
       <div
-        className={`absolute lg:static top-0 left-0 h-screen bg-hitam text-white z-50 md:z-50 lg:z-0 lg:z-
-          transition-transform duration-300 ease-in-out lg:translate-x-0
+        className={`absolute lg:static top-0 left-0 h-1  z-50 md:z-50 lg:z-0 lg:z-
+          transition-transform duration-300 ease-in-out lg:translate-x-0 overscroll-none
           ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <aside className="flex flex-col w-72 px-6 py-7">
+        <aside className="flex flex-col w-72 px-6 py-7 min-h-screen bg-white dark:bg-hitam text-hitam dark:text-white">
           {/* Navigasi */}
           <nav className="flex flex-col flex-grow gap-3">
             <SideItems icon={<HomeIcon />} page={"/"} text={"Dashboard"} />

@@ -10,6 +10,8 @@ const SideItems = ({ page, icon, text }) => {
   const handleActiveItems = () => {
     if (`/${pathSegments[0]}` === page) {
       setIsActive(true);
+    } else if (pathSegments.length === 0) {
+      page === "/" ? setIsActive(true) : setIsActive(false);
     } else {
       setIsActive(false);
     }
@@ -23,7 +25,9 @@ const SideItems = ({ page, icon, text }) => {
     <div className="" onClick={() => navigate(`${page}`)}>
       <a
         href={page}
-        className="group flex items-center w-75 h-10 p-2 hover:bg-zinc-900 rounded-lg transition-colors"
+        className={`group flex items-center w-75 h-10 p-2 hover:bg-putihtrd dark:hover:bg-zinc-900 rounded-lg transition-colors ${
+          isActive ? "bg-putihtrd dark:bg-zinc-900" : ""
+        }`}
       >
         <span
           className={`size-5 text-abumuda group-hover:text-kuning transition-colors ${

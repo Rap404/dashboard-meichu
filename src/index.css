@@ -4,9 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-    font-family: "Be Vietnam Pro", sans-serif;
-    transition-property: all;
-    transition-duration: 0.5s;
+  font-family: "Be Vietnam Pro", sans-serif;
+  transition-property: all;
+  transition-duration: 0.5s;
 }
+
+/* main {
+  overflow: hidden;
+} */
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */

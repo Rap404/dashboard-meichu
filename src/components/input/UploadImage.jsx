@@ -48,32 +48,30 @@ const UploadImage = ({
 
   return (
     <div
-      className={`flex flex-col mt-1 gap-1 items-center justify-end border border-abutua rounded-3xl hover:bg-secondary ${
+      className={`flex flex-col mt-1 gap-1 items-center justify-end border-2 dark:border-abutua rounded-3xl hover:bg-gray-200 dark:hover:bg-secondary ${
         !image ? "py-12" : "py-0 transition-all duration-1000 "
       }`}
     >
       {image && (
-        <>
-          <div className="w-full  to-transparent text-white p-4 rounded-t-3xl flex items-center justify-between transition-all duration-200">
-            {/* <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="text-kuning text-sm">
-                  {fileInfo?.size || ""}
-                </span>
-              </div>
-              <span>Upload Completed</span>
-            </div> */}
+        <div className="w-full bg-gradient-to-b from-ijo to-transparent text-white p-4 rounded-t-3xl items-center justify-between transition-all duration-200">
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <span className="font-medium">{`Image`}</span>
+            </div>
+            <span>Upload Completed</span>
           </div>
-
-          <div className="flex justify-center pb-7">
-            <img
-              src={selectedImg}
-              alt=""
-              className="max-w-64 h-auto rounded-lg"
-            />
-          </div>
-        </>
+        </div>
       )}
+
+      <div className="flex justify-center w-full px-10 pb-7">
+        {image && (
+          <img
+            src={selectedImg}
+            alt=""
+            className="max-w-64 h-auto rounded-lg"
+          />
+        )}
+      </div>
 
       {!image ? (
         <button
@@ -89,7 +87,7 @@ const UploadImage = ({
           <p className=" text-abumuda text-center">Upload product image</p>
         </button>
       ) : (
-        <div className="absolute flex flex-row gap-3 py-5">
+        <div className="flex flex-row gap-3 py-5">
           <Button func={onRemove} name={"Hapus"} />
           <Button func={() => setModalOpen(true)} name={"Edit"} />
           {showAddButton && <Button func={() => onAdd} name={"Tambah"} />}

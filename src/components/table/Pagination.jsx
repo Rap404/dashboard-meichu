@@ -61,14 +61,17 @@ const Pagination = ({
   return (
     <div className="flex justify-between min-w-full px-7 py-5 pt-10">
       <div className="items-center py-2">
-        <span className="text-xs md:text-base lg:text-base text-gray-200">
+        <span className="text-xs md:text-base lg:text-base text-hitam dark:text-gray-200">
           showing {data.length} results
         </span>
       </div>
       <div className="flex items-center">
         <div className="flex gap-4 md:gap-6 lg:gap-8">
           <div className="py-2">
-            <button className="text-white" onClick={decreasePage}>
+            <button
+              className="text-hitam dark:text-white"
+              onClick={decreasePage}
+            >
               <ChevronDoubleLeftIcon className="w-5 h-5" />
             </button>
           </div>
@@ -76,15 +79,14 @@ const Pagination = ({
             {getVisiblePages().map((page, index) => {
               return (
                 <div
-                  className={`rounded-md p-2 ${
-                    page == value ? "bg-abumuda" : "bg-abutua"
+                  className={`rounded-md p-2 border-2 dark:border-abutua ${
+                    page == value
+                      ? "bg-putihtrd dark:bg-abumuda text-kuning "
+                      : "bg-putihsc dark:bg-abutua text-hitam dark:text-white"
                   }`}
                   key={index}
                 >
-                  <button
-                    className="text-white"
-                    onClick={() => setCurrentPage(page)}
-                  >
+                  <button className="" onClick={() => setCurrentPage(page)}>
                     {page}
                   </button>
                 </div>
@@ -92,7 +94,10 @@ const Pagination = ({
             })}
           </div>
           <div className="py-2">
-            <button className="text-white" onClick={increasePage}>
+            <button
+              className="text-hitam dark:text-white"
+              onClick={increasePage}
+            >
               <ChevronDoubleRightIcon className="w-5 h-5" />
             </button>
           </div>
@@ -100,11 +105,11 @@ const Pagination = ({
       </div>
       <div className="">
         <div className="rounded-lg p-2">
-          <span className="hidden lg:inline-block px-2 text-sm text-gray-300">
+          <span className="hidden lg:inline-block px-2 text-sm text-hitam dark:text-gray-300">
             Per page
           </span>
           <select
-            className="bg-zinc-800 rounded px-2 py-1 text-gray-300 text-sm"
+            className="bg-putihtrd dark:bg-zinc-800 rounded px-2 py-1 text-hitam dark:text-gray-300 text-sm"
             onChange={(e) => setPostPerPage(e.target.value)}
           >
             <option value={10}>10</option>

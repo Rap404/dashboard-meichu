@@ -255,7 +255,7 @@ const FormProduct = () => {
     );
 
   return (
-    <div>
+    <div className="h-screen overflow-auto">
       <FormLayout
         formConstant={formProduct}
         formData={formData}

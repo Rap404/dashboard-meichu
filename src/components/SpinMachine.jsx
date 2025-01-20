@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { assets } from "../assets/Assets";
+import CheckBox from "./input/CheckBox";
+import { TrashIcon } from "lucide-react";
+import Button from "./buttons/Button";
+import SubmitButton from "./buttons/SubmitButton";
+import { oneHandleChange } from "../lib/FormHandler";
 
-const SpinMachine = ({ items = ["1", "2", "3", "4", "5"] }) => {
+const SpinMachine = ({}) => {
+  const [items, setItems] = useState(["tes"]);
+  const [value, setValue] = useState("");
   const [isSpinning, setIsSpinning] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [currentItem, setCurrentTime] = useState(0);
   const [result, setResult] = useState(null);
 
@@ -30,17 +38,41 @@ const SpinMachine = ({ items = ["1", "2", "3", "4", "5"] }) => {
       }
     }, 100);
   };
+
+  const handleSelectItems = (id) => {
+    const updateSelection = selectedItems.includes(id)
+      ? selectedItems.filter((selectedItem) => selectedItem !== id)
+      : [...selectedItems, id];
+
+    setSelectedItems(updateSelection);
+  };
+
+  const handleClearAll = () => {
+    setItems([]);
+  };
+
+  const handleAddItem = () => {
+    if (value.trim()) {
+      setItems((prev) => [...prev, value]);
+      setValue("");
+    }
+  };
+
+  console.log(value);
+
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+    <div className="flex flex-col items-center justify-center p-8 bg-gray-900 rounded-lg shadow-lg">
       {/* Kotak Putaran */}
       <div className="text-white text-3xl">Spin Machine</div>
       <div
-        className={`mt-10 w-32 h-32 flex items-center justify-center text-5xl 
+        className={`mt-10 w-64 h-40 flex items-center justify-center 
           bg-gradient-to-r from-purple-500 to-pink-500 
           rounded-lg border-4 border-yellow-400 shadow-xl
           ${isSpinning ? "animate-pulse" : ""}`}
       >
-        {items[currentItem]}
+        <div className="flex justify-center text-center">
+          <span className="text-3xl font-semibold">{items[currentItem]}</span>
+        </div>
       </div>
 
       {/* Tombol Putar */}
@@ -55,35 +87,61 @@ const SpinMachine = ({ items = ["1", "2", "3", "4", "5"] }) => {
           alt=""
         />
       </button>
-      {/* <button
-        onClick={spin}
-        disabled={isSpinning}
-        className={`mt-8 px-8 py-4 text-xl font-bold text-white rounded-full overflow-hidden
-          ${
-            isSpinning
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
-          } transition-all transform hover:scale-105`}
-      >
-        {isSpinning ? "Berputar..." : "PUTAR!"}
-      </button> */}
 
       {/* Hasil */}
       {result && !isSpinning && (
-        <div className="mt-8 text-2xl font-bold text-white">
+        <div className="mt-8 text-2xl font-bold text-white overflow-hidden">
           <span className="text-yellow-400">Hasil: </span> {result}
         </div>
       )}
 
       {/* Daftar Item */}
-      <div className="mt-10 text-white">
-        <h3 className="text-xl font-semibold mb-2">Item yang Tersedia:</h3>
-        <div className="flex gap-4 flex-wrap justify-center">
-          {items.map((item, index) => (
-            <div key={index} className="bg-gray-800 p-2 rounded-lg">
-              {item}
-            </div>
-          ))}
+      <div className="flex flex-row gap-7 mt-20">
+        <div className="flex flex-col gap-10 p-10 text-white">
+          <div className="flex gap-10">
+            <input
+              value={value}
+              onChange={(e) => oneHandleChange(e, setValue)}
+              type="text"
+              className="bg-abutua"
+            />
+            <SubmitButton name="Add" func={handleAddItem} />
+          </div>
+
+          <div className="flex flex-row gap-5">
+            <button
+              className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800"
+              onClick={handleClearAll}
+            >
+              <span className="text-red">
+                <TrashIcon className="h-5 w-5 text-red-500" />
+              </span>
+              <span className="text-red-500 ">Clear all</span>
+            </button>
+            <button className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800">
+              <span className="text-red">
+                <TrashIcon className="h-5 w-5" />
+              </span>
+              <span className="">Delete</span>
+            </button>
+          </div>
+        </div>
+        <div className="mt-10 text-white">
+          <h3 className="text-xl font-semibold mb-2">Item yang Tersedia:</h3>
+          <div className="flex gap-4 flex-wrap justify-center bg-abumuda p-10">
+            {items.map((item, index) => (
+              <div
+                key={index}
+                className="flex gap-2 bg-gray-800 p-2 rounded-lg"
+              >
+                <CheckBox
+                  onChange={() => handleSelectItems(index)}
+                  checked={selectedItems.includes(index)}
+                />
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

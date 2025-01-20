@@ -40,8 +40,8 @@ const TextArea = ({
             w-full
             px-3
             py-2
-            text-white
-            border
+            dark:text-white
+            border-2
             rounded-lg
             focus:outline-none
             focus:ring-2
@@ -51,9 +51,10 @@ const TextArea = ({
             transition
             duration-200
             resize-y
-            bg-secondary
+            bg-white
+            dark:bg-secondary
             ${disabled ? "bg-abumuda cursor-not-allowed" : ""}
-            ${error ? "border-red-500" : "border-abumuda"}
+            ${error ? "border-red-500" : "dark:border-abumuda"}
             ${error ? "focus:ring-red-500" : "focus:ring-oren"}
             hover:shadow-md
             `}
