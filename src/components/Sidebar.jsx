@@ -5,6 +5,7 @@ import {
   HomeIcon,
   PencilSquareIcon,
   RectangleStackIcon,
+  ServerStackIcon,
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
@@ -62,6 +63,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               icon={<UserCircleIcon />}
               page={"/users"}
               text={"Users"}
+            />
+            <SideItems
+              icon={<ServerStackIcon />}
+              page={"/content"}
+              text={"Content"}
             />
           </nav>
         </aside>

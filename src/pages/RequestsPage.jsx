@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layouts/PageLayout";
 import axios from "axios";
 import { baseUrl } from "../Constant";
-import { Columns } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import LoadingComponent from "../components/text/Loading";
 import { errorNotif } from "../components/text/Notification";

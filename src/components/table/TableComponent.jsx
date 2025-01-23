@@ -100,7 +100,7 @@ const TableComponent = ({
   };
 
   return (
-    <div className="me-6 mt-8 bg-white dark:bg-secondary border border-2-secondary dark:border-secondary rounded-xl overflow-x-hidden">
+    <div className="me-6 mt-8 bg-white dark:bg-secondary border border-2-secondary dark:border-secondary rounded-xl overflow-x-auto">
       {/* search bar */}
       <div className="flex justify-between items-center px-5 py-2">
         {selectedIds.length > 0 ? (

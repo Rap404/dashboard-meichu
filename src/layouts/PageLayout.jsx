@@ -76,7 +76,7 @@ const PageLayout = ({
   };
 
   return (
-    <div className="max-h-screen w-full bg-white dark:bg-hitam overflow-x-hidden overflow-auto pb-20">
+    <div className="max-h-screen w-full bg-white dark:bg-hitam overflow-auto pb-20">
       <div className="ps-5 md:ps-6 lg:px-10 lg:ps-12 py-10 min-h-screen w-full bg-white dark:bg-hitam">
         <div className="w-full">
           <div className="flex flex-row gap-4 text-sm text-abumuda">

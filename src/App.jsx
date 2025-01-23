@@ -25,6 +25,7 @@ import ResetPassword from "./pages/auth pages/ResetPassword";
 import FormAmbassador from "./pages/form pages/FormAmbassadors";
 import FormEvent from "./pages/form pages/FormEvent";
 import Requestdetail from "./pages/detail pages/Requestdetail";
+import ContentPage from "./pages/ContentPage";
 
 function App() {
   const { user } = useAuth();
@@ -60,6 +61,7 @@ function App() {
               <Route path="/requests" element={<RequestsPage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/profile" element={<AdminProfilePage />} />
+              <Route path="/content" element={<ContentPage />} />
 
               {/* Form Pages */}
               <Route path="/categories/create" element={<FormCategory />} />

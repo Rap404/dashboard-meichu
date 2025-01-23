@@ -6,9 +6,14 @@ import LoadingComponent from "../components/text/Loading";
 import { errorNotif } from "../components/text/Notification";
 import axios from "axios";
 import { baseUrl } from "../Constant";
-import Spinner from "../components/Spinner";
-import ProductsCard from "../components/card/ProductsCard";
 import { useAuth } from "../lib/AuthContext";
+import FastDisplayCard from "../components/card/FastDisplayCard";
+import {
+  PencilSquareIcon,
+  UserCircleIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
+import CardShuffler from "../components/CardShuffler";
 
 const HomePage = ({ profile }) => {
   const { token } = useAuth();
@@ -21,12 +26,7 @@ const HomePage = ({ profile }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${baseUrl}/requests?filters[isNew]=true`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `${baseUrl}/requests?filters[isNew]=true`
       );
       setNewRequest(response.data.data || []);
       setError(null);
@@ -60,22 +60,30 @@ const HomePage = ({ profile }) => {
           <NotificationBox newRequest={newRequest} />
         </div>
         <div className="flex flex-col md:flex-row lg:flex-row gap-10 mt-20">
-          <ProductsCard />
-          <ProductsCard />
-          <ProductsCard />
-        </div>
-        <div className="flex flex-col items-center justify-center mt-20 w-full ">
-          <span className="text-3xl text-white">Website front images</span>
-          <div className="flex flex-row px-10 gap-2 py-5 mt-10 w-full bg-abutua">
-            <div className="bg-red-900 h-64 w-full">p</div>
-            <div className="bg-red-900 w-full">p</div>
-            <div className="bg-red-900 w-full">p</div>
-            <div className="bg-red-900 w-full">p</div>
-            <div className="bg-red-900 w-full">p</div>
-          </div>
+          <FastDisplayCard
+            endpoint={"products"}
+            title={"Products"}
+            setLoading={setLoading}
+            setError={setError}
+            icon={<PencilSquareIcon />}
+          />
+          <FastDisplayCard
+            endpoint={"ambassadors"}
+            title={"Ambassadors"}
+            setLoading={setLoading}
+            setError={setError}
+            icon={<UserGroupIcon />}
+          />
+          <FastDisplayCard
+            endpoint={"users"}
+            title={"Users"}
+            setLoading={setLoading}
+            setError={setError}
+            icon={<UserCircleIcon />}
+          />
         </div>
         <div className="mt-20">
-          <Spinner />
+          <CardShuffler />
         </div>
       </div>
     </div>

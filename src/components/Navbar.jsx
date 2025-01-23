@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import profile from ".././assets/photo-profile2.svg";
 import { useNavigate } from "react-router-dom";
-import { Bars2Icon, MoonIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars2Icon,
+  MoonIcon,
+  SunIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { assets } from "../assets/Assets";
 import { useTheme } from "../lib/ThemeContext";
 
@@ -15,7 +20,7 @@ const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {
         <div className="flex items-center px-6">
           <button
             onClick={() => toggleSidebar()}
-            className="lg:hidden text-white hover:text-oren focus:outline-none"
+            className="lg:hidden dark:text-white hover:text-oren focus:outline-none"
           >
             {isSideBarOpen ? (
               <XMarkIcon className="h-6 w-6" />
@@ -32,7 +37,11 @@ const Navbar = ({ toggleSidebar, isSideBarOpen, image }) => {
             className="text-hitam dark:text-white mt-1"
             onClick={toggleTheme}
           >
-            <MoonIcon className="w-7" />
+            {isDarkMode ? (
+              <SunIcon className="w-7" />
+            ) : (
+              <MoonIcon className="w-7" />
+            )}
           </button>
           <button
             className="max-w-10 max-h-10 rounded-full group"

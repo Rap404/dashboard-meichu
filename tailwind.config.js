@@ -17,10 +17,13 @@ export default {
         'oren': '#F59E0B',
         'ijo': '#369763',
         'putihsc': '#fafafa',
-        'putihtrd': '#f4f4f5'
+        'putihtrd': '#f4f4f5',
+        'putihfrt': '#f9f9f9',
+        'orengelap': '#FE7A0F',
+        'ijokepong': '#967009'
       },
       fontFamily: {
-        sans: ['Be Vietnam Pro', 'sans-serif'], // Menjadikan Be Vietnam Pro sebagai font sans default
+        sans: ['Be Vietnam Pro', 'sans-serif'],
       },
     },
   },

@@ -3,6 +3,7 @@ import { oneHandleChange } from "../lib/FormHandler";
 import SubmitButton from "./buttons/SubmitButton";
 import { TrashIcon } from "lucide-react";
 import CheckBox from "./input/CheckBox";
+import { assets } from "../assets/Assets";
 
 const Spinner = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -55,13 +56,11 @@ const Spinner = () => {
     }
   };
 
-  console.log(result);
-
   return (
-    <div className="mb-10 bg-secondary pb-10 px-10">
+    <div className="mb-20 bg-putihtrd dark:bg-secondary border-2 dark:border-secondary pb-10 px-10">
       <div className="flex flex-col items-center justify-center p-8 rounded-lg">
         {/* Kotak putaran */}
-        <div className="text-white text-3xl">Spin machine</div>
+        <div className="dark:text-white text-3xl">Spin machine</div>
         <div
           className={`mt-10 w-64 h-40 flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg border-4 border-yellow-400 shadow-xl ${
             isSpinning ? "animate-pulse" : ""
@@ -72,39 +71,37 @@ const Spinner = () => {
           </div>
         </div>
         <button
+          className="mt-10 w-48 cursor-pointer"
           onClick={spin}
           disabled={isSpinning}
-          className="bg-kuning text-gray-600 mt-10 p-2 rounded-sm"
         >
-          SPINN!!!
+          <img src={assets.start} alt="" />
         </button>
         {/* Hasil */}
         {result && !isSpinning && (
-          <div className="mt-8 text-2xl font-bold text-white overflow-hidden">
-            <span className="text-yellow-400">Hasil: </span> {result}
+          <div className="mt-8 text-2xl font-bold dark:text-white overflow-hidden">
+            <span className="">Hasil: </span>
+            <span className="text-yellow-400"> {result}</span>
           </div>
         )}
       </div>
 
       {/* Daftar item */}
-      <span className="text-xl font-semibold text-white">
+      <span className="text-xl font-semibold dark:text-white">
         Item yang tersedia:{" "}
       </span>
-      <div className="w-full flex-col bg-abutua mt-10 rounded-lg">
+      <div className="w-full flex-col border-2 dark:border-secondary bg-putihsc dark:bg-abutua mt-10 rounded-lg">
         <div className="flex flex-row justify-between p-5">
-          <div className="flex flex-row gap-5">
-            <button
-              className="flex gap-1 p-1 rounded-md"
-              onClick={handleClearAll}
-            >
-              <span className="text-red-500 ">Clear all</span>
+          <div className="flex flex-row gap-5 items-center">
+            <button className="flex rounded-md" onClick={handleClearAll}>
+              <span className="text-red-500">Clear all</span>
             </button>
             {selectedItems.length > 0 && (
-              <button className="flex gap-1 p-1 rounded-md">
-                <span className="text-red">
-                  <TrashIcon className="h-5 w-5 text-red-500" />
+              <button className="flex rounded-md hover:text-red-500">
+                <span className="">
+                  <TrashIcon className="h-5 w-5" />
                 </span>
-                <span className="text-red-500 ">Delete</span>
+                <span className="">Delete</span>
               </button>
             )}
           </div>
@@ -114,7 +111,7 @@ const Spinner = () => {
                 value={value}
                 onChange={(e) => oneHandleChange(e, setValue)}
                 type="text"
-                className="bg-abutua text-white border border-abumuda"
+                className="dark:bg-abutua dark:text-white border border-abumuda p-1"
               />
               <SubmitButton name="Add" func={(e) => handleAddItem(e)} />
             </div>
@@ -136,54 +133,6 @@ const Spinner = () => {
           ))}
         </div>
       </div>
-      {/* <div className="flex flex-row gap-7 justify-center">
-        <div className="flex flex-col gap-10 text-white">
-          <div className="flex gap-10">
-            <input
-              value={value}
-              onChange={(e) => oneHandleChange(e, setValue)}
-              type="text"
-              className="bg-abutua"
-            />
-            <SubmitButton name="Add" func={handleAddItem} />
-          </div>
-
-          <div className="flex flex-row gap-5 ">
-            <button
-              className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800"
-              onClick={handleClearAll}
-            >
-              <span className="text-red">
-                <TrashIcon className="h-5 w-5 text-red-500" />
-              </span>
-              <span className="text-red-500 ">Clear all</span>
-            </button>
-            <button className="flex gap-1 bg-abutua p-1 rounded-md hover:border hover:border-red-800">
-              <span className="text-red">
-                <TrashIcon className="h-5 w-5" />
-              </span>
-              <span className="">Delete</span>
-            </button>
-          </div>
-        </div>
-        <div className="mt-10 text-white">
-          <h3 className="text-xl font-semibold mb-2">Item yang Tersedia:</h3>
-          <div className="flex gap-4 flex-wrap justify-center p-10">
-            {items.map((item, index) => (
-              <div
-                key={index}
-                className="flex gap-2 bg-gray-800 p-2 rounded-lg"
-              >
-                <CheckBox
-                  onChange={() => handleSelectItems(index)}
-                  checked={selectedItems.includes(index)}
-                />
-                {item}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

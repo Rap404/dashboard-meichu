@@ -21,7 +21,7 @@ const TableColumn = ({ item, data }) => {
           );
         } catch (error) {
           console.error("Error rendering image:", error);
-          return <div className="text-white">Image Not Alvailable</div>;
+          return <div className="dark:text-white">Image Not Alvailable</div>;
         }
       case "bool":
         try {

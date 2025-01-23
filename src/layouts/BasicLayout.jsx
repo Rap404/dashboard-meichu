@@ -58,7 +58,7 @@ const BasicLayout = ({ children, setUserProfile }) => {
       />
       <div className="flex flex-grow">
         <Sidebar setIsOpen={toggleSidebar} isOpen={isSideBarOpen} />
-        <main className="flex-grow">
+        <main className="flex-grow overflow-auto">
           <Outlet />
         </main>
       </div>

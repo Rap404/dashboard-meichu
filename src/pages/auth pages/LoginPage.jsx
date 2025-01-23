@@ -7,6 +7,7 @@ import { handleChange } from "../../lib/FormHandler";
 import { errorNotif } from "../../components/text/Notification";
 import { useAuth } from "../../lib/AuthContext";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../../components/text/Loading";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -29,30 +30,36 @@ const LoginPage = () => {
   };
 
   const handleLogin = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
       await login(formData.identifier, formData.password);
       navigate("/");
     } catch (error) {
-      setError("login failed");
-      errorNotif(error.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{errorNotif(error)}</div>;
+  if (loading) return <LoadingComponent />;
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-hitam">
-      <div className="max-w-md w-full space-y-8 flex flex-col bg-secondary px-10 py-8 rounded-lg">
-        <div className="mt-3 flex flex-col items-center text-3xl font-extrabold text-white ">
+    <div className="min-h-screen flex justify-center items-center bg-putihfrt dark:bg-hitam">
+      {/* <div className="absolute"></div> */}
+      <div className="max-w-md w-full space-y-8 flex flex-col border border-2-abumuda dark:border-abutua dark:bg-secondary px-10 py-8 rounded-lg">
+        <div className="mt-3 flex flex-col items-center text-3xl font-extrabold dark:text-white ">
           <p className="font-semibold text-lg">Meichuu Dashboard</p>
           <span className="mt-3 font-extrabold text-2xl">Sign In</span>
         </div>
-        <form onSubmit={handleLogin}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
           <FormAuthentication
+            error={error}
             FormData={formFieldLogin}
             showPass={showPassword}
             func={() => setShowPassword(!showPassword)}
@@ -61,9 +68,12 @@ const LoginPage = () => {
           />
           <div className="flex items-center justify-end py-5">
             <div className="">
-              <div onClick={() => navigate("/forgot-password")}>
+              <button
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+              >
                 <span className="text-oren text-sm">Forgot password?</span>
-              </div>
+              </button>
             </div>
           </div>
           <SubmitButton func={handleLogin} />

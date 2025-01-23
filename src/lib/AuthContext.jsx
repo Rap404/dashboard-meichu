@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   // Check token on initial load
   useEffect(() => {
@@ -36,17 +35,11 @@ export const AuthProvider = ({ children }) => {
   // Login Function
   const login = async (identifier, password) => {
     const url = `${baseUrl}/auth/local`;
-
     try {
-      setLoading(true);
-      if (loading) {
-        console.log("loading");
-      }
       const response = await axios.post(url, { identifier, password });
 
-      console.log(response);
-
       // Extract user and JWT token from response
+      console.log("odkdawda");
       const { jwt, user: userData } = response.data;
 
       // Store token and user data in localStorage
@@ -62,7 +55,6 @@ export const AuthProvider = ({ children }) => {
       const errorMessage =
         error.response?.data?.error?.message || "Login failed";
 
-      setError("error");
       setUser(null);
       setIsAuthenticated(false);
       localStorage.removeItem("token");
@@ -70,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
       throw { ...error, message: errorMessage };
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 

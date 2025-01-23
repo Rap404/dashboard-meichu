@@ -83,7 +83,7 @@ export const formProduct = [
     type: "file",
     label: "Product Thumbnail",
     required: true,
-    preset: "portrait",
+    preset: "square",
   },
   {
     id: "images",
