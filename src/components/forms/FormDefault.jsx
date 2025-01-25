@@ -216,7 +216,7 @@ const FormDefault = ({
 
       case "profile":
         return (
-          <div className="flex flex-col p-28">
+          <div className="flex flex-col p-14 py-28 md:p-24 lg:p-28">
             <CircularImages
               setSelectedProfile={(img) => fileHandler(img)}
               image={file}

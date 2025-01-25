@@ -37,13 +37,6 @@ const Slideshow = () => {
     );
   };
 
-  const handleSpin = () => {
-    setIsSpinning(true);
-    setTimeout(() => {
-      setIsSpinning(false);
-    }, 3000); // Stop spinning after 3 seconds
-  };
-
   const getSlideIndex = (index) => {
     const newIndex = (index + slides.length) % slides.length;
     return newIndex;
@@ -89,7 +82,7 @@ const Slideshow = () => {
           </motion.div>
         </div>
 
-        {/* <button
+        <button
           onClick={handlePrev}
           className="absolute left-4 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600 focus:outline-none"
         >
@@ -100,11 +93,8 @@ const Slideshow = () => {
           className="absolute right-4 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-600 focus:outline-none"
         >
           &#8594;
-        </button> */}
+        </button>
       </div>
-      <button onClick={handleSpin} className="bg-ijo">
-        Spin
-      </button>
     </div>
   );
 };
