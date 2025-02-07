@@ -13,6 +13,7 @@ import {
 import ModalEntries from "./modal/ModalEntries";
 import { errorNotif } from "./text/Notification";
 import RadioButton from "./input/RadioButton";
+import confetti from "canvas-confetti";
 
 const CardShuffler = () => {
   const [items, setItems] = useState([]);
@@ -21,8 +22,17 @@ const CardShuffler = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState();
   const [isSpinning, setIsSpinning] = useState(false);
+  const [afterSpin, setAfterSpin] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState("");
+
+  const clap = new Audio(
+    "https://res.cloudinary.com/dszbo6z9j/video/upload/v1738912116/clapping_Audio_Trimmer_com_d3d1cbb020.mp3"
+  );
+
+  const trumpet = new Audio(
+    "https://res.cloudinary.com/dszbo6z9j/video/upload/v1738912176/SOUND_EFEK_TEROMPET_TEWTTETETETETEWT_MP_3_39c64ea45b.mp4"
+  );
 
   useEffect(() => {
     let intervalId;
@@ -38,22 +48,87 @@ const CardShuffler = () => {
       }, 300);
     }
 
-    // if (isSpinning) {
-    //   intervalId = setInterval(() => {
-    //     const randomIndex = Math.floor(Math.random() * items.length);
-    //     setCurrentIndex(randomIndex);
-    //   }, 100);
-    // }
-
     return () => clearInterval(intervalId);
   }, [isSpinning, items.length]);
+
+  useEffect(() => {
+    if (afterSpin) {
+      setTimeout(() => {
+        setAfterSpin(false);
+      }, 5000);
+    }
+  }, [afterSpin]);
+
+  const fireConfetti = () => {
+    // Stars
+    const defaults = {
+      spread: 360,
+      ticks: 50,
+      gravity: 0,
+      decay: 0.94,
+      startVelocity: 30,
+      shapes: ["star"],
+      colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+    };
+
+    function shoot() {
+      confetti({
+        ...defaults,
+        particleCount: 40,
+        scalar: 1.2,
+        shapes: ["star"],
+      });
+
+      confetti({
+        ...defaults,
+        particleCount: 10,
+        scalar: 0.75,
+        shapes: ["circle"],
+      });
+    }
+
+    setTimeout(shoot, 0);
+    setTimeout(shoot, 100);
+    setTimeout(shoot, 200);
+
+    // School Pride
+    const end = Date.now() + 3 * 1000;
+
+    // go Buckeyes!
+    const colors = ["#bb0000", "#ffffff"];
+
+    (function frame() {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  };
 
   const handleSpin = () => {
     if (items.length >= 3) {
       setIsSpinning(true);
       setTimeout(() => {
         setIsSpinning(false);
-      }, 4000); // Stop spinning after 3 seconds
+        setAfterSpin(true);
+        clap.play();
+        trumpet.play();
+        fireConfetti();
+      }, 4000);
     } else {
       errorNotif("Please add at least 3 data to spin!");
     }
@@ -129,7 +204,9 @@ const CardShuffler = () => {
           </button>
         </div>
         <p className="text-3xl font-bold dark:text-white">
-          {isSpinning
+          {afterSpin
+            ? "🤟😜CONGRATULATION!!🥳🤙"
+            : isSpinning
             ? "Hold on! We're still choosing the winner"
             : "Add Data to Start the Spin!"}
         </p>
@@ -139,9 +216,10 @@ const CardShuffler = () => {
             <div className="flex w-full items-center justify-center gap-20">
               {/* Previouse card */}
               <motion.div
-                className={`${
-                  !isSpinning ? "hidden md:flex lg:flex" : "flex"
-                }  relative w-1/2 h-64 rounded-lg shadow-lg bg-white dark:bg-secondary border border-orengelap items-center justify-center dark:text-white text-lg`}
+                className={`
+                  relative w-1/2 h-64 rounded-lg shadow-lg bg-white border ${
+                    isSpinning ? "border-oren" : "border-ijokepong"
+                  }  dark:bg-secondary flex items-center justify-center dark:text-white text-lg`}
                 variants={cardVariants}
                 initial="left"
                 animate={
@@ -157,7 +235,7 @@ const CardShuffler = () => {
               </motion.div>
               {/* Current card */}
               <motion.div
-                className="absolute w-1/2 h-64 z-10 rounded-lg shadow-lg dark:bg-secondary border border-orengelap flex items-center justify-center text-white text-2xl font-bold"
+                className="absolute w-1/2 h-64 z-10 rounded-lg shadow-lg dark:bg-secondary border border-oren flex items-center justify-center text-white text-2xl font-bold"
                 variants={cardVariants}
                 initial="center"
                 animate={
@@ -166,7 +244,7 @@ const CardShuffler = () => {
                 transition={{ duration: 0.3 }}
               >
                 {!isSpinning && (
-                  <div className="absolute -inset-0 ring-offset-1 bg-gradient-to-r from-orengelap to-ijokepong rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                  <div className="absolute -inset-0 ring-offset-1 bg-gradient-to-r from-oren to-ijokepong rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                 )}
                 <div className="relative w-full h-full text-hitam dark:text-white bg-white dark:bg-secondary rounded-lg leading-none flex items-center justify-center space-x-6">
                   <p>{items[getSlideIndex(currentIndex)] || "No Entries"}</p>
@@ -175,7 +253,7 @@ const CardShuffler = () => {
               {/* Next card */}
               <motion.div
                 className={`relative w-1/2 h-64 rounded-lg shadow-lg bg-white border ${
-                  isSpinning ? "border-orengelap" : "border-ijokepong"
+                  isSpinning ? "border-oren" : "border-ijokepong"
                 }  dark:bg-secondary flex items-center justify-center dark:text-white text-lg `}
                 variants={cardVariants}
                 initial="right"
@@ -217,14 +295,14 @@ const CardShuffler = () => {
             )}
           </div>
           <button
-            className="bg-gradient-to-r from-orengelap to-ijokepong p-3 rounded-full"
+            className="bg-gradient-to-r from-oren to-ijokepong p-3 rounded-full"
             onClick={handleSpin}
           >
             <FaSync className="size-8 dark:text-white" />
           </button>
           <div className="">
             <button
-              className="bg-gradient-to-r from-orengelap to-ijokepong rounded-lg dark:text-white p-2"
+              className="bg-gradient-to-r from-oren to-ijokepong rounded-lg dark:text-white p-2"
               onClick={() => setModalOpen(true)}
             >
               <div className="flex flex-row gap-3">
@@ -241,7 +319,7 @@ const CardShuffler = () => {
           {items.map((name, index) => (
             <div
               key={index}
-              className="w-full flex flex-row dark:bg-secondary dark:text-white items-center text-center gap-2 px-2 lg:px-5 py-5 rounded-lg border-abumuda border-r-2 border-b-2 overflow-hidden"
+              className="w-full flex flex-row bg-putihfrt dark:bg-secondary dark:text-white items-center text-center gap-2 px-2 lg:px-5 py-5 rounded-lg border-abumuda border-r-2 border-b-2 overflow-hidden"
             >
               <RadioButton
                 checked={selectedItems.includes(index)}

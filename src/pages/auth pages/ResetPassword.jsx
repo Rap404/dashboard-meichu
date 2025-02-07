@@ -12,14 +12,14 @@ const ResetPassword = () => {
     password: "",
   });
   return (
-    <div className="min-h-screen flex justify-center items-center bg-hitam">
-      <div className="max-w-md w-full space-y-8 flex flex-col bg-secondary px-10 py-8 rounded-lg">
+    <div className="min-h-screen flex justify-center items-center bg-putihfrt dark:bg-hitam">
+      <div className="max-w-md w-full space-y-8 flex flex-col bg-putihfrt dark:bg-secondary px-10 py-8 rounded-lg">
         <div className="absolute">
           <button onClick={() => navigate("/")}>
             <ArrowLeftIcon className="h-6 w-6 text-white" />
           </button>
         </div>
-        <div className="mt-3 flex flex-col items-center text-3xl font-extrabold text-white ">
+        <div className="mt-3 flex flex-col items-center text-3xl font-extrabold dark:text-white ">
           <p className="font-semibold text-lg">Meichuu Dashboard</p>
           <span className="mt-3 font-extrabold text-2xl">Reset Password</span>
         </div>

@@ -7,11 +7,11 @@ const ErrorPage = () => {
       <div className="flex flex-col gap-12">
         <div className="flex justify-center">
           <span>
-            <CircleAlert size={140} className="text-white" />
+            <CircleAlert size={140} className="text-red-500" />
           </span>
         </div>
         <div className="flex justify-center">
-          <span className="text-white text-6xl">Page not found</span>
+          <span className="dark:text-white text-6xl">Page not found</span>
         </div>
       </div>
     </div>

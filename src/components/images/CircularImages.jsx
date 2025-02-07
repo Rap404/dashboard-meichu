@@ -67,7 +67,7 @@ const CircularImages = ({ setSelectedProfile, image }) => {
           // <img
           //   src={assets.photo_profile}
           //   className="w-20 h-20 rounded-full border-2 border-gray-400"
-          // />
+          // /> 
         )}
       </div>
     </div>

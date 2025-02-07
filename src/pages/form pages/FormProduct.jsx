@@ -223,7 +223,6 @@ const FormProduct = () => {
         }
       );
 
-      console.log(response);
       successNotif("Product successfully updated");
       navigate("/products");
     } catch (error) {

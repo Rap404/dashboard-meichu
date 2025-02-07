@@ -76,7 +76,7 @@ const UploadImages = ({
         </button>
       ) : (
         <div className="justify-end flex flex-row gap-3 py-5">
-          <Button func={onRemove} name={"Hapus"} />
+          <Button func={onRemove} name={"Delete"} />
           <Button func={() => setModalOpen(true)} name={"Edit"} />
           {isLast && <Button func={onAdd} name={"Tambah"} />}
         </div>

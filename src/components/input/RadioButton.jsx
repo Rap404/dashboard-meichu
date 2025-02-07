@@ -13,7 +13,7 @@ const RadioButton = ({ checked, onChange }) => {
                     }`}
     >
       {checked && (
-        <div className="bg-gradient-to-r p-1.5 from-orengelap to-ijokepong rounded-full"></div>
+        <div className="bg-gradient-to-r p-1.5 from-oren to-ijokepong rounded-full"></div>
       )}
     </div>
   );

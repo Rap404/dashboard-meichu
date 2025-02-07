@@ -29,7 +29,20 @@ const Requestdetail = () => {
   const fetchRequest = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${baseUrl}/requests/${id}`);
+      const response = await axios.put(
+        `${baseUrl}/requests/${id}`,
+        {
+          data: {
+            isNew: false,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setFormData({
         name: response?.data?.data.attributes?.name,
         image:
@@ -43,20 +56,6 @@ const Requestdetail = () => {
           response?.data?.data?.attributes?.user?.data?.attributes
             ?.telephoneNumber,
       });
-
-      const newResponse = await axios.put(
-        `${baseUrl}/requests/${id}`,
-        {
-          data: {
-            isNew: false,
-          },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
 
       setError(null);
     } catch (error) {
@@ -90,7 +89,7 @@ const Requestdetail = () => {
       </div>
       <div className="flex flex-col md:flex-row lg:flex-row gap-20 my-7 items-center">
         <div className="rounded-lg">
-          <img className="max-h-96 p-3" src={formData.image} alt="" />
+          <img className="max-h-64 p-3" src={formData.image} alt="" />
         </div>
         <div className="flex flex-col">
           {detailRequest.map((field, index) => (
