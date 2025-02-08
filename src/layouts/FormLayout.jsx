@@ -45,7 +45,7 @@ const FormLayout = ({
   };
 
   return (
-    <div className="ps-12 pe-6 pt-10 bg-white dark:bg-hitam mb-40">
+    <div className="min-h-screen ps-12 pe-6 pt-10 bg-white dark:bg-hitam mb-40">
       <div className="w-full">
         <div className="flex flex-row gap-4 text-sm text-zinc-400">
           {pages.map((page, index) => (
