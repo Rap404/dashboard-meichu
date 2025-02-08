@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleChange } from "../../lib/FormHandler";
 import { formResetPassword } from "../../Constant";
-import SubmitButton from "../../components/buttons/SubmitButton";
 import FormAuthentication from "../../components/forms/FormAuthentication";
 
 const ResetPassword = () => {
@@ -38,7 +37,6 @@ const ResetPassword = () => {
               </span>
             </div>
           </div>
-          <SubmitButton name={"Submit"} func={() => console.log("")} />
         </form>
       </div>
     </div>

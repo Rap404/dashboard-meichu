@@ -30,8 +30,6 @@ const FormProduct = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  console.log(formData);
-
   const fetchCategories = async () => {
     try {
       setLoading(true);
@@ -62,7 +60,6 @@ const FormProduct = () => {
         images: [],
         categories: [],
       });
-      console.log(response);
       if (response.data.data.attributes.categories) {
         setSelectedCategories([]);
         response.data.data.attributes.categories.data.map((item) =>
@@ -171,8 +168,6 @@ const FormProduct = () => {
         isBundle: formData.isBundle,
       };
 
-      console.log("pro", productData);
-
       let thumbnail_id = null;
       if (
         formData.thumbnail instanceof File ||
@@ -183,7 +178,6 @@ const FormProduct = () => {
           formData.name + " thumbnail",
           token
         );
-        console.log(thumbnailResponse);
         thumbnail_id = thumbnailResponse[0].id;
         productData.thumbnail = thumbnail_id;
       }

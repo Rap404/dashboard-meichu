@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(url, { identifier, password });
 
       // Extract user and JWT token from response
-      console.log("odkdawda");
       const { jwt, user: userData } = response.data;
 
       // Store token and user data in localStorage

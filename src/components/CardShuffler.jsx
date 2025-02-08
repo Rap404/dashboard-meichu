@@ -1,19 +1,12 @@
-import React, { State, useEffect, useState } from "react";
-import { oneHandleChange } from "../lib/FormHandler";
-import SubmitButton from "./buttons/SubmitButton";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import CheckBox from "./input/CheckBox";
-import { FaFontAwesome, FaSync } from "react-icons/fa";
+import { audio, fireConfetti } from "../assets/Assets";
+import { FaSync } from "react-icons/fa";
 import { ArrowsPointingInIcon, PlusIcon } from "@heroicons/react/24/solid";
-import {
-  ArrowsPointingOutIcon,
-  ArrowTopRightOnSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowsPointingOutIcon, TrashIcon } from "@heroicons/react/24/outline";
 import ModalEntries from "./modal/ModalEntries";
 import { errorNotif } from "./text/Notification";
 import RadioButton from "./input/RadioButton";
-import confetti from "canvas-confetti";
 
 const CardShuffler = () => {
   const [items, setItems] = useState([]);
@@ -25,14 +18,6 @@ const CardShuffler = () => {
   const [afterSpin, setAfterSpin] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState("");
-
-  const clap = new Audio(
-    "https://res.cloudinary.com/dszbo6z9j/video/upload/v1738912116/clapping_Audio_Trimmer_com_d3d1cbb020.mp3"
-  );
-
-  const trumpet = new Audio(
-    "https://res.cloudinary.com/dszbo6z9j/video/upload/v1738912176/SOUND_EFEK_TEROMPET_TEWTTETETETETEWT_MP_3_39c64ea45b.mp4"
-  );
 
   useEffect(() => {
     let intervalId;
@@ -55,78 +40,19 @@ const CardShuffler = () => {
     if (afterSpin) {
       setTimeout(() => {
         setAfterSpin(false);
-      }, 5000);
+      }, 7000);
     }
   }, [afterSpin]);
-
-  const fireConfetti = () => {
-    // Stars
-    const defaults = {
-      spread: 360,
-      ticks: 50,
-      gravity: 0,
-      decay: 0.94,
-      startVelocity: 30,
-      shapes: ["star"],
-      colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
-    };
-
-    function shoot() {
-      confetti({
-        ...defaults,
-        particleCount: 40,
-        scalar: 1.2,
-        shapes: ["star"],
-      });
-
-      confetti({
-        ...defaults,
-        particleCount: 10,
-        scalar: 0.75,
-        shapes: ["circle"],
-      });
-    }
-
-    setTimeout(shoot, 0);
-    setTimeout(shoot, 100);
-    setTimeout(shoot, 200);
-
-    // School Pride
-    const end = Date.now() + 3 * 1000;
-
-    // go Buckeyes!
-    const colors = ["#bb0000", "#ffffff"];
-
-    (function frame() {
-      confetti({
-        particleCount: 2,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: colors,
-      });
-      confetti({
-        particleCount: 2,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: colors,
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    })();
-  };
 
   const handleSpin = () => {
     if (items.length >= 3) {
       setIsSpinning(true);
+      audio.shuffle.play();
       setTimeout(() => {
         setIsSpinning(false);
         setAfterSpin(true);
-        clap.play();
-        trumpet.play();
+        audio.clap.play();
+        audio.trumpet.play();
         fireConfetti();
       }, 4000);
     } else {

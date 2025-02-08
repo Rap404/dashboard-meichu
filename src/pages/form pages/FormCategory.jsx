@@ -93,8 +93,6 @@ const FormCategory = () => {
         }
       );
 
-      console.log("categoryResponse", categoryResponse);
-
       successNotif("Category successfully made");
 
       if (resetForm) {

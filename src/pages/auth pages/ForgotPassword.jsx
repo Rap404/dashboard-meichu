@@ -24,7 +24,6 @@ const ForgotPassword = () => {
         data
       );
       successNotif("Request successfully sended, please check your email");
-      console.log(response);
     } catch (error) {
       setError(error);
     } finally {

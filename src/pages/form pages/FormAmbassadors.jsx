@@ -76,7 +76,6 @@ const FormAmbassador = () => {
           formData.name + " photo",
           token
         );
-        console.log(imageResponse);
         imageId = imageResponse[0].id;
         ambassadorData.image = imageId;
       }
@@ -148,8 +147,6 @@ const FormAmbassador = () => {
           },
         }
       );
-
-      console.log(response);
       successNotif("Ambassador successfully updated");
       navigate("/ambassadors");
     } catch (error) {

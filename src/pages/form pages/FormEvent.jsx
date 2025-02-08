@@ -32,7 +32,6 @@ const FormEvent = () => {
       setLoading(true);
       const response = await axios.get(`${baseUrl}/events/${id}`);
       setEvent(response.data || []);
-      console.log(response);
       const eventData = response.data.data.attributes;
       setFormData({
         name: eventData.name,
@@ -73,7 +72,6 @@ const FormEvent = () => {
           formData.name,
           token
         );
-        console.log(imageResponse);
         imageId = imageResponse[0].id;
         eventData.image_cover = imageId;
       }
@@ -146,7 +144,6 @@ const FormEvent = () => {
         }
       );
 
-      console.log(response);
       successNotif("Event successfully updated");
       navigate("/events");
     } catch (error) {
