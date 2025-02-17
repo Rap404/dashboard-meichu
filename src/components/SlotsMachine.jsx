@@ -1,16 +1,8 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const SlotMachine = () => {
-  const symbols = [
-    "Rangga",
-    "Azril",
-    "Intan",
-    "Bogeng",
-    "Acengpilek",
-    "aduhai",
-    "gantengnya",
-  ];
-
+  const symbols = ["A", "B", "C", "D", "E", "F", "G"];
   const [reel, setReel] = useState({ position: 0, spinning: false });
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState("");
@@ -21,11 +13,12 @@ const SlotMachine = () => {
     setIsSpinning(true);
     setResult("");
 
-    // Simulate spinning with random steps
-    const steps = 10 + Math.floor(Math.random() * 10); // Random number of spins
-    const finalPosition = Math.floor(Math.random() * symbols.length); // Final position
+    const steps = Math.floor(Math.random() * 10);
+    const finalPosition = Math.floor(Math.random() * symbols.length);
+    console.log(finalPosition);
     let currentStep = 0;
 
+    // console.log(finalPosition);
     const interval = setInterval(() => {
       setReel((prevReel) => ({
         ...prevReel,
@@ -34,19 +27,21 @@ const SlotMachine = () => {
 
       currentStep++;
 
+      console.log(currentStep);
+
       if (currentStep > steps) {
         clearInterval(interval);
 
-        // Stop spinning and set final position
         setReel({ position: finalPosition, spinning: false });
         setIsSpinning(false);
-        setTimeout(checkWin, 500);
+        setTimeout(() => checkWin(finalPosition), 300);
+        console.log(finalPosition);
       }
-    }, 500); // Slower spin speed
+    }, 300);
   };
 
-  const checkWin = () => {
-    setResult(`Hasil: ${symbols[reel.position]} 🎉`);
+  const checkWin = (finalPosition) => {
+    setResult(`Terpilih: ${symbols[finalPosition]}`);
   };
 
   return (
@@ -56,22 +51,27 @@ const SlotMachine = () => {
       </div>
 
       <div className="flex justify-center mb-6">
-        <div className="w-40 h-24 overflow-hidden bg-white rounded-lg relative shadow-lg">
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${reel.position * 100}%)`,
+        <div className="w-10 h-24 overflow-hidden bg-white rounded-lg relative shadow-lg">
+          <motion.div
+            className="flex"
+            animate={{
+              x: -reel.position * 100 + "%",
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 100,
+              damping: 15,
             }}
           >
             {symbols.map((symbol, index) => (
               <div
                 key={index}
-                className="w-40 h-24 text-black flex-shrink-0 flex items-center justify-center text-4xl"
+                className="w-10 h-24 text-black flex-shrink-0 flex items-center justify-center text-4xl font-bold"
               >
                 {symbol}
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
 

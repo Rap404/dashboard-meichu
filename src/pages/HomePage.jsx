@@ -14,6 +14,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import CardShuffler from "../components/CardShuffler";
+import GachaPage from "../components/GachaMachine";
 
 const HomePage = ({ profile }) => {
   const { token } = useAuth();
@@ -83,7 +84,8 @@ const HomePage = ({ profile }) => {
           />
         </div>
         <div className="mt-20">
-          <CardShuffler />
+          <GachaPage />
+          {/* <CardShuffler /> */}
         </div>
       </div>
     </div>

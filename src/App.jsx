@@ -21,11 +21,14 @@ import ErrorPage from "./pages/ErrorPage";
 import { useState } from "react";
 import FormCategory from "./pages/form pages/FormCategory";
 import FormProduct from "./pages/form pages/FormProduct";
-import ResetPassword from "./pages/auth pages/ResetPassword";
 import FormAmbassador from "./pages/form pages/FormAmbassadors";
 import FormEvent from "./pages/form pages/FormEvent";
 import Requestdetail from "./pages/detail pages/Requestdetail";
 import ContentPage from "./pages/ContentPage";
+import SlotMachine from "./components/SlotsMachine";
+import GachaPage from "./components/GachaMachine";
+import Spinner from "./components/Spinner";
+import SlotsMachine from "./components/SlotsMachine";
 
 function App() {
   const { user } = useAuth();
@@ -52,6 +55,7 @@ function App() {
           <>
             <Route element={<BasicLayout setUserProfile={setUserProfile} />}>
               <Route path="/" element={<HomePage profile={userProfile} />} />
+              {/* <Route path="/tes" element={<GachaPage />} /> */}
 
               {/* Pages */}
               <Route path="/categories" element={<CategoriesPage />} />

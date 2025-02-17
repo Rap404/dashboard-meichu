@@ -58,8 +58,6 @@ const SpinMachine = ({}) => {
     }
   };
 
-  console.log(value);
-
   return (
     <div className="flex flex-col items-center justify-center p-8 bg-gray-900 rounded-lg shadow-lg">
       {/* Kotak Putaran */}
