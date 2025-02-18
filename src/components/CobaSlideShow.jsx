@@ -7,7 +7,14 @@ import { useAuth } from "../lib/AuthContext";
 import { successNotif } from "./text/Notification";
 import DeleteButton from "./buttons/DeleteButton";
 
-const Slideshow = ({ slides, setLoading, setError, removeNewImage, fetch }) => {
+const Slideshow = ({
+  slides,
+  setLoading,
+  setError,
+  removeNewImage,
+  fetch,
+  deleteFunction,
+}) => {
   const { token } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,11 +52,7 @@ const Slideshow = ({ slides, setLoading, setError, removeNewImage, fetch }) => {
       setLoading(true);
       const currentUUID = slides[currentIndex]?.attributes?.uuid;
       if (currentUUID) {
-        await axios.delete(`${baseUrl}/banner-images/${currentUUID}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await deleteFunction(currentUUID);
 
         await fetch();
       } else {
