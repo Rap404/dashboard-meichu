@@ -95,10 +95,13 @@ const FormFrontImages = ({ setOpenForm }) => {
 
   return (
     <div className="overflow-auto w-full">
-      <button className="p-5" onClick={() => setOpenForm(null)}>
+      <button
+        className="p-5 dark:text-putihfrt"
+        onClick={() => setOpenForm(null)}
+      >
         <ArrowLeftIcon width={30} height={30} />
       </button>
-      <div className="flex flex-col w-full items-center justify-center gap-10  py-5 px-20">
+      <div className="flex flex-col w-full items-center justify-center gap-10 py-5 px-0">
         <div className="">
           <p className="text-3xl font-bold text-black dark:text-white">
             slideShow Images

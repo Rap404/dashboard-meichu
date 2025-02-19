@@ -23,9 +23,9 @@ const ContentPage = () => {
     return (
       <>
         <div className="flex w-full justify-center">
-          <p className="text-4xl font-bold">Choose content</p>
+          <p className="text-4xl font-bold dark:text-white">Choose content</p>
         </div>
-        <div className="flex justify-center h-full items-center gap-10">
+        <div className="flex flex-col md:flex-row lg:flex-row mt-20 md:mt-0 lg:mt-0 justify-center h-full items-center gap-10">
           <button
             className="flex flex-col items-center border border-abumuda hover:border-oren p-10 text-hitam dark:text-putihfrt group"
             onClick={() => setOpenForm("banner")}
@@ -36,7 +36,7 @@ const ContentPage = () => {
             <div className="">Front Images Banner</div>
           </button>
           <button
-            className="flex flex-col items-center border  border-abumuda hover:border-oren p-10 text-hitam dark:text-putihfrt group"
+            className="flex flex-col items-center border  border-abumuda hover:border-oren p-5 md:p-10 lg:p-10 text-hitam dark:text-putihfrt group"
             onClick={() => setOpenForm("custom")}
           >
             <span className="w-36 h-36 group-hover:text-oren">
@@ -63,7 +63,7 @@ const ContentPage = () => {
   };
 
   return (
-    <div className="overflow-auto w-full h-screen py-10 pb-32 px-20">
+    <div className="overflow-auto w-full h-screen py-10 pb-32 px-0 md:px-10 lg:px-20">
       {choosePage()}
     </div>
   );
