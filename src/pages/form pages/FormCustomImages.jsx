@@ -11,8 +11,9 @@ import Button from "../../components/buttons/Button";
 import SubmitButton from "../../components/buttons/SubmitButton";
 import { useAuth } from "../../lib/AuthContext";
 import Modal from "../../components/modal/Modal";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-const FormCustomImages = () => {
+const FormCustomImages = ({ setOpenForm }) => {
   const { token } = useAuth();
   const [images, setImages] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -96,8 +97,11 @@ const FormCustomImages = () => {
   if (error) return errorNotif(error.message);
 
   return (
-    <div className="overflow-auto w-full py-5 pt-10 px-20">
-      <div className="flex flex-col w-full items-center justify-center gap-10">
+    <div className="overflow-auto w-full">
+      <button className="p-5" onClick={() => setOpenForm(null)}>
+        <ArrowLeftIcon width={30} height={30} />
+      </button>
+      <div className="flex flex-col w-full items-center justify-center gap-10  py-5 pt-10 px-20">
         <div className="">
           <p className="text-3xl font-bold text-black dark:text-white">
             Custom Product Images

@@ -226,7 +226,7 @@ const GachaPage = () => {
         isFull && "fixed inset-0 w-screen h-screen overflow-y-auto"
       }`}
     >
-      <div className="w-full h-screen flex flex-col gap-10 bg-putihtrd dark:bg-abutua overflow-auto px-10 pb-20">
+      <div className="w-full h-screen flex flex-col gap-10 bg-putihtrd dark:bg-abutua px-10 pb-20">
         <div className="">
           <div className="w-full flex justify-end pt-10">
             <button
