@@ -7,9 +7,6 @@ import SubmitButton from "../components/buttons/SubmitButton";
 import LoadingComponent from "../components/text/Loading";
 import { errorNotif, successNotif } from "../components/text/Notification";
 import axios from "axios";
-import { useAuth } from "../lib/AuthContext";
-import { uploadFileTostrapi } from "../lib/ImageHandler";
-import { frontImageService } from "../Api/services/contentService";
 import FormFrontImages from "./form pages/FormFrontImages";
 import FormCustomImages from "./form pages/formCustomImages";
 

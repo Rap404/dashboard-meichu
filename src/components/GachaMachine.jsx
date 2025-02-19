@@ -398,17 +398,15 @@ const GachaPage = () => {
           )}
         </AnimatePresence>
 
-        <AnimatePresence initial={false}>
-          {formOpen && (
-            <ModalEntries
-              closeModal={() => setFormOpen(false)}
-              value={value}
-              setValue={setValue}
-              addMoreData={addMoreData}
-              addData={addData}
-            />
-          )}
-        </AnimatePresence>
+        {formOpen && (
+          <ModalEntries
+            closeModal={() => setFormOpen(false)}
+            value={value}
+            setValue={setValue}
+            addMoreData={addMoreData}
+            addData={addData}
+          />
+        )}
       </div>
     </div>
   );

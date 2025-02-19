@@ -5,6 +5,7 @@ import UploadImages from "../input/UploadImages";
 import MultiSelect from "../input/MultiSelect";
 import DateInput from "../input/DateInput";
 import CircularImages from "../images/CircularImages";
+import MultiPreview from "../input/MultiPreview";
 
 const FormDefault = ({
   formConstant,
@@ -18,6 +19,8 @@ const FormDefault = ({
   onMultiChange,
   onSelectChange,
 }) => {
+  console.log(availableItems);
+
   const selectOptions = Array.isArray(availableItems)
     ? availableItems?.map((item) => ({
         id: item?.id,
@@ -199,6 +202,13 @@ const FormDefault = ({
               options={selectOptions}
               label={item.label}
             />
+          </div>
+        );
+
+      case "itemsPreview":
+        return (
+          <div className="">
+            <MultiPreview items={availableItems} />
           </div>
         );
 

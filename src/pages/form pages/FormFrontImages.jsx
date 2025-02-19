@@ -97,7 +97,7 @@ const FormFrontImages = () => {
       <div className="flex flex-col w-full items-center justify-center gap-10">
         <div className="">
           <p className="text-3xl font-bold text-black dark:text-white">
-            slideShow Images asdsad
+            slideShow Images
           </p>
         </div>
         <Slideshow

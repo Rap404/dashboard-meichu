@@ -27,16 +27,7 @@ const ModalEntries = ({
         >
           &#8203;
         </span>
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          transition={{
-            duration: 0.4,
-            scale: { type: "spring" },
-          }}
-          className="inline-block bg-white border-2 dark:border-none dark:bg-black rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-        >
+        <div className="inline-block bg-white border-2 dark:border-none dark:bg-black rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           {/* <div className="absolute -inset-0.5 ring-offset-1 bg-gradient-to-r from-oren to-ijokepong rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div> */}
           <div className="relative rounded-lg bg-putihtrd dark:bg-abutua">
             <form onSubmit={addMoreData}>
@@ -86,7 +77,7 @@ const ModalEntries = ({
               </div>
             </form>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

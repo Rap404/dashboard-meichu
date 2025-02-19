@@ -23,6 +23,7 @@ const TableColumn = ({ item, data }) => {
           console.error("Error rendering image:", error);
           return <div className="dark:text-white">Image Not Alvailable</div>;
         }
+
       case "bool":
         try {
           const type = item.accessor(data);
@@ -30,6 +31,19 @@ const TableColumn = ({ item, data }) => {
             return <div className="">Imvu+</div>;
           } else {
             return <div className="">Non imvu</div>;
+          }
+        } catch (error) {
+          console.error("Error rendering image:", error);
+          return <div className="text-red-500">Data Not Alvailable</div>;
+        }
+
+      case "catBool":
+        try {
+          const type = item.accessor(data);
+          if (type === false) {
+            return <div className="">Single</div>;
+          } else {
+            return <div className="">Bundle</div>;
           }
         } catch (error) {
           console.error("Error rendering image:", error);

@@ -43,6 +43,29 @@ export const formResetPassword = [
   },
 ];
 
+export const formCustomCategories = [
+  {
+    id: "name",
+    name: "name",
+    type: "text",
+    required: true,
+    placeholder: "Enter category name",
+    label: "Category name",
+  },
+  {
+    id: "isBundle",
+    name: "isBundle",
+    type: "bool",
+    label: "Is Bundle",
+  },
+  {
+    id: "requests",
+    name: "requests",
+    type: "itemsPreview",
+    label: "Requests with this category :",
+  },
+];
+
 export const formCategories = [
   {
     id: "name",

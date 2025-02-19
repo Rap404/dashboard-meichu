@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  ArchiveBoxIcon,
   CalendarDaysIcon,
   ChatBubbleLeftRightIcon,
   HomeIcon,
@@ -35,14 +36,19 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <nav className="flex flex-col flex-grow gap-3">
             <SideItems icon={<HomeIcon />} page={"/"} text={"Dashboard"} />
             <SideItems
+              icon={<PencilSquareIcon />}
+              page={"/products"}
+              text={"Products"}
+            />
+            <SideItems
               icon={<RectangleStackIcon />}
               page={"/categories"}
               text={"Categories"}
             />
             <SideItems
-              icon={<PencilSquareIcon />}
-              page={"/products"}
-              text={"Products"}
+              icon={<ArchiveBoxIcon />}
+              page={"/content"}
+              text={"Content"}
             />
             <SideItems
               icon={<CalendarDaysIcon />}
@@ -55,6 +61,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               text={"Ambassadors"}
             />
             <SideItems
+              icon={<ServerStackIcon />}
+              page={"/custom-categories"}
+              text={"Request categories"}
+            />
+            <SideItems
               icon={<ChatBubbleLeftRightIcon />}
               page={"/requests"}
               text={"Requests"}
@@ -63,11 +74,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               icon={<UserCircleIcon />}
               page={"/users"}
               text={"Users"}
-            />
-            <SideItems
-              icon={<ServerStackIcon />}
-              page={"/content"}
-              text={"Content"}
             />
           </nav>
         </aside>

@@ -1,5 +1,3 @@
-import { image } from "motion/react-m";
-import { baseUrl } from "../../Constant"
 import axiosInstance from "../axiosConfig"
 
 export const frontImageService =  {

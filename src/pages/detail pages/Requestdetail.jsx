@@ -74,7 +74,7 @@ const Requestdetail = () => {
   if (error) return errorNotif(error);
 
   return (
-    <div className="ps-12 pe-6 pt-10 min-h-screen dark:bg-hitam">
+    <div className="ps-12 pe-6 pt-10 py-10 h-screen overflow-auto dark:bg-hitam">
       <div className="w-full">
         <div className="flex flex-row gap-4 text-sm text-zinc-400">
           {pages.map((page, index) => (

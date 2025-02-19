@@ -29,6 +29,8 @@ import SlotMachine from "./components/SlotsMachine";
 import GachaPage from "./components/GachaMachine";
 import Spinner from "./components/Spinner";
 import SlotsMachine from "./components/SlotsMachine";
+import FormCustomCategories from "./pages/form pages/FormCustomCategories";
+import CustomCategoriesPage from "./pages/CustomCategoriesPage";
 
 function App() {
   const { user } = useAuth();
@@ -60,6 +62,10 @@ function App() {
               {/* Pages */}
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/ambassadors" element={<Ambassador />} />
+              <Route
+                path="/custom-categories"
+                element={<CustomCategoriesPage />}
+              />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/events" element={<EventsPage />} />
               <Route path="/requests" element={<RequestsPage />} />
@@ -70,6 +76,15 @@ function App() {
               {/* Form Pages */}
               <Route path="/categories/create" element={<FormCategory />} />
               <Route path="/categories/edit/:id" element={<FormCategory />} />
+
+              <Route
+                path="/custom-categories/create"
+                element={<FormCustomCategories />}
+              />
+              <Route
+                path="/custom-categories/edit/:id"
+                element={<FormCustomCategories />}
+              />
 
               <Route path="/ambassadors/create" element={<FormAmbassador />} />
               <Route
