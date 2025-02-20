@@ -10,6 +10,7 @@ import {
 import RadioButton from "./input/RadioButton";
 import { FaSync } from "react-icons/fa";
 import { fireConfetti } from "../assets/Assets";
+import { errorNotif } from "./text/Notification";
 
 const GachaPage = () => {
   const [items, setItems] = useState([]);
@@ -45,9 +46,13 @@ const GachaPage = () => {
   ];
 
   const openGacha = () => {
+    if (items.length < 3) {
+      errorNotif("Data must be more than 3 to start the spin!");
+      return;
+    }
     setIsSpinning(true);
 
-    const duration = Math.floor(Math.random() * 3) + 2;
+    const duration = Math.floor(Math.random() * 10) + 3;
 
     setTimeout(() => {
       stopGacha();
@@ -94,11 +99,14 @@ const GachaPage = () => {
 
       animation.playbackRate = 0.5;
 
+      console.log(animation.playbackRate);
       setTimeout(() => {
         animation.playbackRate = 0.2;
+        console.log(animation.playbackRate);
 
         setTimeout(() => {
           const selectedItem = getItemAtRedLine();
+          console.log(animation.playbackRate);
 
           animation.playbackRate = 0;
           setTimeout(() => {
@@ -109,8 +117,8 @@ const GachaPage = () => {
               setGachaResult(selectedItem);
             }
           }, 800);
-        }, 2000);
-      }, 3000);
+        }, 1800);
+      }, 3200);
     }
   };
 
@@ -174,8 +182,12 @@ const GachaPage = () => {
         { transform: `translateX(-${totalWidth}px)` },
       ];
 
+      const duration = Math.floor(Math.random() * items.length) + 2;
+
+      console.log(duration * 150);
+
       const options = {
-        duration: 1000,
+        duration: duration * 155,
         iterations: Infinity,
         easing: "linear",
       };
@@ -376,7 +388,7 @@ const GachaPage = () => {
                   <div className="flex justify-between items-center mb-4">
                     <div className="p-2"></div>
                     <h2 className="text-2xl text-black dark:text-putihfrt font-bold text-center">
-                      🎉🤟 CONGRATULATION 😜🎉
+                      🎉😮👍 CONGRATULATION 🤟😜🎉
                     </h2>
                     <button
                       onClick={closeGacha}
