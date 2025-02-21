@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import FormFrontImages from "./formPages/FormFrontImages";
-import FormCustomImages from "./formPages/formCustomImages";
 import { FilmIcon } from "@heroicons/react/24/outline";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import FormCustomImages from "./formPages/FormCustomImages";
 
 const ContentPage = () => {
   const [openForm, setOpenForm] = useState(null);
