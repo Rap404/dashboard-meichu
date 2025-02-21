@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import FormFrontImages from "./form pages/FormFrontImages";
-import FormCustomImages from "../form pages/formCustomImages";
+import FormFrontImages from "./formPages/FormFrontImages";
+import FormCustomImages from "./formPages/formCustomImages";
 import { FilmIcon } from "@heroicons/react/24/outline";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 
