@@ -1,18 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Slideshow from "../components/CobaSlideShow";
-import Modal from "../components/modal/Modal";
-import { baseUrl } from "../Constant";
-import Button from "../components/buttons/Button";
-import SubmitButton from "../components/buttons/SubmitButton";
-import LoadingComponent from "../components/text/Loading";
-import { errorNotif, successNotif } from "../components/text/Notification";
-import axios from "axios";
+import React, { useState } from "react";
 import FormFrontImages from "./form pages/FormFrontImages";
-import FormCustomImages from "./form pages/formCustomImages";
-import {
-  customImageService,
-  frontImageService,
-} from "../Api/services/contentService";
+import FormCustomImages from "../form pages/formCustomImages";
 import { FilmIcon } from "@heroicons/react/24/outline";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 
