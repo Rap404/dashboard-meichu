@@ -46,6 +46,9 @@ const FormCustomImages = ({ setOpenForm }) => {
   };
 
   const handleSave = async () => {
+    if (images.length === 0) {
+      return errorNotif("Please add images first");
+    }
     try {
       setLoading(true);
       const data = {};

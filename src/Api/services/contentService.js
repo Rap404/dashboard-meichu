@@ -31,7 +31,7 @@ export const frontImageService =  {
     delete: async (id) => {
         try {
             const response = await axiosInstance.delete(`banner-images/${id}`);
-            return response.data;
+            return response;
         } catch (error) {
             throw error;
         }

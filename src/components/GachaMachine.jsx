@@ -20,6 +20,9 @@ const GachaPage = () => {
   const [gachaResult, setGachaResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [value, setValue] = useState("");
+  const [rigged, setRigged] = useState(false);
+  const [winningItemIndex, setWinningItemIndex] = useState(null);
+  const [isSlow, setIsSlow] = useState(false);
   const spinContainerRef = useRef(null);
   const animationRef = useRef(null);
   const redLineRef = useRef(null);
@@ -45,22 +48,54 @@ const GachaPage = () => {
     "🌊",
   ];
 
+  const getWinningItemPosition = (winningIndex) => {
+    if (!redLineRef.current || !spinContainerRef.current) return 0;
+
+    const containerRect = spinContainerRef.current.getBoundingClientRect();
+    const redLineRect = redLineRef.current.getBoundingClientRect();
+    const itemWidth = 160;
+    const totalWidth = containerRect.width;
+
+    const targetPosition = winningIndex * itemWidth + itemWidth / 2;
+    const redLinePosition = redLineRect.left - containerRect.left;
+
+    return targetPosition - redLinePosition;
+  };
+
+  const deleteSelectedItems = () => {
+    const updatedItems = items.filter(
+      (_, index) => !selectedItems.includes(index)
+    );
+
+    setItems(updatedItems);
+    setSelectedItems([]);
+  };
+
   const openGacha = () => {
     if (items.length < 3) {
       errorNotif("Data must be more than 3 to start the spin!");
       return;
     }
     setIsSpinning(true);
+    setIsSlow(false);
 
     const duration = Math.floor(Math.random() * 10) + 3;
-
-    setTimeout(() => {
-      stopGacha();
-    }, duration * 1000);
+    if (rigged && winningItemIndex !== null) {
+      setTimeout(() => {
+        stopGacha();
+      }, 5000);
+    } else {
+      console.log(duration);
+      setTimeout(() => {
+        stopGacha();
+      }, duration * 1000);
+    }
   };
 
   const closeGacha = () => {
+    setSelectedItems(gachaResult);
     setGachaResult(null);
+    deleteSelectedItems();
   };
 
   const getItemAtRedLine = () => {
@@ -97,35 +132,41 @@ const GachaPage = () => {
     if (animationRef.current) {
       const animation = animationRef.current;
 
-      animation.playbackRate = 0.5;
-
-      console.log(animation.playbackRate);
-      setTimeout(() => {
-        animation.playbackRate = 0.2;
-        console.log(animation.playbackRate);
+      if (rigged && winningItemIndex !== null) {
+        setIsSlow(true);
 
         setTimeout(() => {
-          const selectedItem = getItemAtRedLine();
-          console.log(animation.playbackRate);
+          animation.pause();
+          setIsSpinning(false);
+          setGachaResult(items[winningItemIndex]);
+          fireConfetti();
+        }, 5000);
+      } else {
+        animation.playbackRate = 0.5;
+        setTimeout(() => {
+          animation.playbackRate = 0.2;
 
-          animation.playbackRate = 0;
           setTimeout(() => {
-            animation.cancel();
-            setIsSpinning(false);
-            fireConfetti();
-            if (selectedItem) {
-              setGachaResult(selectedItem);
-            }
-          }, 800);
-        }, 1800);
-      }, 3200);
+            const selectedItem = getItemAtRedLine();
+
+            animation.playbackRate = 0;
+            setTimeout(() => {
+              animation.cancel();
+              setIsSpinning(false);
+              fireConfetti();
+              if (selectedItem) {
+                setGachaResult(selectedItem);
+              }
+            }, 800);
+          }, 1800);
+        }, 3200);
+      }
     }
   };
 
   const addMoreData = (e) => {
     e.preventDefault();
     const indexIcon = Math.floor(Math.random() * emoticon.length) + 1;
-    console.log(indexIcon);
     if (value.trim()) {
       setItems((prev) => [
         ...prev,
@@ -139,7 +180,6 @@ const GachaPage = () => {
     e.preventDefault();
 
     const indexIcon = Math.floor(Math.random() * emoticon.length) + 1;
-    console.log(indexIcon);
     if (value.trim()) {
       setItems((prev) => [
         ...prev,
@@ -163,36 +203,58 @@ const GachaPage = () => {
     setSelectedItems(updateSelection);
   };
 
-  const deleteSelectedItems = () => {
-    const updatedItems = items.filter(
-      (_, index) => !selectedItems.includes(index)
-    );
-
-    setItems(updatedItems);
-    setSelectedItems([]);
-  };
-
   useEffect(() => {
     if (isSpinning && spinContainerRef.current) {
       const container = spinContainerRef.current;
       const totalWidth = container.scrollWidth / 3;
+      let animation;
 
-      const keyframes = [
-        { transform: "translateX(0)" },
-        { transform: `translateX(-${totalWidth}px)` },
-      ];
+      if (rigged && winningItemIndex !== null && isSlow) {
+        const targetPosition = getWinningItemPosition(winningItemIndex);
+        const initialSpinDistance = totalWidth * 2;
 
-      const duration = Math.floor(Math.random() * items.length) + 2;
+        animation = container.animate(
+          [
+            { transform: "translateX(0)", easing: "linear" },
+            {
+              transform: `translateX(-${initialSpinDistance}px)`,
+              easing: "linear",
+              offset: 0.7,
+            },
+            {
+              transform: `translateX(-${
+                initialSpinDistance + targetPosition
+              }px)`,
+              easing: "cubic-bezier(0.1, 0.7, 0.1, 1.0)",
+            },
+          ],
+          {
+            duration: 3000,
+            fill: "forwards",
+          }
+        );
+      } else {
+        let duration;
+        if (!rigged) {
+          const dura = Math.floor(Math.random() * items.length) + 2;
+          duration = dura * 155;
+        } else {
+          duration = 1000;
+        }
+        animation = container.animate(
+          [
+            { transform: "translateX(0)" },
+            { transform: `translateX(-${totalWidth}px)` },
+          ],
+          {
+            duration: duration,
+            iterations: Infinity,
+            easing: "linear",
+          }
+        );
+      }
 
-      console.log(duration * 150);
-
-      const options = {
-        duration: duration * 155,
-        iterations: Infinity,
-        easing: "linear",
-      };
-
-      animationRef.current = container.animate(keyframes, options);
+      animationRef.current = animation;
 
       return () => {
         if (animationRef.current) {
@@ -200,8 +262,7 @@ const GachaPage = () => {
         }
       };
     }
-  }, [isSpinning]);
-
+  }, [isSpinning, rigged, winningItemIndex, isSlow]);
   const renderSpinningItems = () => {
     return (
       <div className="flex">
@@ -226,8 +287,111 @@ const GachaPage = () => {
                 </div>
               </div>
             ))}
+            {rigged && winningItemIndex !== null && (
+              <>
+                <div
+                  ref={(el) => {
+                    if (el) {
+                      itemRefs.current[setIndex - 0] = el;
+                    }
+                  }}
+                  className="flex-shrink-0 w-40 p-2"
+                  style={{ height: "160px" }}
+                >
+                  <div className=" rounded-lg p-2 h-full border border-oren flex flex-col items-center justify-center">
+                    <span className="text-3xl">{items[0]?.emoticon}</span>
+                    <p className="text-lg font-medium text-center truncate w-full">
+                      {items[0].name}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  ref={(el) => {
+                    if (el) {
+                      itemRefs.current[setIndex - 1] = el;
+                    }
+                  }}
+                  className="flex-shrink-0 w-40 p-2"
+                  style={{ height: "160px" }}
+                >
+                  <div className=" rounded-lg p-2 h-full border border-oren flex flex-col items-center justify-center">
+                    <span className="text-3xl">{items[1]?.emoticon}</span>
+                    <p className="text-lg font-medium text-center truncate w-full">
+                      {items[1].name}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  ref={(el) => {
+                    if (el) {
+                      itemRefs.current[setIndex - 2] = el;
+                    }
+                  }}
+                  className="flex-shrink-0 w-40 p-2"
+                  style={{ height: "160px" }}
+                >
+                  <div className=" rounded-lg p-2 h-full border border-oren flex flex-col items-center justify-center">
+                    <span className="text-3xl">{items[2]?.emoticon}</span>
+                    <p className="text-lg font-medium text-center truncate w-full">
+                      {items[2].name}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  ref={(el) => {
+                    if (el) {
+                      itemRefs.current[setIndex - 3] = el;
+                    }
+                  }}
+                  className="flex-shrink-0 w-40 p-2"
+                  style={{ height: "160px" }}
+                >
+                  <div className=" rounded-lg p-2 h-full border border-oren flex flex-col items-center justify-center">
+                    <span className="text-3xl">{items[3]?.emoticon}</span>
+                    <p className="text-lg font-medium text-center truncate w-full">
+                      {items[3].name}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         ))}
+      </div>
+    );
+  };
+
+  const renderControls = () => {
+    if (isSpinning) return null;
+
+    return (
+      <div className="flex flex-col gap-4 mt-4">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={rigged}
+            onChange={(e) => setRigged(e.target.checked)}
+            className="form-checkbox h-4 w-4"
+          />
+          <label className="text-sm text-gray-700 dark:text-gray-300">
+            Set Winning Item
+          </label>
+        </div>
+
+        {rigged && (
+          <select
+            value={winningItemIndex || ""}
+            onChange={(e) => setWinningItemIndex(Number(e.target.value))}
+            className="form-select mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+          >
+            <option value="">Select winning item</option>
+            {items.map((item, index) => (
+              <option key={index} value={index}>
+                {item.emoticon} {item.name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
     );
   };
@@ -365,6 +529,8 @@ const GachaPage = () => {
             )}
           </div>
         </div>
+
+        {renderControls()}
 
         <AnimatePresence>
           {gachaResult && (

@@ -15,7 +15,6 @@ const Slideshow = ({
   fetch,
   deleteFunction,
 }) => {
-  const { token } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
 

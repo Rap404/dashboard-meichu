@@ -43,6 +43,9 @@ const FormFrontImages = ({ setOpenForm }) => {
   };
 
   const handleSaveFI = async () => {
+    if (frontImages.length === 0) {
+      return errorNotif("Please add images first");
+    }
     try {
       setLoading(true);
       const data = {};

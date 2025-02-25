@@ -31,6 +31,7 @@ import Spinner from "./components/Spinner";
 import SlotsMachine from "./components/SlotsMachine";
 import FormCustomCategories from "./pages/formPages/FormCustomCategories";
 import CustomCategoriesPage from "./pages/CustomCategoriesPage";
+import RollingMachine from "./components/RollingMachine";
 
 function App() {
   const { user } = useAuth();
@@ -57,7 +58,7 @@ function App() {
           <>
             <Route element={<BasicLayout setUserProfile={setUserProfile} />}>
               <Route path="/" element={<HomePage profile={userProfile} />} />
-              {/* <Route path="/tes" element={<GachaPage />} /> */}
+              <Route path="/tes" element={<RollingMachine />} />
 
               {/* Pages */}
               <Route path="/categories" element={<CategoriesPage />} />
