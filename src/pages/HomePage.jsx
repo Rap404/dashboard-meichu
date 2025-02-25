@@ -6,20 +6,20 @@ import LoadingComponent from "../components/text/Loading";
 import { errorNotif } from "../components/text/Notification";
 import axios from "axios";
 import { baseUrl } from "../Constant";
-import { useAuth } from "../lib/AuthContext";
 import FastDisplayCard from "../components/card/FastDisplayCard";
 import {
   PencilSquareIcon,
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-import CardShuffler from "../components/CardShuffler";
 import GachaPage from "../components/GachaMachine";
 
 const HomePage = ({ profile }) => {
-  const { token } = useAuth();
   const imageProfile = profile?.profilePicture?.url;
+  const [items, setItems] = useState([]);
   const [newRequest, setNewRequest] = useState({});
+  const [rigged, setRigged] = useState(false);
+  const [winningItemIndex, setWinningItemIndex] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -37,6 +37,41 @@ const HomePage = ({ profile }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const renderControls = () => {
+    return (
+      <div className="flex flex-col gap-4 mt-4">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={rigged}
+            onChange={(e) => setRigged(e.target.checked)}
+            className="form-checkbox h-4 w-4"
+          />
+          <label className="text-sm text-gray-700 dark:text-gray-300">
+            Set Winning Item
+          </label>
+        </div>
+
+        {rigged && (
+          <select
+            value={winningItemIndex || ""}
+            onChange={(e) => setWinningItemIndex(Number(e.target.value))}
+            className="form-select mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+          >
+            {winningItemIndex === null && (
+              <option value="">Select winning item</option>
+            )}
+            {items.map((item, index) => (
+              <option key={index} value={index}>
+                {item.emoticon} {item.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -84,8 +119,14 @@ const HomePage = ({ profile }) => {
           />
         </div>
         <div className="mt-20">
-          <GachaPage />
-          {/* <CardShuffler /> */}
+          <GachaPage
+            items={items}
+            setItems={setItems}
+            rigged={rigged}
+            winningItemIndex={winningItemIndex}
+            setWinningItemIndex={setWinningItemIndex}
+          />
+          <div className="">{renderControls()}</div>
         </div>
       </div>
     </div>

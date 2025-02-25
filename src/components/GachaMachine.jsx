@@ -12,16 +12,19 @@ import { FaSync } from "react-icons/fa";
 import { fireConfetti } from "../assets/Assets";
 import { errorNotif } from "./text/Notification";
 
-const GachaPage = () => {
-  const [items, setItems] = useState([]);
+const GachaPage = ({
+  items,
+  setItems,
+  rigged,
+  winningItemIndex,
+  setWinningItemIndex,
+}) => {
   const [isFull, setIsFull] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [gachaResult, setGachaResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [value, setValue] = useState("");
-  const [rigged, setRigged] = useState(false);
-  const [winningItemIndex, setWinningItemIndex] = useState(null);
   const [isSlow, setIsSlow] = useState(false);
   const spinContainerRef = useRef(null);
   const animationRef = useRef(null);
@@ -144,10 +147,10 @@ const GachaPage = () => {
 
         setTimeout(() => {
           animation.pause();
+          fireConfetti();
           setIsSpinning(false);
           setGachaResult(items[winningItemIndex]);
           setWinningItemIndex(null);
-          fireConfetti();
         }, 5000);
       } else {
         animation.playbackRate = 0.5;
@@ -371,43 +374,6 @@ const GachaPage = () => {
     );
   };
 
-  const renderControls = () => {
-    if (isSpinning) return null;
-
-    return (
-      <div className="flex flex-col gap-4 mt-4">
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={rigged}
-            onChange={(e) => setRigged(e.target.checked)}
-            className="form-checkbox h-4 w-4"
-          />
-          <label className="text-sm text-gray-700 dark:text-gray-300">
-            Set Winning Item
-          </label>
-        </div>
-
-        {rigged && (
-          <select
-            value={winningItemIndex || ""}
-            onChange={(e) => setWinningItemIndex(Number(e.target.value))}
-            className="form-select mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-          >
-            {winningItemIndex === null && (
-              <option value="">Select winning item</option>
-            )}
-            {items.map((item, index) => (
-              <option key={index} value={index}>
-                {item.emoticon} {item.name}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div
       className={`${
@@ -541,8 +507,6 @@ const GachaPage = () => {
             )}
           </div>
         </div>
-
-        {renderControls()}
 
         <AnimatePresence>
           {gachaResult && (
