@@ -90,7 +90,7 @@ const GachaPage = () => {
       });
       setTimeout(() => {
         stopGacha();
-      }, 5000);
+      }, 4200);
     } else {
       console.log(duration);
       setTimeout(() => {
@@ -146,6 +146,7 @@ const GachaPage = () => {
           animation.pause();
           setIsSpinning(false);
           setGachaResult(items[winningItemIndex]);
+          setWinningItemIndex(null);
           fireConfetti();
         }, 5000);
       } else {
@@ -242,12 +243,13 @@ const GachaPage = () => {
         );
       } else {
         let duration;
-        if (!rigged) {
-          const dura = Math.floor(Math.random() * items.length) + 2;
+        if (!rigged || winningItemIndex === null) {
+          const dura = Math.floor(Math.random() * items.length) + 1;
           duration = dura * 155;
         } else {
           duration = 1000;
         }
+        console.log(duration);
         animation = container.animate(
           [
             { transform: "translateX(0)" },
@@ -392,7 +394,9 @@ const GachaPage = () => {
             onChange={(e) => setWinningItemIndex(Number(e.target.value))}
             className="form-select mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700"
           >
-            <option value="">Select winning item</option>
+            {winningItemIndex === null && (
+              <option value="">Select winning item</option>
+            )}
             {items.map((item, index) => (
               <option key={index} value={index}>
                 {item.emoticon} {item.name}
@@ -410,7 +414,7 @@ const GachaPage = () => {
         isFull && "fixed inset-0 w-screen h-screen overflow-y-auto"
       }`}
     >
-      <div className="w-full h-screen flex flex-col gap-10 bg-putihtrd dark:bg-abutua px-10 pb-20">
+      <div className="w-full h-full flex flex-col gap-10 bg-putihtrd dark:bg-abutua px-10 pb-20">
         <div className="">
           <div className="w-full flex justify-end pt-10">
             <button
