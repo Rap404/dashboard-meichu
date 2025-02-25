@@ -80,7 +80,14 @@ const GachaPage = () => {
     setIsSlow(false);
 
     const duration = Math.floor(Math.random() * 10) + 3;
+
     if (rigged && winningItemIndex !== null) {
+      setItems((prev) => {
+        const newArray = [...prev];
+        const element = newArray.splice(winningItemIndex, 1)[0];
+        newArray.push(element);
+        return newArray;
+      });
       setTimeout(() => {
         stopGacha();
       }, 5000);
@@ -210,7 +217,7 @@ const GachaPage = () => {
       let animation;
 
       if (rigged && winningItemIndex !== null && isSlow) {
-        const targetPosition = getWinningItemPosition(winningItemIndex);
+        const targetPosition = getWinningItemPosition(items.length - 1);
         const initialSpinDistance = totalWidth * 2;
 
         animation = container.animate(
@@ -263,6 +270,7 @@ const GachaPage = () => {
       };
     }
   }, [isSpinning, rigged, winningItemIndex, isSlow]);
+
   const renderSpinningItems = () => {
     return (
       <div className="flex">
