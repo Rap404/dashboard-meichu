@@ -76,31 +76,31 @@ const RequestsPage = () => {
   const column = [
     {
       header: "Nama",
-      accessor: (item) => item.attributes.name,
+      accessor: (item) => item?.attributes?.name,
       nowrap: true,
     },
     {
       header: "References",
-      accessor: (item) => item.attributes.references.data.attributes.url,
+      accessor: (item) => item?.attributes?.references?.data?.attributes?.url,
       type: "image",
     },
     {
       header: "Is imvu+",
-      accessor: (item) => item.attributes.imvu,
+      accessor: (item) => item?.attributes?.imvu,
       type: "bool",
     },
     {
       header: "Type",
-      accessor: (item) => item.attributes.productType,
+      accessor: (item) => item?.attributes?.productType,
       nowrap: true,
     },
     {
       header: "user",
-      accessor: (item) => item.attributes.user.data.attributes.email,
+      accessor: (item) => item?.attributes?.user?.data?.attributes?.email,
     },
     {
       header: "",
-      accessor: (item) => item.attributes.isNew,
+      accessor: (item) => item?.attributes?.isNew,
       type: "notif",
     },
   ];

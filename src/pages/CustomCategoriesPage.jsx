@@ -65,7 +65,7 @@ const CustomCategoriesPage = () => {
       nowrap: true,
     },
     {
-      header: "Requests",
+      header: "Description",
       accessor: (item) => item.attributes.isBundle,
       type: "catBool",
     },

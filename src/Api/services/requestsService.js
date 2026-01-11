@@ -10,6 +10,15 @@ export const requestsService = {
         }
     },
 
+    getRequestById: async (id) => {
+        try {
+            const response = await axiosInstance.get(`requests/${id}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     searchRequests: async (query) => {
         try {
             const response = await axiosInstance.get(`requests/search?query=${query}`);

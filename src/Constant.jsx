@@ -306,6 +306,11 @@ export const detailRequest = [
     label: "Type :",
   },
   {
+    id: "category",
+    name: "category",
+    label: "category :",
+  },
+  {
     id: "user",
     name: "user",
     label: "User :",
